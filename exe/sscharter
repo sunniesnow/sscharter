@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'sscharter'
+require 'sscharter/cli'
+
+command = ARGV.shift&.to_sym
+unless Sunniesnow::Charter::CLI::COMMANDS.include? command
+	$stderr.puts "Usage: #{File.basename $0} <#{Sunniesnow::Charter::CLI::COMMANDS.join '|'}>"
+	exit 1
+end
+
+exit Sunniesnow::Charter::CLI.send(command, *ARGV) || 0
