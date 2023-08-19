@@ -6,6 +6,8 @@ require_relative 'sscharter/chart'
 
 class Sunniesnow::Charter
 
+	using Sunniesnow::Utils
+
 	class OffsetError < StandardError
 		def initialize method_name
 			super "offset must be set before using #{method_name}"
@@ -53,8 +55,8 @@ class Sunniesnow::Charter
 	end
 
 	class Event
-		attr_accessor :beat, :offset, :duration_beats
-		attr_reader :type, :bpm_changes, :properties
+		attr_accessor :beat, :offset, :duration_beats, :properties
+		attr_reader :type, :bpm_changes
 
 		def initialize type, beat, duration_beats = nil, bpm_changes, **properties
 			@beat = beat
@@ -86,10 +88,76 @@ class Sunniesnow::Charter
 		end
 
 		def to_sunniesnow
-			time = time
+			t = time
 			properties = @properties.transform_keys &:snake_to_camel
-			properties[:duration] = end_time - time if @duration_beats
-			Sunniesnow::Event.new time, @type, **properties
+			properties[:duration] = end_time - t if @duration_beats
+			Sunniesnow::Event.new t, @type.snake_to_camel, **properties
+		end
+
+		def dup
+			result = super
+			result.properties = @properties.dup
+			result
+		end
+	end
+
+	# Implements homography
+	class Transform
+		include Math
+		attr_reader :xx, :xy, :xz, :yx, :yy, :yz, :zx, :zy, :zz
+		
+		def initialize
+			@xx = @yy = @zz = 1.0
+			@xy = @xz = @yx = @yz = @zx = @zy = 0.0
+		end
+
+		def apply event
+			return unless x = event[:x]
+			return unless y = event[:y]
+			rx = xx*x + xy*y + xz
+			ry = yx*x + yy*y + yz
+			d = zx*x + zy*y + zz
+			event[:x] = rx / d
+			event[:y] = ry / d
+			if angle = event[:angle]
+				dx, dy = cos(angle), sin(angle)
+				event[:angle] = atan2(yx*dx + yy*dy, xx*dx + xy*dy)
+			end
+			event
+		end
+
+		def compound_linear xx, xy, yx, yy
+			@xx, @xy, @xz, @yx, @yy, @yz = [
+				xx * @xx + xy * @yx,
+				xx * @xy + xy * @yy,
+				xx * @xz + xy * @yz,
+				yx * @xx + yy * @yx,
+				yx * @xy + yy * @yy,
+				yx * @xz + yy * @yz,
+			]
+		end
+
+		def translate dx, dy
+			@xz += dx
+			@yz += dy
+		end
+
+		def horizontal_flip
+			compound_linear -1, 0, 0, 1
+		end
+
+		def vertical_flip
+			compound_linear 1, 0, 0, -1
+		end
+
+		def rotate angle
+			c = cos angle
+			s = sin angle
+			compound_linear c, -s, s, c
+		end
+
+		def scale sx, sy = sx
+			compound_linear sx, 0, 0, sy
 		end
 	end
 
@@ -112,10 +180,15 @@ class Sunniesnow::Charter
 		down_right: -Math::PI / 4
 	}
 
+	singleton_class.attr_reader :charts
+	@charts = {}
+
 	def initialize name, &block
 		@name = name
 		init_chart_info
 		init_state
+		self.class.charts[name] = self
+		instance_eval &block if block
 	end
 
 	def init_chart_info
@@ -134,7 +207,9 @@ class Sunniesnow::Charter
 		@bpm_changes = nil
 		@tip_point_mode = :none
 		@current_tip_point = 0
+		@current_duplicate = 0
 		@tip_point_start_to_add = nil
+		@groups = [@events]
 	end
 
 	def title title
@@ -184,12 +259,12 @@ class Sunniesnow::Charter
 		raise ArgumentError, 'offset must be a number' unless offset.is_a? Numeric
 		@current_offset = offset.to_f
 		@current_beat = 0r
-		@bpm_changes = []
+		@bpm_changes = BpmChangeList.new @current_offset
 	end
 
 	def bpm bpm
 		raise OffsetError.new __method__ unless @bpm_changes
-		@bpm_changes.push BpmChange.new @current_offset, @current_beat, bpm
+		@bpm_changes.add @current_beat, bpm
 	end
 
 	def beat delta_beat
@@ -226,49 +301,58 @@ class Sunniesnow::Charter
 	end
 
 	def tip_point_chain x = 0, y = 0, relative_time = 0.0,
-			relative: false, speed: nil, preserve_beat: false,
+			relative: false, speed: nil, preserve_beat: true,
 			&block
-		unless block
-			raise ArgumentError, 'no block given'
-		end
+		raise ArgumentError, 'no block given' unless block
 		@tip_point_mode = :chain
-		last_beat = @current_beat
 		set_tip_point_start_to_add x, y, relative, relative_time, speed
-		instance_eval &block
-		@tip_point_mode = :none
+		result = group preserve_beat: preserve_beat, &block
+		clear_tip_point
 		@current_tip_point += 1
-		beat! last_beat unless preserve_beat
+		result
 	end
 	alias tp_chain tip_point_chain
 
 	def tip_point_drop x = 0, y = 0, relative_time = 0.0,
-			relative: true, speed: nil, preserve_beat: false,
+			relative: true, speed: nil, preserve_beat: true,
 			&block
-		unless block
-			raise ArgumentError, 'no block given'
-		end
+		raise ArgumentError, 'no block given' unless block
 		@tip_point_mode = :drop
-		last_beat = @current_beat
 		set_tip_point_start_to_add x, y, relative, relative_time, speed
-		instance_eval &block
-		@tip_point_mode = :none
-		beat! last_beat unless preserve_beat
+		result = group preserve_beat: preserve_beat, &block
+		clear_tip_point
+		result
 	end
 	alias tp_drop tip_point_drop
 
+	def group preserve_beat: true, &block
+		raise ArgumentError, 'no block given' unless block
+		@groups.push result = []
+		last_beat = @current_beat
+		instance_eval &block
+		beat! last_beat unless preserve_beat
+		@groups.delete_if { result.equal? _1 }
+		result
+	end
+
 	def set_tip_point_start_to_add x, y, relative, relative_time, speed
-		if relative_time != 0 && speed
-			raise ArgumentError, 'cannot specify both relative_time and speed'
-		end
+		raise ArgumentError, 'cannot specify both relative_time and speed' if relative_time != 0 && speed
 		@tip_point_start_to_add = [x, y, relative, relative_time, speed]
 	end
 
-	def event type, duration_beats = nil, **properties
+	def clear_tip_point
+		@tip_point_start_to_add = nil
+		@tip_point_mode = :none
+	end
+
+	def event type, duration_beats = nil, has_tip_point: false, **properties
 		raise OffsetError.new __method__ unless @bpm_changes
 		event = Event.new type, @current_beat, duration_beats, @bpm_changes, **properties
+		@groups.each { _1.push event }
+		return event unless has_tip_point
 		if @tip_point_start_to_add && properties[:x]
 			x, y, relative, relative_time, speed = @tip_point_start_to_add
-			tip_point_start = Event.new :placeholder, @current_beat, @bpm_changes, tip_point: @current_tip_point
+			tip_point_start = Event.new :placeholder, @current_beat, @bpm_changes, tip_point: @current_tip_point.to_s
 			if relative
 				tip_point_start[:x] = properties[:x] + x
 				tip_point_start[:y] = properties[:y] + y
@@ -281,27 +365,45 @@ class Sunniesnow::Charter
 			else
 				tip_point_start.offset = -relative_time
 			end
-			@events.push tip_point_start
+			@groups.each { _1.push tip_point_start }
 		end
 		case @tip_point_mode
 		when :chain
-			event[:tip_point] = @current_tip_point
+			event[:tip_point] = @current_tip_point.to_s
 			@tip_point_start_to_add = nil
 		when :drop
-			event[:tip_point] = @current_tip_point
+			event[:tip_point] = @current_tip_point.to_s
 			@current_tip_point += 1
 		when :none
 			# pass
 		end
-		@events.push event
 		event
+	end
+
+	def transform events, &block
+		raise ArgumentError, 'no block given' unless block
+		transform = Transform.new
+		transform.instance_eval &block
+		events.each { transform.apply _1 }
+	end
+
+	def duplicate events
+		result = []
+		events.each do |event|
+			result.push event = event.dup
+			if event[:tip_point]
+				event[:tip_point] = "#@current_duplicate #{event[:tip_point]}"
+			end
+			@groups.each { _1.push event }
+		end
+		result
 	end
 
 	def tap x, y, text = ''
 		if !x.is_a?(Numeric) || !y.is_a?(Numeric)
 			raise ArgumentError, 'x and y must be numbers'
 		end
-		event :tap, x: x.to_f, y: y.to_f, text: text.to_s
+		event :tap, x: x.to_f, y: y.to_f, has_tip_point: true, text: text.to_s
 	end
 	alias t tap
 
@@ -315,7 +417,7 @@ class Sunniesnow::Charter
 		if duration_beats.is_a? Float
 			warn 'Rational is recommended over Float for duration_beats'
 		end
-		event :hold, duration_beats.to_r, x: x.to_f, y: y.to_f, text: text.to_s
+		event :hold, duration_beats.to_r, has_tip_point: true, x: x.to_f, y: y.to_f, text: text.to_s
 	end
 	alias h hold
 
@@ -323,7 +425,7 @@ class Sunniesnow::Charter
 		if !x.is_a?(Numeric) || !y.is_a?(Numeric)
 			raise ArgumentError, 'x and y must be numbers'
 		end
-		event :drag, x: x.to_f, y: y.to_f
+		event :drag, has_tip_point: true, x: x.to_f, y: y.to_f
 	end
 	alias d drag
 
@@ -334,20 +436,46 @@ class Sunniesnow::Charter
 		if direction.is_a? Symbol
 			direction = DIRECTIONS[direction]
 		elsif direction.is_a? Numeric
-			warn 'Are you using degrees as angle unit instead of radians?' if direction % 45 == 0
+			warn 'Are you using degrees as angle unit instead of radians?' if direction != 0 && direction % 45 == 0
 			direction = direction.to_f
 		else
 			raise ArgumentError, 'direction must be a symbol or a number'
 		end
-		event :flick, x: x, y: y, direction: direction
+		event :flick, has_tip_point: true, x: x, y: y, angle: direction
 	end
 	alias f flick
 
-	def bg_note x, y, text = ''
+	def bg_note x, y, duration_beats = 0, text = ''
 		if !x.is_a?(Numeric) || !y.is_a?(Numeric)
 			raise ArgumentError, 'x and y must be numbers'
 		end
-		event :bg_note, x: x.to_f, y: y.to_f, text: text.to_s
+		event :bg_note, duration_beats.to_r, x: x.to_f, y: y.to_f, text: text.to_s
+	end
+
+	def big_text duration_beats = 0, text
+		event :big_text, duration_beats.to_r, text: text.to_s
+	end
+
+	%i[grid hexagon checkerboard diamond_grid pentagon turntable].each do |method_name|
+		define_method method_name do |duration_beats = 0|
+			event method_name, duration_beats.to_r
+		end
+	end
+
+	def to_sunniesnow
+		result = Sunniesnow::Chart.new
+		result.title = @title
+		result.artist = @artist
+		result.charter = @charter
+		result.difficulty_name = @difficulty_name
+		result.difficulty_color = @difficulty_color
+		result.difficulty = @difficulty
+		@events.each { result.events.push _1.to_sunniesnow }
+		result
+	end
+
+	def output_json
+		to_sunniesnow.to_json
 	end
 
 end

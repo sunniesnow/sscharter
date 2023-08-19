@@ -1,0 +1,39 @@
+PATH
+  remote: .
+  specs:
+    sscharter (0.1.0)
+      filewatcher (~> 2.0)
+      launchy (~> 2.5)
+      rubyzip (~> 2.3)
+      webrick (~> 1.8)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.8.5)
+      public_suffix (>= 2.0.2, < 6.0)
+    filewatcher (2.1.0)
+      module_methods (~> 0.1.0)
+    launchy (2.5.2)
+      addressable (~> 2.8)
+    minitest (5.19.0)
+    module_methods (0.1.0)
+    public_suffix (5.0.3)
+    rake (13.0.6)
+    rubyzip (2.3.2)
+    webrick (1.8.1)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  filewatcher (~> 2.0)
+  launchy (~> 2.5)
+  minitest (~> 5.0)
+  rake (~> 13.0)
+  rubyzip (~> 2.3)
+  sscharter!
+  webrick (~> 1.8)
+
+BUNDLED WITH
+   2.4.13

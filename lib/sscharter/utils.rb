@@ -3,7 +3,7 @@ module Sunniesnow::Utils
 	refine Array do
 		# If there no match, return the next index.
 		# Less than all: return 0. Greater than all: return array.length.
-		def bisect value = nil, &compare_function, right: false
+		def bisect value = nil, right: false, &compare_function
 			if value && compare_function
 				raise ArgumentError, "Cannot specify both value and compare_function"
 			end

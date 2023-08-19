@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Sunniesnow
-	module Charter
+	class Charter
 		VERSION = "0.1.0"
 	end
 end

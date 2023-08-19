@@ -11,3 +11,6 @@ group :develop do
 end
 
 gem 'rubyzip', '~> 2.3'
+gem 'launchy', '~> 2.5'
+gem 'webrick', '~> 1.8'
+gem 'filewatcher', '~> 2.0'

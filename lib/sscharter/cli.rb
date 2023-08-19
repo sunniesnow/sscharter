@@ -2,8 +2,12 @@
 
 require 'fileutils'
 require 'yaml'
+require 'cgi'
 
 require 'zip'
+require 'launchy'
+require 'webrick'
+require 'filewatcher'
 
 require 'sscharter'
 
@@ -17,7 +21,17 @@ end
 module Sunniesnow::Charter::CLI
 	module_function
 
-	COMMANDS = %i[init build]
+	COMMANDS = %i[init build serve]
+
+	def config
+		config_filename = '.sscharter.yml'
+		config_filename = '.sscharter.yaml' unless File.exist? config_filename
+		unless File.exist? config_filename
+			puts 'No .sscharter.yml found'
+			return nil
+		end
+		YAML.load_file config_filename, symbolize_names: true
+	end
 
 	def init project_dir, *files
 		if File.directory? project_dir
@@ -100,13 +114,7 @@ module Sunniesnow::Charter::CLI
 	end
 
 	def build
-		config_filename = '.sschart.yml'
-		config_filename = '.sschart.yaml' unless File.exist? config_filename
-		unless File.exist? config_filename
-			puts 'No .sschart.yml found'
-			return 1
-		end
-		config = YAML.load_file config_filename, symbolize_names: true
+		return 1 unless config = self.config
 		project_name = config[:project_name] || File.basename(Dir.pwd)
 		build_dir = config[:build_dir] || 'build'
 		files_dir = config[:files_dir] || 'files'
@@ -114,8 +122,15 @@ module Sunniesnow::Charter::CLI
 		include_files = config[:include] || []
 		Dir.glob File.join sources_dir, '*.rb' do |filename|
 			load filename
+		rescue Exception => e
+			puts "Error loading #{filename}:"
+			puts e.full_message
+			return 1
 		end
-		Zip::File.open File.join build_dir, "#{project_name}.ssc" do |zip_file|
+		FileUtils.mkdir_p build_dir
+		build_filename = File.join build_dir, "#{project_name}.ssc"
+		FileUtils.rm build_filename if File.exist? build_filename
+		Zip::File.open build_filename, create: true do |zip_file|
 			Dir.glob File.join files_dir, '**', '*' do |filename|
 				zip_file.add filename["#{files_dir}/".length..], filename
 			end
@@ -130,5 +145,28 @@ module Sunniesnow::Charter::CLI
 				end
 			end
 		end
+		0
+	end
+
+	def serve port = 8011
+		config = self.config
+		server = WEBrick::HTTPServer.new Port: port, DocumentRoot: config[:build_dir]
+		server.mount_proc "/#{config[:project_name]}.ssc" do |request, response|
+			response['Content-Type'] = 'application/zip'
+			response['Access-Control-Allow-Origin'] = '*'
+			response.body = File.read File.join config[:build_dir], "#{config[:project_name]}.ssc"
+		end
+		url = CGI.escape "http://localhost:#{port}/#{config[:project_name]}.ssc"
+		# Launchy.open "https://sunniesnow.github.io/game/?level-file=online&level-file-online=#{url}"
+		Thread.new do
+			puts 'Building...'
+			puts build == 0 ? 'Finished' : 'Failed'
+			Filewatcher.new(config.values_at :files_dir, :sources_dir).watch do |changes|
+				puts 'Rebuilding...'
+				puts build == 0 ? 'Finished' : 'Failed'
+			end
+		end
+		server.start
+		0
 	end
 end
