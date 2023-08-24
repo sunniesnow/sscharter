@@ -8,6 +8,8 @@ require 'zip'
 require 'launchy'
 require 'webrick'
 require 'filewatcher'
+require 'rake'
+require 'bundler'
 
 require 'sscharter'
 
@@ -15,6 +17,15 @@ module Sunniesnow
 	class Charter
 		module CLI
 		end
+	end
+end
+
+class Filewatcher
+	# This is a hack. See:
+	# https://github.com/filewatcher/filewatcher/blob/v2.0.0/lib/filewatcher.rb#L42
+	# The `exit` call here will cause the WEBrick server to report a fatal error.
+	def exit
+		stop
 	end
 end
 
@@ -46,12 +57,17 @@ module Sunniesnow::Charter::CLI
 				# frozen_string_literal: true
 				source 'https://rubygems.org'
 				gem 'sscharter', '~> #{Sunniesnow::Charter::VERSION}'
+				gem 'rake', '~> #{Rake::VERSION}'
+				gem 'bundler', '~> #{Bundler::VERSION}'
 			GEMFILE
 			File.write 'Rakefile', <<~RAKEFILE
 				# frozen_string_literal: true
 				task default: :build
 				task :build do
-					sh 'bundle exec sscharter build'
+					exec 'bundle exec sscharter build'
+				end
+				task :serve do
+					exec 'bundle exec sscharter serve'
 				end
 			RAKEFILE
 			File.write '.gitignore', <<~GITIGNORE
@@ -89,7 +105,7 @@ module Sunniesnow::Charter::CLI
 			File.write 'src/master.rb', <<~CHART
 				# frozen_string_literal: true
 
-				Sunniesnow::Charter.new 'master' do
+				Sunniesnow::Charter.open 'master' do
 
 				title 'The title of the music'
 				artist 'The artist of the music'
@@ -149,6 +165,7 @@ module Sunniesnow::Charter::CLI
 	end
 
 	def serve port = 8011
+		port = port.to_i
 		config = self.config
 		server = WEBrick::HTTPServer.new Port: port, DocumentRoot: config[:build_dir]
 		server.mount_proc "/#{config[:project_name]}.ssc" do |request, response|
@@ -157,14 +174,16 @@ module Sunniesnow::Charter::CLI
 			response.body = File.read File.join config[:build_dir], "#{config[:project_name]}.ssc"
 		end
 		url = CGI.escape "http://localhost:#{port}/#{config[:project_name]}.ssc"
-		# Launchy.open "https://sunniesnow.github.io/game/?level-file=online&level-file-online=#{url}"
-		Thread.new do
+		filewatcher = Filewatcher.new [config[:files_dir], config[:sources_dir], *config[:include]]
+		Launchy.open "https://sunniesnow.github.io/game/?level-file=online&level-file-online=#{url}"
+		filewatcher_thread = Thread.new do
 			puts 'Building...'
 			puts build == 0 ? 'Finished' : 'Failed'
-			Filewatcher.new(config.values_at :files_dir, :sources_dir).watch do |changes|
+			filewatcher.watch do |changes|
 				puts 'Rebuilding...'
 				puts build == 0 ? 'Finished' : 'Failed'
 			end
+			server.shutdown
 		end
 		server.start
 		0
