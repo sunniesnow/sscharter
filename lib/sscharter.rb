@@ -14,6 +14,17 @@ class Sunniesnow::Charter
 		end
 	end
 
+	class TipPointError < StandardError
+		def initialize *expected_state, actual_state
+			super "wrong tip point state: expected #{expected_state.join ' or '}, got #{actual_state}"
+		end
+
+		def self.ensure state, *expected
+			raise self.new *expected, state unless expected.include? state
+		end
+
+	end
+
 	class BpmChangeList
 
 		class BpmChange
@@ -42,11 +53,12 @@ class Sunniesnow::Charter
 
 		def time_at beat
 			index = @list.bisect(right: true) { _1.beat <=> beat }
-			if index < 0
-				raise ArgumentError, 'beat is before the first bpm change'
-			end
+			raise ArgumentError, 'beat is before the first bpm change' if index < 0
 			bpm = @list[index]
-			@offset + (beat - bpm.beat) / bpm.bps
+			(0...index).sum @offset + (beat - bpm.beat) / bpm.bps do |i|
+				bpm = @list[i]
+				(@list[i+1].beat - bpm.beat) / bpm.bps
+			end
 		end
 
 		def [] index
@@ -55,6 +67,9 @@ class Sunniesnow::Charter
 	end
 
 	class Event
+
+		TIP_POINTABLE_TYPES = %i[tap hold flick drag]
+
 		attr_accessor :beat, :offset, :duration_beats, :properties
 		attr_reader :type, :bpm_changes
 
@@ -99,19 +114,26 @@ class Sunniesnow::Charter
 			result.properties = @properties.dup
 			result
 		end
+
+		def tip_pointable?
+			TIP_POINTABLE_TYPES.include? @type
+		end
 	end
 
 	# Implements homography
 	class Transform
 		include Math
-		attr_reader :xx, :xy, :xz, :yx, :yy, :yz, :zx, :zy, :zz
+		attr_reader :xx, :xy, :xz, :yx, :yy, :yz, :zx, :zy, :zz, :tt, :t1
 		
 		def initialize
 			@xx = @yy = @zz = 1.0
 			@xy = @xz = @yx = @yz = @zx = @zy = 0.0
+			@t1 = 0r
+			@tt = 1r
 		end
 
 		def apply event
+			event.beat = @t1 + @tt * event.beat
 			return unless x = event[:x]
 			return unless y = event[:y]
 			rx = xx*x + xy*y + xz
@@ -138,6 +160,7 @@ class Sunniesnow::Charter
 		end
 
 		def translate dx, dy
+			raise ArgumentError, 'dx and dy must be numbers' unless dx.is_a?(Numeric) && dy.is_a?(Numeric)
 			@xz += dx
 			@yz += dy
 		end
@@ -151,13 +174,80 @@ class Sunniesnow::Charter
 		end
 
 		def rotate angle
+			raise ArgumentError, 'angle must be a number' unless angle.is_a? Numeric
+			warn 'Are you using degrees as angle unit instead of radians?' if angle != 0 && angle % 45 == 0
 			c = cos angle
 			s = sin angle
 			compound_linear c, -s, s, c
 		end
 
 		def scale sx, sy = sx
+			raise ArgumentError, 'sx and sy must be numbers' unless sx.is_a?(Numeric) && sy.is_a?(Numeric)
 			compound_linear sx, 0, 0, sy
+		end
+
+		def beat_translate delta_beat
+			raise ArgumentError, 'delta_beat must be a number' unless delta_beat.is_a? Numeric
+			warn 'Rational is recommended over Float for delta_beat' if delta_beat.is_a? Float
+			@t1 += delta_beat.to_r
+		end
+	end
+
+	class TipPointStart
+
+		def initialize x = 0, y = 0, relative_time = 0.0, relative: true, speed: nil,
+				relative_beat: nil, beat_speed: nil
+			@x = x
+			@y = y
+			@relative_time = relative_time
+			@relative = relative
+			@speed = speed
+			@relative_beat = relative_beat
+			@beat_speed = beat_speed
+			check
+		end
+
+		def check
+			%i[@relative_time @speed @relative_beat @beat_speed].each do |key|
+				value = instance_variable_get key
+				raise ArgumentError, "cannot specify both #@time_key and #{key}" if @time_key && value&.!=(0)
+				@time_key = key if value&.!=(0)
+			end
+			@time_key ||= :@relative_time
+		end
+
+		def get_start_placeholder start_event
+			raise ArgumentError, "start_event is not tip-pointable" unless start_event.tip_pointable?
+			result = Event.new :placeholder, start_event.beat, start_event.bpm_changes
+			if @relative
+				result[:x] = start_event[:x] + @x
+				result[:y] = start_event[:y] + @y
+			else
+				result[:x] = @x
+				result[:y] = @y
+			end
+			case @time_key
+			when :@relative_time
+				raise ArgumentError, "relative_time must be a number" unless @relative_time.is_a? Numeric
+				raise ArgumentError, "relative_time must be non-negative" if @relative_time < 0
+				result.offset = -@relative_time.to_f
+			when :@speed
+				raise ArgumentError, "speed must be a number" unless @speed.is_a? Numeric
+				raise ArgumentError, "speed must be positive" if @speed <= 0
+				result.offset = -Math.hypot(result[:x] - start_event[:x], result[:y] - start_event[:y]) / @speed
+			when :@relative_beat
+				raise ArgumentError, "relative_beat must be a number" unless @relative_beat.is_a? Numeric
+				raise ArgumentError, "relative_beat must be non-negative" if @relative_beat < 0
+				warn "Rational is recommended over Float for relative_beat" if @relative_beat.is_a? Float
+				result.beat -= @relative_beat.to_r
+			when :@beat_speed
+				raise ArgumentError, "beat_speed must be a number" unless @beat_speed.is_a? Numeric
+				raise ArgumentError, "beat_speed must be positive" if @beat_speed <= 0
+				delta_beat = Math.hypot(result[:x] - start_event[:x], result[:y] - start_event[:y]) / @beat_speed
+				result.beat -= delta_beat.to_r # a little weird, but fine
+			end
+			result[:tip_point] = start_event[:tip_point]
+			result
 		end
 	end
 
@@ -183,12 +273,16 @@ class Sunniesnow::Charter
 	singleton_class.attr_reader :charts
 	@charts = {}
 
-	def initialize name, &block
+	def self.open name, &block
+		result = @charts[name] ||= new name
+		result.instance_eval &block if block
+		result
+	end
+
+	def initialize name
 		@name = name
 		init_chart_info
 		init_state
-		self.class.charts[name] = self
-		instance_eval &block if block
 	end
 
 	def init_chart_info
@@ -243,7 +337,7 @@ class Sunniesnow::Charter
 			"##{r}#{r}#{g}#{g}#{b}#{b}"
 		when /^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/
 			r, g, b = $1, $2, $3
-			"##{r.to_i.to_s 16}#{g.to_i.to_s 16}#{b.to_i.to_s 16}"
+			sprintf '#%02x%02x%02x', r.to_i, g.to_i, b.to_i
 		when Integer
 			sprintf '#%06x', difficulty_color % 0x1000000
 		else
@@ -295,33 +389,24 @@ class Sunniesnow::Charter
 	end
 	alias b! beat!
 
-	def time_at beat
+	def time_at beat = @current_beat
 		raise OffsetError.new __method__ unless @bpm_changes
 		@bpm_changes.time_at beat
 	end
 
-	def tip_point_chain x = 0, y = 0, relative_time = 0.0,
-			relative: false, speed: nil, preserve_beat: true,
-			&block
+	def tip_point_chain *args, preserve_beat: true, **opts, &block
 		raise ArgumentError, 'no block given' unless block
-		@tip_point_mode = :chain
-		set_tip_point_start_to_add x, y, relative, relative_time, speed
-		result = group preserve_beat: preserve_beat, &block
-		clear_tip_point
-		@current_tip_point += 1
-		result
+		tip_point :chain, *args, **opts do
+			group preserve_beat: preserve_beat, &block
+		end.tap { @current_tip_point += 1 }
 	end
 	alias tp_chain tip_point_chain
 
-	def tip_point_drop x = 0, y = 0, relative_time = 0.0,
-			relative: true, speed: nil, preserve_beat: true,
-			&block
+	def tip_point_drop *args, preserve_beat: true, **opts, &block
 		raise ArgumentError, 'no block given' unless block
-		@tip_point_mode = :drop
-		set_tip_point_start_to_add x, y, relative, relative_time, speed
-		result = group preserve_beat: preserve_beat, &block
-		clear_tip_point
-		result
+		tip_point :drop, *args, **opts do
+			group preserve_beat: preserve_beat, &block
+		end
 	end
 	alias tp_drop tip_point_drop
 
@@ -335,49 +420,44 @@ class Sunniesnow::Charter
 		result
 	end
 
-	def set_tip_point_start_to_add x, y, relative, relative_time, speed
-		raise ArgumentError, 'cannot specify both relative_time and speed' if relative_time != 0 && speed
-		@tip_point_start_to_add = [x, y, relative, relative_time, speed]
-	end
-
 	def clear_tip_point
+		TipPointError.ensure @tip_point_mode, :chain, :drop
 		@tip_point_start_to_add = nil
 		@tip_point_mode = :none
 	end
 
-	def event type, duration_beats = nil, has_tip_point: false, **properties
+	def tip_point mode, *args, **opts, &block
+		TipPointError.ensure @tip_point_mode, :none
+		@tip_point_mode = mode
+		@tip_point_start_to_add = TipPointStart.new *args, **opts
+		result = block.()
+		@tip_point_start_to_add = nil
+		@tip_point_mode = :none
+		result
+	end
+
+	def event type, duration_beats = nil, **properties
 		raise OffsetError.new __method__ unless @bpm_changes
 		event = Event.new type, @current_beat, duration_beats, @bpm_changes, **properties
 		@groups.each { _1.push event }
-		return event unless has_tip_point
-		if @tip_point_start_to_add && properties[:x]
-			x, y, relative, relative_time, speed = @tip_point_start_to_add
-			tip_point_start = Event.new :placeholder, @current_beat, @bpm_changes, tip_point: @current_tip_point.to_s
-			if relative
-				tip_point_start[:x] = properties[:x] + x
-				tip_point_start[:y] = properties[:y] + y
-			else
-				tip_point_start[:x] = x
-				tip_point_start[:y] = y
-			end
-			if speed
-				tip_point_start.offset = -Math.hypot(tip_point_start[:x] - properties[:x], tip_point_start[:y] - properties[:y]) / speed
-			else
-				tip_point_start.offset = -relative_time
-			end
-			@groups.each { _1.push tip_point_start }
-		end
+		return event unless event.tip_pointable?
 		case @tip_point_mode
 		when :chain
-			event[:tip_point] = @current_tip_point.to_s
+			push_tip_point_start event
 			@tip_point_start_to_add = nil
 		when :drop
-			event[:tip_point] = @current_tip_point.to_s
+			push_tip_point_start event
 			@current_tip_point += 1
 		when :none
 			# pass
 		end
 		event
+	end
+
+	def push_tip_point_start start_event
+		start_event[:tip_point] = @current_tip_point.to_s
+		tip_point_start = @tip_point_start_to_add&.get_start_placeholder start_event
+		@groups.each { _1.push tip_point_start } if tip_point_start
 	end
 
 	def transform events, &block
@@ -403,7 +483,7 @@ class Sunniesnow::Charter
 		if !x.is_a?(Numeric) || !y.is_a?(Numeric)
 			raise ArgumentError, 'x and y must be numbers'
 		end
-		event :tap, x: x.to_f, y: y.to_f, has_tip_point: true, text: text.to_s
+		event :tap, x: x.to_f, y: y.to_f, text: text.to_s
 	end
 	alias t tap
 
@@ -417,7 +497,7 @@ class Sunniesnow::Charter
 		if duration_beats.is_a? Float
 			warn 'Rational is recommended over Float for duration_beats'
 		end
-		event :hold, duration_beats.to_r, has_tip_point: true, x: x.to_f, y: y.to_f, text: text.to_s
+		event :hold, duration_beats.to_r, x: x.to_f, y: y.to_f, text: text.to_s
 	end
 	alias h hold
 
@@ -425,11 +505,11 @@ class Sunniesnow::Charter
 		if !x.is_a?(Numeric) || !y.is_a?(Numeric)
 			raise ArgumentError, 'x and y must be numbers'
 		end
-		event :drag, has_tip_point: true, x: x.to_f, y: y.to_f
+		event :drag, x: x.to_f, y: y.to_f
 	end
 	alias d drag
 
-	def flick x, y, direction
+	def flick x, y, direction, text = ''
 		if !x.is_a?(Numeric) || !y.is_a?(Numeric)
 			raise ArgumentError, 'x and y must be numbers'
 		end
@@ -441,13 +521,19 @@ class Sunniesnow::Charter
 		else
 			raise ArgumentError, 'direction must be a symbol or a number'
 		end
-		event :flick, has_tip_point: true, x: x, y: y, angle: direction
+		event :flick, x: x, y: y, angle: direction, text: text.to_s
 	end
 	alias f flick
 
 	def bg_note x, y, duration_beats = 0, text = ''
 		if !x.is_a?(Numeric) || !y.is_a?(Numeric)
 			raise ArgumentError, 'x and y must be numbers'
+		end
+		if duration_beats < 0
+			raise ArgumentError, 'duration must be non-negative'
+		end
+		if duration_beats.is_a? Float
+			warn 'Rational is recommended over Float for duration_beats'
 		end
 		event :bg_note, duration_beats.to_r, x: x.to_f, y: y.to_f, text: text.to_s
 	end
@@ -458,6 +544,12 @@ class Sunniesnow::Charter
 
 	%i[grid hexagon checkerboard diamond_grid pentagon turntable].each do |method_name|
 		define_method method_name do |duration_beats = 0|
+			if duration_beats < 0
+				raise ArgumentError, 'duration must be non-negative'
+			end
+			if duration_beats.is_a? Float
+				warn 'Rational is recommended over Float for duration_beats'
+			end
 			event method_name, duration_beats.to_r
 		end
 	end
