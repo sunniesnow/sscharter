@@ -136,6 +136,7 @@ module Sunniesnow::Charter::CLI
 		files_dir = config[:files_dir] || 'files'
 		sources_dir = config[:sources_dir] || 'src'
 		include_files = config[:include] || []
+		::Sunniesnow::Charter.charts.clear
 		Dir.glob File.join sources_dir, '*.rb' do |filename|
 			load filename
 		rescue Exception => e

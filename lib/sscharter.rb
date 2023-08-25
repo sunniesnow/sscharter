@@ -139,12 +139,25 @@ class Sunniesnow::Charter
 			rx = xx*x + xy*y + xz
 			ry = yx*x + yy*y + yz
 			d = zx*x + zy*y + zz
-			event[:x] = rx / d
-			event[:y] = ry / d
-			if angle = event[:angle]
-				dx, dy = cos(angle), sin(angle)
-				event[:angle] = atan2(yx*dx + yy*dy, xx*dx + xy*dy)
-			end
+			event[:x] = xp = rx / d
+			event[:y] = yp = ry / d
+			
+			return event unless angle = event[:angle]
+			dx = cos angle
+			dy = sin angle
+			cross = y*dx - x*dy
+
+			cx0 = zy*xx - xy*zx
+			cxx = zz*xx - xz*zx
+			cxy = zz*xy - xz*zy
+			dxp = cx0*cross + cxx*dx + cxy*dy
+
+			cy0 = zx*yy - yx*zy
+			cyy = zz*yy - yz*zy
+			cyx = zz*yx - yz*zx
+			dyp = cy0*-cross + cyy*dy + cyx*dx
+			
+			event[:angle] = atan2 dyp, dxp
 			event
 		end
 
@@ -361,7 +374,7 @@ class Sunniesnow::Charter
 		@bpm_changes.add @current_beat, bpm
 	end
 
-	def beat delta_beat
+	def beat delta_beat = 0
 		raise OffsetError.new __method__ unless @current_beat
 		case delta_beat
 		when Integer, Rational
@@ -375,7 +388,7 @@ class Sunniesnow::Charter
 	end
 	alias b beat
 
-	def beat! beat
+	def beat! beat = @current_beat
 		raise OffsetError.new __method__ unless @current_beat
 		case beat
 		when Integer, Rational
@@ -462,6 +475,7 @@ class Sunniesnow::Charter
 
 	def transform events, &block
 		raise ArgumentError, 'no block given' unless block
+		events = [events] if events.is_a? Event
 		transform = Transform.new
 		transform.instance_eval &block
 		events.each { transform.apply _1 }
