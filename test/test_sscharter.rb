@@ -107,7 +107,7 @@ class TestSscharter < Minitest::Test
 			bpm rand * 300
 		end
 		chart.tap (x1 = rand 100), (y1 = rand 100), (text1 = Random.bytes 10)
-		chart.hold (x2 = rand 100), (y2 = rand 100), (duration2 = rand 100), (text2 = Random.bytes 10)
+		chart.hold (x2 = rand 100), (y2 = rand 100), (duration2 = rand(100) + 1), (text2 = Random.bytes 10)
 		chart.drag (x3 = rand 100), (y3 = rand 100)
 		chart.flick (x4 = rand 100), (y4 = rand 100), (direction = rand*PI*2), (text4 = Random.bytes 10)
 		events = chart.instance_variable_get :@events
