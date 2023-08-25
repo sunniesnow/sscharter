@@ -691,7 +691,7 @@ end
 
 Transformations can also be used to bulk edit notes.
 Imagine that you have already written a bunch of notes with their coordinates,
-but you then decided them move them (say, translating by vector $(25,25)$).
+but you then decided them move them (say, translating by vector $`(25,25)`$).
 You can use `transform` to do that:
 
 ```ruby
@@ -999,6 +999,18 @@ their duplicates are also connected by the same tip point, too.
 
 TODO.
 
+### Use Git as a version manager
+
+### Useful loops
+
+### Homography
+
+### Tip points and placeholders
+
+### Multiple offsets
+
+### JSON post-processing
+
 ## Step 6: review your chart and write the README
 
 Now, you have finished writing the chart!
@@ -1016,4 +1028,5 @@ Congratulations! You finished your chart.
 Now, you can distribute the level file to people who may want to play it.
 
 If you want your chart to be available as an online level of Sunniesnow,
-you need to [contact the author of Sunniesnow](mailto:UlyssesZhan <ulysseszhan@gmail.com>).
+you need to
+<a href="mailto:UlyssesZhan <ulysseszhan@gmail.com>">contact the author of Sunniesnow</a>.
