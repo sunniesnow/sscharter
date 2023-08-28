@@ -157,6 +157,13 @@ module Sunniesnow::Charter::CLI
 				end
 			end
 			::Sunniesnow::Charter.charts.each do |name, chart|
+				begin
+					output = chart.output_json
+				rescue => e
+					puts 'An error happened. Report if this is a bug of sscharter.'
+					puts e.full_message
+					return 2
+				end
 				zip_file.get_output_stream "#{name}.json" do |file|
 					file.write chart.output_json
 				end

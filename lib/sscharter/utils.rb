@@ -11,7 +11,7 @@ module Sunniesnow::Utils
 			low = 0
 			high = length
 			while low < high
-				mid = (low + high) / 2
+				mid = low + high >> 1
 				compare = compare_function.(self[mid])
 				if compare == 0
 					return mid

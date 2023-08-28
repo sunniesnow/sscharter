@@ -156,7 +156,7 @@ class Sunniesnow::Charter
 			cyy = zz*yy - yz*zy
 			cyx = zz*yx - yz*zx
 			dyp = cy0*-cross + cyy*dy + cyx*dx
-			
+
 			event[:angle] = atan2 dyp, dxp
 			event
 		end
@@ -490,6 +490,7 @@ class Sunniesnow::Charter
 			end
 			@groups.each { _1.push event }
 		end
+		@current_duplicate += 1
 		result
 	end
 
@@ -540,8 +541,8 @@ class Sunniesnow::Charter
 	alias f flick
 
 	def bg_note x, y, duration_beats = 0, text = ''
-		if !x.is_a?(Numeric) || !y.is_a?(Numeric)
-			raise ArgumentError, 'x and y must be numbers'
+		if !x.is_a?(Numeric) || !y.is_a?(Numeric) || !duration_beats.is_a?(Numeric)
+			raise ArgumentError, 'x, y, and duration_beats must be numbers'
 		end
 		if duration_beats < 0
 			raise ArgumentError, 'duration must be non-negative'
