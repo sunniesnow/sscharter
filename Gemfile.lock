@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sscharter (0.1.0)
+    sscharter (0.2.0)
       filewatcher (~> 2.0)
       launchy (~> 2.5)
       rubyzip (~> 2.3)
