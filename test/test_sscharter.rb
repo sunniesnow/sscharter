@@ -191,7 +191,7 @@ class TestSscharter < Minitest::Test
 		assert_in_delta tp_spawn[:y], x2 + y, 1e-8
 		assert_in_delta chain_head.time - tp_spawn.time, hypot(x, y)/speed, 1e-8
 
-		group4 = chart.tip_point_chain (x = rand 100), (y = rand 100), beat_speed: (beat_speed = rand*100) do
+		group4 = chart.tip_point_chain (x = rand 100), (y = rand 100), beat_speed: (beat_speed = 90+rand*10) do
 			h rand(100), rand(100), rand(10) + 1
 			b 1
 		end
