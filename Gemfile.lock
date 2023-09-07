@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sscharter (0.2.0)
+    sscharter (0.2.1)
       filewatcher (~> 2.0)
       launchy (~> 2.5)
       rubyzip (~> 2.3)
@@ -16,7 +16,7 @@ GEM
       module_methods (~> 0.1.0)
     launchy (2.5.2)
       addressable (~> 2.8)
-    minitest (5.19.0)
+    minitest (5.20.0)
     module_methods (0.1.0)
     public_suffix (5.0.3)
     rake (13.0.6)
