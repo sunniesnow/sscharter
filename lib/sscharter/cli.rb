@@ -179,7 +179,7 @@ module Sunniesnow::Charter::CLI
 		server.mount_proc "/#{config[:project_name]}.ssc" do |request, response|
 			response['Content-Type'] = 'application/zip'
 			response['Access-Control-Allow-Origin'] = '*'
-			response.body = File.read File.join config[:build_dir], "#{config[:project_name]}.ssc"
+			response.body = File.read File.join(config[:build_dir], "#{config[:project_name]}.ssc"), binmode: true
 		end
 		url = CGI.escape "http://localhost:#{port}/#{config[:project_name]}.ssc"
 		filewatcher = Filewatcher.new [config[:files_dir], config[:sources_dir], *config[:include]]
