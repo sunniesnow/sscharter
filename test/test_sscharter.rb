@@ -321,4 +321,33 @@ class TestSscharter < Minitest::Test
 		assert_operator tap3[:tip_point], :!=, tap4[:tip_point]
 	end
 
+	def test_offset_in_groups
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+		delta = rand
+		events = chart.instance_variable_get :@events
+
+		group1 = chart.group preserve_beat: false do
+			t rand(100), rand(100)
+			b 1
+			offset time_at + delta
+			bpm bpm
+			f rand(100), rand(100), rand*PI*2
+			b 2
+		end
+		group2 = chart.group do
+			t rand(100), rand(100)
+			b 1
+			offset time_at + delta
+			bpm bpm
+			f rand(100), rand(100), rand*PI*2
+			b 2
+		end
+		assert_equal events.length, 4
+		assert_equal group1[0].time, group2[0].time
+		assert_equal group1[1].time, group2[1].time
+		assert_in_delta group1[1].time, offset + 60/bpm + delta, 1e-8
+	end
+
 end

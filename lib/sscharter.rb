@@ -408,7 +408,6 @@ class Sunniesnow::Charter
 	end
 
 	def tip_point_chain *args, preserve_beat: true, **opts, &block
-		raise ArgumentError, 'no block given' unless block
 		tip_point :chain, *args, **opts do
 			group preserve_beat: preserve_beat, &block
 		end.tap { @current_tip_point += 1 }
@@ -416,7 +415,6 @@ class Sunniesnow::Charter
 	alias tp_chain tip_point_chain
 
 	def tip_point_drop *args, preserve_beat: true, **opts, &block
-		raise ArgumentError, 'no block given' unless block
 		tip_point :drop, *args, **opts do
 			group preserve_beat: preserve_beat, &block
 		end
@@ -426,9 +424,17 @@ class Sunniesnow::Charter
 	def group preserve_beat: true, &block
 		raise ArgumentError, 'no block given' unless block
 		@groups.push result = []
-		last_beat = @current_beat
+		unless preserve_beat
+			last_beat = @current_beat
+			last_offset = @current_offset
+			last_bpm_changes = @bpm_changes
+		end
 		instance_eval &block
-		beat! last_beat unless preserve_beat
+		unless preserve_beat
+			@current_beat = last_beat
+			@current_offset = last_offset
+			@bpm_changes = last_bpm_changes
+		end
 		@groups.delete_if { result.equal? _1 }
 		result
 	end
@@ -530,6 +536,7 @@ class Sunniesnow::Charter
 		end
 		if direction.is_a? Symbol
 			direction = DIRECTIONS[direction]
+			raise ArgumentError, "unknown direction #{direction}" unless direction
 		elsif direction.is_a? Numeric
 			warn 'Are you using degrees as angle unit instead of radians?' if direction != 0 && direction % 45 == 0
 			direction = direction.to_f
@@ -554,11 +561,23 @@ class Sunniesnow::Charter
 	end
 
 	def big_text duration_beats = 0, text
+		unless duration_beats.is_a? Numeric
+			raise ArgumentError, 'duration_beats must be a number'
+		end
+		if duration_beats < 0
+			raise ArgumentError, 'duration must be non-negative'
+		end
+		if duration_beats.is_a? Float
+			warn 'Rational is recommended over Float for duration_beats'
+		end
 		event :big_text, duration_beats.to_r, text: text.to_s
 	end
 
 	%i[grid hexagon checkerboard diamond_grid pentagon turntable].each do |method_name|
 		define_method method_name do |duration_beats = 0|
+			unless duration_beats.is_a? Numeric
+				raise ArgumentError, 'duration_beats must be a number'
+			end
 			if duration_beats < 0
 				raise ArgumentError, 'duration must be non-negative'
 			end
