@@ -701,6 +701,13 @@ end
 transform(notes) { translate 25, 25 }
 ```
 
+> Because argument of `rotate` is in radians,
+> you may want to use the Math constant $\pi$.
+> In Ruby, it is `Math::PI`.
+> If you use this constant a lot, you may want to write `include Math`
+> at the beginning of the source codes file so that you can just write `PI`
+> instead of `Math::PI` every time.
+
 ### Navigate among beats
 
 You have already learned how to use `beat` to proceed the current beat
