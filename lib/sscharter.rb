@@ -312,10 +312,11 @@ class Sunniesnow::Charter
 		@current_offset = nil
 		@current_beat = nil
 		@bpm_changes = nil
-		@tip_point_mode = :none
-		@current_tip_point = 0
+		@tip_point_mode_stack = [:none]
+		@current_tip_point_stack = []
+		@tip_point_peak = 0
 		@current_duplicate = 0
-		@tip_point_start_to_add = nil
+		@tip_point_start_to_add_stack = [nil]
 		@groups = [@events]
 	end
 
@@ -410,7 +411,7 @@ class Sunniesnow::Charter
 	def tip_point_chain *args, preserve_beat: true, **opts, &block
 		tip_point :chain, *args, **opts do
 			group preserve_beat: preserve_beat, &block
-		end.tap { @current_tip_point += 1 }
+		end#.tap { @tip_point_peak += 1 }
 	end
 	alias tp_chain tip_point_chain
 
@@ -420,6 +421,13 @@ class Sunniesnow::Charter
 		end
 	end
 	alias tp_drop tip_point_drop
+
+	def tip_point_none preserve_beat: true, &block
+		tip_point :none do
+			group preserve_beat: preserve_beat, &block
+		end
+	end
+	alias tp_none tip_point_none
 
 	def group preserve_beat: true, &block
 		raise ArgumentError, 'no block given' unless block
@@ -439,19 +447,19 @@ class Sunniesnow::Charter
 		result
 	end
 
-	def clear_tip_point
-		TipPointError.ensure @tip_point_mode, :chain, :drop
-		@tip_point_start_to_add = nil
-		@tip_point_mode = :none
-	end
-
 	def tip_point mode, *args, **opts, &block
-		TipPointError.ensure @tip_point_mode, :none
-		@tip_point_mode = mode
-		@tip_point_start_to_add = TipPointStart.new *args, **opts
+		@tip_point_mode_stack.push mode
+		if mode == :none
+			@current_tip_point_stack.push nil
+		else
+			@tip_point_start_to_add_stack.push TipPointStart.new *args, **opts
+			@current_tip_point_stack.push @tip_point_peak
+			@tip_point_peak += 1
+		end
 		result = block.()
-		@tip_point_start_to_add = nil
-		@tip_point_mode = :none
+		@tip_point_start_to_add_stack.pop
+		@tip_point_mode_stack.pop
+		@current_tip_point_stack.pop
 		result
 	end
 
@@ -460,13 +468,14 @@ class Sunniesnow::Charter
 		event = Event.new type, @current_beat, duration_beats, @bpm_changes, **properties
 		@groups.each { _1.push event }
 		return event unless event.tip_pointable?
-		case @tip_point_mode
+		case @tip_point_mode_stack.last
 		when :chain
 			push_tip_point_start event
-			@tip_point_start_to_add = nil
+			@tip_point_start_to_add_stack[-1] = nil
 		when :drop
 			push_tip_point_start event
-			@current_tip_point += 1
+			@current_tip_point_stack[-1] = @tip_point_peak
+			@tip_point_peak += 1
 		when :none
 			# pass
 		end
@@ -474,8 +483,8 @@ class Sunniesnow::Charter
 	end
 
 	def push_tip_point_start start_event
-		start_event[:tip_point] = @current_tip_point.to_s
-		tip_point_start = @tip_point_start_to_add&.get_start_placeholder start_event
+		start_event[:tip_point] = @current_tip_point_stack.last.to_s
+		tip_point_start = @tip_point_start_to_add_stack.last&.get_start_placeholder start_event
 		@groups.each { _1.push tip_point_start } if tip_point_start
 	end
 
@@ -543,7 +552,7 @@ class Sunniesnow::Charter
 		else
 			raise ArgumentError, 'direction must be a symbol or a number'
 		end
-		event :flick, x: x, y: y, angle: direction, text: text.to_s
+		event :flick, x: x.to_f, y: y.to_f, angle: direction, text: text.to_s
 	end
 	alias f flick
 

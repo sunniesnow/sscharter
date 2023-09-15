@@ -350,4 +350,74 @@ class TestSscharter < Minitest::Test
 		assert_in_delta group1[1].time, offset + 60/bpm + delta, 1e-8
 	end
 
+	def test_nested_tip_points
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+
+		chain2 = nil
+		chain1 = chart.tip_point_chain 0, 0, 0 do
+			t rand(100), rand(100)
+			b 1
+			chain2 = tip_point_chain rand(100), rand(100), 1 do
+				t rand(100), rand(100)
+				b 1
+			end
+			t rand(100), rand(100)
+			b 1
+		end
+		assert_equal chain1.length, 5
+		assert_equal chain2.length, 2
+		assert_equal chain1.map(&:type), %i[tap placeholder tap placeholder tap]
+		tp1, tp2, tp3, tp4, tp5 = chain1.map { _1[:tip_point] }
+		assert_equal tp1, tp2
+		assert_equal tp2, tp5
+		assert_equal tp3, tp4
+		assert_operator tp1, :!=, tp3
+		
+		drop1 = nil
+		chain3 = chart.tip_point_chain 0, 0, 0 do
+			t rand(100), rand(100)
+			b 1
+			drop1 = tip_point_drop rand(100), rand(100), 1 do
+				t rand(100), rand(100)
+				b 1
+				t rand(100), rand(100)
+				b 1
+			end
+			t rand(100), rand(100)
+			b 1
+		end
+		assert_equal chain3.length, 7
+		assert_equal drop1.length, 4
+		assert_equal chain3.map(&:type), %i[tap placeholder tap placeholder tap placeholder tap]
+		tp1, tp2, tp3, tp4, tp5, tp6, tp7 = chain3.map { _1[:tip_point] }
+		assert_equal tp1, tp2
+		assert_equal tp2, tp7
+		assert_equal tp3, tp4
+		assert_equal tp5, tp6
+		assert_operator tp1, :!=, tp3
+		assert_operator tp3, :!=, tp5
+		assert_operator tp1, :!=, tp5
+
+		group1 = nil
+		chain4 = chart.tip_point_chain 0, 0, 0 do
+			t rand(100), rand(100)
+			b 1
+			group1 = tip_point_none do
+				t rand(100), rand(100)
+				b 1
+			end
+			t rand(100), rand(100)
+			b 1
+		end
+		assert_equal chain4.length, 4
+		assert_equal group1.length, 1
+		assert_equal chain4.map(&:type), %i[tap placeholder tap tap]
+		tp1, tp2, tp3, tp4 = chain4.map { _1[:tip_point] }
+		assert_equal tp1, tp2
+		assert_equal tp2, tp4
+		assert_nil tp3
+	end
+
 end
