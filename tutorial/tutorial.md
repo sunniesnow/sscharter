@@ -860,33 +860,46 @@ in the call of `tip_point_chain` or `tip_point_drop`.
 The beat speed may be specified as a float number,
 and this is the only case where something related to beats is not preferred to be specified as a rational number.
 
-We can categorize the four ways into a table:
+Besides the two methods `tip_point_chain` and `tip_point_drop`,
+there is another method `tip_point_none` (abbreviated as `tp_none`)
+for you to specify that those events in the code block are not connected by tip points.
+This is useful when you nest those methods inside each other.
+Different from `tip_point_chain` and `tip_point_drop`,
+the method `tip_point_none` does not take any arguments
+(besides `preserve_beat`, which will be mentioned later).
+
+We can summarize all of them in the following table:
 
 <table>
   <tr>
     <th>Method</th>
     <td><code>tip_point_chain</code></td>
     <td><code>tip_point_drop</code></td>
+    <td><code>tip_point_none</code></td>
   </tr>
   <tr>
     <th><code>relative_time</code></th>
     <td><code>tip_point_chain x=0, y=0, relative_time=0.0, relative: true</code></td>
     <td><code>tip_point_drop x=0, y=0, relative_time=0.0, relative: true</code></td>
+    <td></td>
   </tr>
   <tr>
     <th><code>speed</code></th>
     <td><code>tip_point_chain x=0, y=0, relative: true, speed:</code></td>
     <td><code>tip_point_drop x=0, y=0, relative: true, speed:</code></td>
+    <td></td>
   </tr>
   <tr>
     <th><code>relative_beat</code></th>
     <td><code>tip_point_chain x=0, y=0, relative: true, relative_beat:</code></td>
     <td><code>tip_point_drop x=0, y=0, relative: true, relative_beat:</code></td>
+    <td></td>
   </tr>
   <tr>
     <th><code>beat_speed</code></th>
     <td><code>tip_point_chain x=0, y=0, relative: true, beat_speed:</code></td>
     <td><code>tip_point_drop x=0, y=0, relative: true, beat_speed:</code></td>
+    <td></td>
   </tr>
 </table>
 
