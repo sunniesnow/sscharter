@@ -496,16 +496,17 @@ class Sunniesnow::Charter
 		events.each { transform.apply _1 }
 	end
 
-	def duplicate events
+	def duplicate events, new_tip_points: true
 		result = []
 		events.each do |event|
+			next if event.type == :placeholder && !new_tip_points
 			result.push event = event.dup
-			if event[:tip_point]
+			if event[:tip_point] && new_tip_points
 				event[:tip_point] = "#@current_duplicate #{event[:tip_point]}"
 			end
 			@groups.each { _1.push event }
 		end
-		@current_duplicate += 1
+		@current_duplicate += 1 if new_tip_points
 		result
 	end
 
@@ -556,7 +557,15 @@ class Sunniesnow::Charter
 	end
 	alias f flick
 
-	def bg_note x, y, duration_beats = 0, text = ''
+	def bg_note x, y, duration_beats = 0, text = nil
+		if text.nil?
+			if duration_beats.is_a? String
+				text = duration_beats
+				duration_beats = 0
+			else
+				text = ''
+			end
+		end
 		if !x.is_a?(Numeric) || !y.is_a?(Numeric) || !duration_beats.is_a?(Numeric)
 			raise ArgumentError, 'x, y, and duration_beats must be numbers'
 		end

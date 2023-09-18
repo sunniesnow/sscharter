@@ -176,10 +176,11 @@ module Sunniesnow::Charter::CLI
 		port = port.to_i
 		config = self.config
 		server = WEBrick::HTTPServer.new Port: port, DocumentRoot: config[:build_dir]
-		server.mount_proc "/#{config[:project_name]}.ssc" do |request, response|
-			response['Content-Type'] = 'application/zip'
+		def server.service request, response
+			super
 			response['Access-Control-Allow-Origin'] = '*'
-			response.body = File.read File.join(config[:build_dir], "#{config[:project_name]}.ssc"), binmode: true
+			response['Cache-Control'] = 'no-cache'
+			response['Content-Type'] = 'application/zip' if request.path.end_with? '.ssc'
 		end
 		url = CGI.escape "http://localhost:#{port}/#{config[:project_name]}.ssc"
 		filewatcher = Filewatcher.new [config[:files_dir], config[:sources_dir], *config[:include]]

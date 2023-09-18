@@ -306,19 +306,35 @@ class TestSscharter < Minitest::Test
 		tap2[:x] += 1
 		assert_equal tap1[:x] + 1, tap2[:x]
 
-		group3 = chart.tip_point_drop do
+		group3 = chart.tip_point_chain rand(100), rand(100), rand do
 			t rand(100), rand(100)
 			b 1
 			f rand(100), rand(100), rand*PI*2
 			b 2
 		end
+		tip_point3 = group3.first[:tip_point]
+		assert_equal group3.map { _1[:tip_point] }, [tip_point3]*3
+
 		group4 = chart.duplicate group3
 		assert_equal events, [*group1, *group2, *group3, *group4]
-		tap3, flick3 = group3
-		tap4, flick4 = group4
-		assert_equal tap3[:tip_point], flick3[:tip_point]
-		assert_equal tap4[:tip_point], flick4[:tip_point]
-		assert_operator tap3[:tip_point], :!=, tap4[:tip_point]
+		tip_point4 = group4.first[:tip_point]
+		assert_equal group4.map { _1[:tip_point] }, [tip_point4]*3
+		assert_operator tip_point3, :!=, tip_point4
+
+		group5 = chart.duplicate group3, new_tip_points: false
+		assert_equal events, [*group1, *group2, *group3, *group4, *group5]
+		assert_equal group5.map { _1[:tip_point] }, [tip_point3]*2
+
+		group6 = chart.tip_point_drop rand(100), rand(100), rand do
+			t rand(100), rand(100)
+			b 1
+			f rand(100), rand(100), rand*PI*2
+			b 2
+		end
+		tip_point6_1, tip_point6_2 = group6.map { _1[:tip_point] }.uniq!
+		group7 = chart.duplicate group6, new_tip_points: false
+		assert_equal events, [*group1, *group2, *group3, *group4, *group5, *group6, *group7]
+		assert_equal group7.map { _1[:tip_point] }, [tip_point6_1, tip_point6_2]
 	end
 
 	def test_offset_in_groups
@@ -418,6 +434,29 @@ class TestSscharter < Minitest::Test
 		assert_equal tp1, tp2
 		assert_equal tp2, tp4
 		assert_nil tp3
+	end
+
+	def test_bg_note
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+
+		event1 = chart.bg_note x = rand(100), y = rand(100), text = Random.bytes(10)
+		assert_equal event1.type, :bg_note
+		assert_equal event1[:text], text
+		assert_equal event1.duration_beats, 0
+
+		event2 = chart.bg_note x = rand(100), y = rand(100), duration = rand(10) + 1, text = Random.bytes(10)
+		assert_equal event2[:text], text
+		assert_equal event2.duration_beats, duration
+
+		event3 = chart.bg_note x = rand(100), y = rand(100), duration = rand(10) + 1
+		assert_equal event3[:text], ''
+		assert_equal event3.duration_beats, duration
+
+		event4 = chart.bg_note x = rand(100), y = rand(100)
+		assert_equal event4[:text], ''
+		assert_equal event4.duration_beats, 0
 	end
 
 end

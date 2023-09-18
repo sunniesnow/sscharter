@@ -1009,11 +1009,21 @@ You may build the level file and play it on Sunniesnow to see what you have done
 
 ![Second chart](https://i.imgur.com/ksu5sVW.png)
 
-*Notice*:
 When duplicating tip-pointed events,
 the duplicated events are not connected by the same tip point as the original events.
 However, if two original events are connected by the same tip point,
 their duplicates are also connected by the same tip point, too.
+If you want the duplicated events to be connected by the same tip point as the original events,
+you can add set the keyword argument `new_tip_points:` to `false` in the call of `duplicate`:
+
+```ruby
+notes = tp_chain 0, 100, speed: 100 do
+  # notes...
+end
+transform duplicate notes, new_tip_points: false do
+  # transforms...
+end
+```
 
 ## Advanced charting techniques
 
@@ -1027,7 +1037,7 @@ TODO.
 
 ### Tip points and placeholders
 
-### Multiple offsets
+### Multiple offsets and timing tweaking
 
 ### JSON post-processing
 
