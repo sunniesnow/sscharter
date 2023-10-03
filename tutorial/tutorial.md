@@ -669,13 +669,14 @@ The transformation is done like this:
 > y'=\mathtt{yx}\cdot x+\mathtt{yy}\cdot y.
 > ```
 
-*Notice*: When doing spatial transformations,
-you do not need to worry about the direction of flick notes.
-They are taken care of as well.
-
-*Another notice*: For background patterns,
-they are ignored when doing spatial transformations.
-They are still affected by temporal transformations, though.
+> [!NOTE]
+> When doing spatial transformations,
+> you do not need to worry about the direction of flick notes.
+> They are taken care of as well.
+>
+> For background patterns,
+> they are ignored when doing spatial transformations.
+> They are still affected by temporal transformations, though.
 
 Therefore, you can also apply, say, a horizontal flip on the duplicated notes like this:
 
@@ -789,9 +790,10 @@ end
 
 ### BPM changes
 
-*Notice*: because *Big-D* does not have BPM changes,
-this part of the tutorial will not be used in the actual chart of *Big-D*.
-You may still try it out, though.
+> [!NOTE]
+> Because *Big-D* does not have BPM changes,
+> this part of the tutorial will not be used in the actual chart of *Big-D*.
+> You may still try it out, though.
 
 You can use `bpm` to set the BPM starting at the current beat.
 
@@ -918,7 +920,7 @@ For example, in the expression
 > ```
 >
 > the argument `speed:` is a keyword argument in the call of `tp_chain`.
-The value of the keyword argument is `100`.
+> The value of the keyword argument is `100`.
 
 Knowing how to specify the position and time of the spawning of a tip point,
 then creating tip points is just as easy as filling events in the code block
@@ -958,16 +960,16 @@ transform duplicate notes do
 end
 ```
 
-*Tips*:
-Just like `group`, `tip_point_chain` and `tip_point_drop`
-may also not preserve beat.
-You can let them not preserve beat by specifying the keyword argument `preserve_beat: false`:
-
-```ruby
-tp_chain 0, 100, speed: 100, preserve_beat: false do
-  # notes...
-end
-```
+> [!NOTE]
+> Just like `group`, `tip_point_chain` and `tip_point_drop`
+> may also not preserve beat.
+> You can let them not preserve beat by specifying the keyword argument `preserve_beat: false`:
+>
+> ```ruby
+> tp_chain 0, 100, speed: 100, preserve_beat: false do
+>   # notes...
+> end
+> ```
 
 Now, the whole source codes file should look like this:
 
