@@ -591,7 +591,7 @@ class Sunniesnow::Charter
 		event :big_text, duration_beats.to_r, text: text.to_s
 	end
 
-	%i[grid hexagon checkerboard diamond_grid pentagon turntable].each do |method_name|
+	%i[grid hexagon checkerboard diamond_grid pentagon turntable hexagram].each do |method_name|
 		define_method method_name do |duration_beats = 0|
 			unless duration_beats.is_a? Numeric
 				raise ArgumentError, 'duration_beats must be a number'

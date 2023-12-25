@@ -563,6 +563,7 @@ There are totally 7 different kinds of background patterns:
 | diamond grid | `diamond_grid duration_beats=0` |
 | pentagon | `pentagon duration_beats=0` |
 | turntable | `turntable duration_beats=0` |
+| hexagram | `hexagram duration_beats=0` |
 
 Most of them only has one optional argument, specifying the duration.
 The big text is different in that it needs an additional required argument,
