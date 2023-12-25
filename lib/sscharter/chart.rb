@@ -7,7 +7,7 @@ class Sunniesnow::Chart
 	using Sunniesnow::Utils
 
 	attr_accessor :title, :artist, :charter
-	attr_accessor :difficulty_name, :difficulty_color, :difficulty
+	attr_accessor :difficulty_name, :difficulty_color, :difficulty, :difficulty_sup
 	attr_reader :events
 
 	def initialize
@@ -17,6 +17,7 @@ class Sunniesnow::Chart
 		@difficulty_name = ''
 		@difficulty_color = '#000000'
 		@difficulty = ''
+		@difficulty_sup = ''
 		@events = []
 	end
 
@@ -28,6 +29,7 @@ class Sunniesnow::Chart
 			difficultyName: @difficulty_name,
 			difficultyColor: @difficulty_color,
 			difficulty: @difficulty,
+			difficultySup: @difficulty_sup,
 			events: @events
 		}.to_json
 	end

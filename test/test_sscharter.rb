@@ -19,6 +19,7 @@ class TestSscharter < Minitest::Test
 			difficulty_name 'Test difficulty name'
 			difficulty_color '#521108'
 			difficulty 'Test difficulty'
+			difficulty_sup 'Test difficulty sup'
 		end
 		chart = Charter.charts[__method__]
 		chart.instance_exec method :assert_equal do |t|
@@ -28,6 +29,7 @@ class TestSscharter < Minitest::Test
 			t.call 'Test difficulty name', @difficulty_name
 			t.call '#521108', @difficulty_color
 			t.call 'Test difficulty', @difficulty
+			t.call 'Test difficulty sup', @difficulty_sup
 		end
 	end
 

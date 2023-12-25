@@ -363,6 +363,10 @@ class Sunniesnow::Charter
 		@difficulty = difficulty.to_s
 	end
 
+	def difficulty_sup difficulty_sup
+		@difficulty_sup = difficulty_sup.to_s
+	end
+
 	def offset offset
 		raise ArgumentError, 'offset must be a number' unless offset.is_a? Numeric
 		@current_offset = offset.to_f
