@@ -618,6 +618,7 @@ class Sunniesnow::Charter
 		result.difficulty_name = @difficulty_name
 		result.difficulty_color = @difficulty_color
 		result.difficulty = @difficulty
+		result.difficulty_sup = @difficulty_sup
 		@events.each { result.events.push _1.to_sunniesnow }
 		result
 	end
