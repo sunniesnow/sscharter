@@ -221,6 +221,11 @@ class Sunniesnow::Charter
 		end
 
 		def check
+			if !@x.is_a?(Numeric) || !@y.is_a?(Numeric)
+				raise ArgumentError, 'x and y must be numbers'
+			end
+			@x = @x.to_f
+			@y = @y.to_f
 			%i[@relative_time @speed @relative_beat @beat_speed].each do |key|
 				value = instance_variable_get key
 				raise ArgumentError, "cannot specify both #@time_key and #{key}" if @time_key && value&.!=(0)
