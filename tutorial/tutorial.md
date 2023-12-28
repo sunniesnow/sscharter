@@ -552,7 +552,7 @@ If you see something similar, congratulations!
 
 ### Background patterns
 
-There are totally 7 different kinds of background patterns:
+There are totally 8 different kinds of background patterns:
 
 | Pattern | Syntax |
 |-|-|
