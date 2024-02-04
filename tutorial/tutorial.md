@@ -163,6 +163,7 @@ charter 'Your name'
 difficulty_name 'Master'
 difficulty_color '#8c68f3'
 difficulty '12'
+difficulty_sup '+' # optional
 
 offset 0
 bpm 120
@@ -248,6 +249,7 @@ charter 'Your name'
 difficulty_name 'Master'
 difficulty_color '#8c68f3'
 difficulty '12'
+difficulty_sup '+' # optional
 ```
 
 These lines are the metadata of the chart.
