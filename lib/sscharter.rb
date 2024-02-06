@@ -275,7 +275,7 @@ class Sunniesnow::Charter
 		hard: '#e75e74',
 		master: '#8c68f3',
 		special: '#f156ee'
-	}
+	}.freeze
 
 	DIRECTIONS = {
 		right: 0.0,
@@ -287,6 +287,19 @@ class Sunniesnow::Charter
 		down: -Math::PI / 2,
 		down_right: -Math::PI / 4
 	}
+	{
+		right: %i[r],
+		up_right: %i[ur ru],
+		up: %i[u],
+		up_left: %i[ul lu],
+		left: %i[l],
+		down_left: %i[dl ld],
+		down: %i[d],
+		down_right: %i[dr rd]
+	}.each do |direction_name, aliases|
+		aliases.each { DIRECTIONS[_1] = DIRECTIONS[direction_name] }
+	end
+	DIRECTIONS.freeze
 
 	singleton_class.attr_reader :charts
 	@charts = {}

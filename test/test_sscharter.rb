@@ -118,6 +118,24 @@ class TestSscharter < Minitest::Test
 		assert_equal events.map { _1[:text] }, [text1, text2, nil, text4]
 	end
 
+	def test_flick_directions
+		chart = Charter.open __method__ do
+			offset rand
+			bpm rand * 300
+		end
+		chart.flick (x = rand 100), (y = rand 100), :right
+		chart.flick x, y, :down_left
+		chart.flick x, y, :u
+		chart.flick x, y, :ur
+		chart.flick x, y, :l
+		chart.flick x, y, :ld
+		events = chart.instance_variable_get :@events
+		ground_truth = [0, -3*PI/4, PI/2, PI/4, PI, -3*PI/4]
+		events.zip ground_truth do |event, true_angle|
+			assert_in_delta (event[:angle] - true_angle).modulo(PI*2), 0, 1e-8
+		end
+	end
+
 	def test_group
 		chart = Charter.open __method__ do
 			offset rand
