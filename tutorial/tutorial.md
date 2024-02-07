@@ -221,6 +221,24 @@ If you need to change the port to 1314 for example, you need to run
 bundle exec sscharter serve 1314
 ```
 
+> [!TIP]
+> The default settings of Sunniesnow are tuned for gameplay instead of charting,
+> so you may want to change some settings to help you write the chart.
+> Here are some useful settings:
+>
+> - Enable [`autoplay`](https://sunniesnow.github.io/game/help.html#autoplay).
+> - Disable [`fullscreen-on-start`](https://sunniesnow.github.io/game/help.html#fullscreen-on-start).
+>   Fullscreen is good for gamplay but is disturbing for charting.
+> - Enable [`debug`](https://sunniesnow.github.io/game/help.html#debug),
+>   and you can see the current progress of the music, the judgement region of notes,
+>   the coordinates of where you click your mouse, etc.
+> - Use the option [`start`](https://sunniesnow.github.io/game/help.html#start)
+>   to start the music at a certain time.
+>   You can use the progress you got from debug mode UI to set it.
+> - Enable [`se-with-music`](https://sunniesnow.github.io/game/help.html#se-with-music)
+>   and set [`chart-offset`](https://sunniesnow.github.io/game/help.html#chart-offset) to zero.
+>   This will make sure the timing of sound effects is precise no matter how much latency your computer has.
+
 ## What does each line in `src/master.rb` mean?
 
 Now, you are ready to write the chart!
@@ -505,13 +523,22 @@ Here is a list of all the note types you can use:
 | flick | `flick x, y, direction, text=""` | `f` |
 | background note | `bg_note x, y, duration_beats=0, text=""` | |
 
-Here are some notices:
+The duration of a background note can be zero, but that of a hold note cannot.
 
-- The direction of a flick note can be a number specifying the angle in **radians**
+The direction of a flick note can be a number specifying the angle in **radians**
 (zero is to the right, and increasing angle is counterclockwise),
-or it can be one of the following 8 symbols:
-`:right`, `:up_right`, `:up`, `:up_left`, `:left`, `:down_left`, `:down`, `:down_right`.
-- The duration of a background note can be zero, but that of a hold note cannot.
+or it can be one of the following symbols:
+
+| Symbol | Direction |
+|-|-|
+| `:right`, `:r` | $0$ |
+| `:up_right`, `:ur`, `:ru` | $\pi/4$ |
+| `:up`, `:u` | $\pi/2$ |
+| `:up_left`, `:ul`, `:lu` | $3\pi/4$ |
+| `:left`, `:l` | $\pi$ |
+| `:down_left`, `:dl`, `:ld` | $-3\pi/4$ |
+| `:down`, `:d` | $-\pi/2$ |
+| `:down_right`, `:dr`, `:rd` | $-\pi/4$ |
 
 > Here is another notice for those who are not familiar with Ruby.
 > In Ruby, the parentheses around the arguments of a method call can be omitted.
@@ -571,8 +598,9 @@ Most of them only has one optional argument, specifying the duration.
 The big text is different in that it needs an additional required argument,
 specifying the contents of the texts.
 
-The mathematical details about the shapes of these patterns are
-specified in [the documentation](https://sunniesnow.github.io/doc/chart.html).
+> [!NOTE]
+> The mathematical details about the shapes of these patterns are
+> specified in [the documentation](https://sunniesnow.github.io/doc/chart.html).
 
 You may now try adding a grid pattern to the chart:
 
