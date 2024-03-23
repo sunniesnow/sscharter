@@ -320,6 +320,7 @@ class Sunniesnow::Charter
 		@difficulty_name = ''
 		@difficulty_color = '#000000'
 		@difficulty = ''
+		@difficulty_sup = ''
 		@title = ''
 		@artist = ''
 		@charter = ''

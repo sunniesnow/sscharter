@@ -33,6 +33,21 @@ class TestSscharter < Minitest::Test
 		end
 	end
 
+	def test_chart_metadata_defaults
+		Charter.open __method__ do
+		end
+		chart = Charter.charts[__method__]
+		chart.instance_exec method :assert_equal do |t|
+			t.call '', @title
+			t.call '', @artist
+			t.call '', @charter
+			t.call '', @difficulty_name
+			t.call '#000000', @difficulty_color
+			t.call '', @difficulty
+			t.call '', @difficulty_sup
+		end
+	end
+
 	def test_difficulty_colors
 		chart = Charter.open __method__
 
