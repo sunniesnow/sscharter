@@ -118,6 +118,11 @@ class Sunniesnow::Charter
 		def tip_pointable?
 			TIP_POINTABLE_TYPES.include? @type
 		end
+
+		def inspect
+			"#<#@type at #@beat#{@duration_beats && " for #@duration_beats"} offset #@offset: " +
+			@properties.map { |k, v| "#{k}=#{v.inspect}" }.join(', ') + '>'
+		end
 	end
 
 	# Implements homography
