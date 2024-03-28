@@ -651,4 +651,8 @@ class Sunniesnow::Charter
 		to_sunniesnow.to_json
 	end
 
+	def inspect
+		"#<Sunniesnow::Charter #@name>"
+	end
+
 end
