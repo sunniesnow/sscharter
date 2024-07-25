@@ -634,8 +634,8 @@ class Sunniesnow::Charter
 		end
 	end
 
-	def to_sunniesnow
-		result = Sunniesnow::Chart.new
+	def to_sunniesnow **opts
+		result = Sunniesnow::Chart.new **opts
 		result.title = @title
 		result.artist = @artist
 		result.charter = @charter
@@ -647,8 +647,8 @@ class Sunniesnow::Charter
 		result
 	end
 
-	def output_json
-		to_sunniesnow.to_json
+	def output_json **opts
+		to_sunniesnow(**opts).to_json
 	end
 
 	def inspect

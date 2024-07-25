@@ -4,10 +4,9 @@
 require 'sscharter'
 require 'sscharter/cli'
 
-command = ARGV.shift&.to_sym
-unless Sunniesnow::Charter::CLI::COMMANDS.include? command
-	$stderr.puts "Usage: #{File.basename $0} <#{Sunniesnow::Charter::CLI::COMMANDS.join '|'}>"
+unless subcommand = Sunniesnow::Charter::CLI.commands[ARGV.shift&.to_sym]
+	$stderr.puts "Usage: #{File.basename $0} <#{Sunniesnow::Charter::CLI.commands.keys.join '|'}>"
 	exit 1
 end
 
-exit Sunniesnow::Charter::CLI.send(command, *ARGV) || 0
+exit subcommand.run || 0

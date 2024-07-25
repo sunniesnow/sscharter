@@ -212,14 +212,16 @@ This command will open the Sunniesnow webpage in your browser for you.
 The `online` field of Sunniesnow is already filled with the address to the generated level file.
 Every time you save changes to the source codes,
 the program will automatically rebuild the level file.
-You just need to hit "load" again to reload the level file.
+Sunniesnow will reload the level file automatically if you are using the default settings.
 
 The port of the local server is 8011 by default.
 If you need to change the port to 1314 for example, you need to run
 
 ```shell
-bundle exec sscharter serve 1314
+bundle exec sscharter serve --port 1314
 ```
+
+You can edit `Rakefile` to make `rake serve` use that port.
 
 > [!TIP]
 > The default settings of Sunniesnow are tuned for gameplay instead of charting,
@@ -238,6 +240,17 @@ bundle exec sscharter serve 1314
 > - Enable [`se-with-music`](https://sunniesnow.github.io/game/help.html#se-with-music)
 >   and set [`chart-offset`](https://sunniesnow.github.io/game/help.html#chart-offset) to zero.
 >   This will make sure the timing of sound effects is precise no matter how much latency your computer has.
+
+> [!TIP]
+> It is already convenient that Sunniesnow automatically reloads the level file for you.
+> However, you may also want it to restart the level for you, too.
+> To do this, use
+>
+> ```shell
+> bundle exec sscharter serve --live-restart
+> ```
+>
+> You can edit `Rakefile` to make `rake serve` use that option.
 
 ## What does each line in `src/master.rb` mean?
 

@@ -1,7 +1,8 @@
 PATH
   remote: .
   specs:
-    sscharter (0.5.4)
+    sscharter (0.6.0)
+      em-websocket (~> 0.5)
       filewatcher (~> 2.0)
       launchy (~> 2.5)
       rubyzip (~> 2.3)
@@ -10,16 +11,21 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.8.6)
-      public_suffix (>= 2.0.2, < 6.0)
+    addressable (2.8.7)
+      public_suffix (>= 2.0.2, < 7.0)
+    em-websocket (0.5.3)
+      eventmachine (>= 0.12.9)
+      http_parser.rb (~> 0)
+    eventmachine (1.2.7)
     filewatcher (2.1.0)
       module_methods (~> 0.1.0)
+    http_parser.rb (0.8.0)
     launchy (2.5.2)
       addressable (~> 2.8)
-    minitest (5.22.3)
+    minitest (5.24.1)
     module_methods (0.1.0)
-    public_suffix (5.0.4)
-    rake (13.1.0)
+    public_suffix (6.0.1)
+    rake (13.2.1)
     rubyzip (2.3.2)
     webrick (1.8.1)
 
@@ -27,6 +33,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  em-websocket (~> 0.5)
   filewatcher (~> 2.0)
   launchy (~> 2.5)
   minitest (~> 5.0)
@@ -36,4 +43,4 @@ DEPENDENCIES
   webrick (~> 1.8)
 
 BUNDLED WITH
-   2.5.4
+   2.5.16

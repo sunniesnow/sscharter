@@ -10,7 +10,7 @@ class Sunniesnow::Chart
 	attr_accessor :difficulty_name, :difficulty_color, :difficulty, :difficulty_sup
 	attr_reader :events
 
-	def initialize
+	def initialize live_reload_port: 31108, production: false, live_restart: false
 		@title = ''
 		@artist = ''
 		@charter = ''
@@ -19,10 +19,13 @@ class Sunniesnow::Chart
 		@difficulty = ''
 		@difficulty_sup = ''
 		@events = []
+		@live_reload_port = live_reload_port
+		@production = production
+		@live_restart = live_restart
 	end
 
 	def to_json *args
-		{
+		hash = {
 			title: @title,
 			artist: @artist,
 			charter: @charter,
@@ -31,7 +34,13 @@ class Sunniesnow::Chart
 			difficulty: @difficulty,
 			difficultySup: @difficulty_sup,
 			events: @events
-		}.to_json
+		}
+		hash[:sscharter] = {
+			version: Sunniesnow::Charter::VERSION,
+			port: @live_reload_port,
+			liveRestart: @live_restart
+		} unless @production
+		hash.to_json
 	end
 end
 
