@@ -6,6 +6,8 @@ require_relative 'sscharter/chart'
 
 class Sunniesnow::Charter
 
+	PROJECT_DIR = File.expand_path(ENV['SSCHARTER_PROJECT_DIR'] ||= Dir.pwd)
+
 	using Sunniesnow::Utils
 
 	class OffsetError < StandardError
@@ -71,7 +73,7 @@ class Sunniesnow::Charter
 		TIP_POINTABLE_TYPES = %i[tap hold flick drag]
 
 		attr_accessor :beat, :offset, :duration_beats, :properties
-		attr_reader :type, :bpm_changes
+		attr_reader :type, :bpm_changes, :backtrace
 
 		def initialize type, beat, duration_beats = nil, bpm_changes, **properties
 			@beat = beat
@@ -80,6 +82,7 @@ class Sunniesnow::Charter
 			@bpm_changes = bpm_changes
 			@properties = properties
 			@offset = 0.0
+			process_backtrace
 		end
 
 		def time_at_relative_beat delta_beat
@@ -122,6 +125,10 @@ class Sunniesnow::Charter
 		def inspect
 			"#<#@type at #@beat#{@duration_beats && " for #@duration_beats"} offset #@offset: " +
 			@properties.map { |k, v| "#{k}=#{v.inspect}" }.join(', ') + '>'
+		end
+
+		def process_backtrace
+			@backtrace = caller.filter { _1.sub! /^#{PROJECT_DIR}\//, '' }
 		end
 	end
 
@@ -653,6 +660,14 @@ class Sunniesnow::Charter
 
 	def inspect
 		"#<Sunniesnow::Charter #@name>"
+	end
+
+	def build_index
+		@events_index = @events.sort_by &:time
+	end
+
+	def find_event_by_id id
+		@events_index[id]
 	end
 
 end

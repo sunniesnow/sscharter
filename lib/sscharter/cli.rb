@@ -12,6 +12,7 @@ require 'filewatcher'
 require 'rake'
 require 'bundler'
 require 'em-websocket'
+require 'concurrent'
 
 require 'sscharter'
 
@@ -21,8 +22,8 @@ module Sunniesnow
 			module_function
 
 			def config
-				config_filename = '.sscharter.yml'
-				config_filename = '.sscharter.yaml' unless File.exist? config_filename
+				config_filename = File.join PROJECT_DIR, '.sscharter.yml'
+				config_filename = File.join PROJECT_DIR, '.sscharter.yaml' unless File.exist? config_filename
 				unless File.exist? config_filename
 					puts 'No .sscharter.yml found'
 					return nil
@@ -51,19 +52,32 @@ module Sunniesnow
 	end
 end
 
-class Filewatcher
-	# This is a hack. See:
-	# https://github.com/filewatcher/filewatcher/blob/v2.0.0/lib/filewatcher.rb#L42
-	# The `exit` call here will cause the WEBrick server to report a fatal error.
-	def exit
-		stop
+module Sunniesnow::Charter::CLI
+	module FilewatcherPatch
+		Filewatcher.prepend self
+
+		# This is a hack. See:
+		# https://github.com/filewatcher/filewatcher/blob/v2.0.0/lib/filewatcher.rb#L42
+		# The `exit` call here will cause the WEBrick server to report a fatal error.
+		def exit
+			stop
+		end
+	end
+
+	module OptionParserPatch
+		OptionParser.prepend self
+
+		def order!(argv = default_argv, into: nil, **keywords, &nonopt)
+			setter = ->(name, val) {into[name.tr(?-, ?_).to_sym] = val} if into
+			parse_in_order(argv, setter, **keywords, &nonopt)
+		end
 	end
 end
 
 option_parser = OptionParser.new do |o|
 	o.banner = 'Usage: sscharter init [project_dir] [files...]'
 end
-Sunniesnow::Charter::CLI::Subcommand.new :init, option_parser do |project_dir = '.', *files|
+Sunniesnow::Charter::CLI::Subcommand.new :init, option_parser do |project_dir = Sunniesnow::Charter::PROJECT_DIR, *files|
 	if File.directory?(project_dir) && !Dir.empty?(project_dir)
 		puts "Directory #{project_dir} already exists and is not empty"
 		return 1
@@ -150,12 +164,13 @@ end
 
 def build **opts
 	return 1 unless config = Sunniesnow::Charter::CLI.config
-	project_name = config[:project_name] || File.basename(Dir.pwd)
-	build_dir = config[:build_dir] || 'build'
-	files_dir = config[:files_dir] || 'files'
-	sources_dir = config[:sources_dir] || 'src'
-	include_files = config[:include] || []
-	::Sunniesnow::Charter.charts.clear
+	dir = Sunniesnow::Charter::PROJECT_DIR
+	project_name = config[:project_name] || File.basename(dir)
+	build_dir = File.join dir, config[:build_dir] || 'build'
+	files_dir = File.join dir, config[:files_dir] || 'files'
+	sources_dir = File.join dir, config[:sources_dir] || 'src'
+	include_files = (config[:include] || []).map { File.join dir, _1 }
+	Sunniesnow::Charter.charts.clear
 	Dir.glob File.join sources_dir, '*.rb' do |filename|
 		load filename
 	rescue Exception => e
@@ -172,10 +187,10 @@ def build **opts
 		end
 		include_files.each do |pattern|
 			Dir.glob pattern do |filename|
-				zip_file.add filename, filename
+				zip_file.add filename["#{dir}/".length..], filename
 			end
 		end
-		::Sunniesnow::Charter.charts.each do |name, chart|
+		Sunniesnow::Charter.charts.each do |name, chart|
 			begin
 				output = chart.output_json **opts
 			rescue => e
@@ -204,13 +219,19 @@ option_parser = OptionParser.new do |o|
 	o.on '--exposed-host=HOST', String, 'Exposed host name'
 	o.on '--port=PORT', Integer, 'Port number'
 	o.on '--live-reload-port=PORT', Integer, 'live_reload port number'
-	o.on '--production', 'Disable live_reload'
-	o.on '--live-restart', 'Enable live_restart'
-	o.on '--open-browser', 'Open browser'
+	o.on '--[no-]production', 'Disable live_reload'
+	o.on '--[no-]live-restart', 'Enable live_restart'
+	o.on '--[no-]open-browser', 'Open browser'
 end
 Sunniesnow::Charter::CLI::Subcommand.new :serve, option_parser do |host: '0.0.0.0', exposed_host: 'localhost', port: 8011, live_reload_port: 31108, production: false, live_restart: false, open_browser: true|
 	return 1 unless config = Sunniesnow::Charter::CLI.config
-	server = WEBrick::HTTPServer.new BindAddress: host, Port: port, DocumentRoot: config[:build_dir]
+	dir = Sunniesnow::Charter::PROJECT_DIR
+	project_name = config[:project_name] || File.basename(dir)
+	build_dir = File.join dir, config[:build_dir] || 'build'
+	files_dir = File.join dir, config[:files_dir] || 'files'
+	sources_dir = File.join dir, config[:sources_dir] || 'src'
+	include_files = (config[:include] || []).map { File.join dir, _1 }
+	server = WEBrick::HTTPServer.new BindAddress: host, Port: port, DocumentRoot: build_dir
 	def server.service request, response
 		super
 		response['Access-Control-Allow-Origin'] = '*'
@@ -218,7 +239,7 @@ Sunniesnow::Charter::CLI::Subcommand.new :serve, option_parser do |host: '0.0.0.
 		response['Content-Type'] = 'application/zip' if request.path.end_with? '.ssc'
 	end
 	unless production
-		live_reload_clients = []
+		live_reload_clients = Concurrent::Array.new
 		Thread.new do
 			EM.run do
 				EM::WebSocket.run host:, port: live_reload_port do |ws|
@@ -229,32 +250,39 @@ Sunniesnow::Charter::CLI::Subcommand.new :serve, option_parser do |host: '0.0.0.
 						live_reload_clients.delete ws
 					end
 					ws.onmessage do |message|
-						data = JSON.parse message
-						case data['type']
+						data = JSON.parse message, symbolize_names: true
+						case data[:type]
 						when 'connect'
-							puts "Connected: #{data['userAgent']}"
+							puts "Connected: #{data[:userAgent]}"
+						when 'eventInfoTip'
+							if backtrace = Sunniesnow::Charter.charts[File.basename data[:chart], '.*']&.find_event_by_id(data[:id])&.backtrace
+								puts "Event #{data[:id]} in #{data[:chart]} was defined at"
+								puts backtrace
+							else
+								puts "Event #{data[:id]} in #{data[:chart]} is not found"
+							end
 						else
-							puts "Unknown message type '#{data['type']}' from live reload client"
+							puts "Unknown message type '#{data[:type]}' from live reload client"
 						end
 					end
 				end
 			end
 		end
 	end
-	url = CGI.escape "http://#{exposed_host}:#{port}/#{config[:project_name]}.ssc"
-	filewatcher = Filewatcher.new [config[:files_dir], config[:sources_dir], *config[:include]]
+	url = CGI.escape "http://#{exposed_host}:#{port}/#{project_name}.ssc"
+	filewatcher = Filewatcher.new [files_dir, sources_dir, *include_files]
 	Launchy.open "https://sunniesnow.github.io/game/?level-file=online&level-file-online=#{url}" if open_browser
 	build_proc = -> do
+		puts 'Building...'
 		puts build(live_reload_port:, production:, live_restart:) == 0 ? 'Finished' : 'Failed'
-		live_reload_clients.each { _1.send JSON.generate type: 'update' } unless production
+		unless production
+			live_reload_clients.each { _1.send JSON.generate type: 'update' }
+			Sunniesnow::Charter.charts.each_value &:build_index
+		end
 	end
 	filewatcher_thread = Thread.new do
-		puts 'Building...'
 		build_proc.()
-		filewatcher.watch do |changes|
-			puts 'Rebuilding...'
-			build_proc.()
-		end
+		filewatcher.watch { |changes| build_proc.() }
 		server.shutdown
 		EM.stop unless production
 	end
