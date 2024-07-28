@@ -127,7 +127,7 @@ class TestSscharter < Minitest::Test
 		chart.hold (x2 = rand 100), (y2 = rand 100), (duration2 = rand(100) + 1), (text2 = Random.bytes 10)
 		chart.drag (x3 = rand 100), (y3 = rand 100)
 		chart.flick (x4 = rand 100), (y4 = rand 100), (direction = rand*PI*2), (text4 = Random.bytes 10)
-		events = chart.instance_variable_get :@events
+		events = chart.events
 		assert_equal events.map(&:type), %i[tap hold drag flick]
 		assert_equal events.map { [_1[:x], _1[:y]] }, [[x1, y1], [x2, y2], [x3, y3], [x4, y4]]
 		assert_equal events.map { _1[:text] }, [text1, text2, nil, text4]
@@ -144,7 +144,7 @@ class TestSscharter < Minitest::Test
 		chart.flick x, y, :ur
 		chart.flick x, y, :l
 		chart.flick x, y, :ld
-		events = chart.instance_variable_get :@events
+		events = chart.events
 		ground_truth = [0, -3*PI/4, PI/2, PI/4, PI, -3*PI/4]
 		events.zip ground_truth do |event, true_angle|
 			assert_in_delta (event[:angle] - true_angle).modulo(PI*2), 0, 1e-8
@@ -156,7 +156,7 @@ class TestSscharter < Minitest::Test
 			offset rand
 			bpm rand * 300
 		end
-		events = chart.instance_variable_get :@events
+		events = chart.events
 
 		group1 = chart.group do
 			t rand(100), rand(100)
@@ -183,7 +183,7 @@ class TestSscharter < Minitest::Test
 		chart = Charter.open __method__
 		chart.offset offset = rand
 		chart.bpm bpm = rand * 300
-		events = chart.instance_variable_get :@events
+		events = chart.events
 
 		group1 = chart.tip_point_chain (x = rand 100), (y = rand 100), (t1 = rand) do
 			t rand(100), rand(100)
@@ -247,7 +247,7 @@ class TestSscharter < Minitest::Test
 		chart = Charter.open __method__
 		chart.offset offset = rand
 		chart.bpm bpm = rand * 300
-		events = chart.instance_variable_get :@events
+		events = chart.events
 
 		group1 = chart.tip_point_drop (x = rand 100), (y = rand 100), (t1 = rand) do
 			t rand(100), rand(100)
@@ -266,7 +266,7 @@ class TestSscharter < Minitest::Test
 		chart = Charter.open __method__
 		chart.offset offset = rand
 		chart.bpm bpm = rand * 300
-		events = chart.instance_variable_get :@events
+		events = chart.events
 
 		x1, y1, x2, y2 = Array.new(4) { rand 100 }
 		angle = rand*PI*2
@@ -324,7 +324,7 @@ class TestSscharter < Minitest::Test
 		chart = Charter.open __method__
 		chart.offset offset = rand
 		chart.bpm bpm = rand * 300
-		events = chart.instance_variable_get :@events
+		events = chart.events
 
 		group1 = chart.group do
 			t rand(100), rand(100)
@@ -377,7 +377,7 @@ class TestSscharter < Minitest::Test
 		chart.offset offset = rand
 		chart.bpm bpm = rand * 300
 		delta = rand
-		events = chart.instance_variable_get :@events
+		events = chart.events
 
 		group1 = chart.group preserve_beat: false do
 			t rand(100), rand(100)

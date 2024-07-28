@@ -316,6 +316,8 @@ class Sunniesnow::Charter
 	singleton_class.attr_reader :charts
 	@charts = {}
 
+	attr_reader :events
+
 	def self.open name, &block
 		result = @charts[name] ||= new name
 		result.instance_eval &block if block
@@ -660,14 +662,6 @@ class Sunniesnow::Charter
 
 	def inspect
 		"#<Sunniesnow::Charter #@name>"
-	end
-
-	def build_index
-		@events_index = @events.sort_by &:time
-	end
-
-	def find_event_by_id id
-		@events_index[id]
 	end
 
 end

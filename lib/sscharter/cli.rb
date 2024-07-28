@@ -255,7 +255,7 @@ Sunniesnow::Charter::CLI::Subcommand.new :serve, option_parser do |host: '0.0.0.
 						when 'connect'
 							puts "Connected: #{data[:userAgent]}"
 						when 'eventInfoTip'
-							if backtrace = Sunniesnow::Charter.charts[File.basename data[:chart], '.*']&.find_event_by_id(data[:id])&.backtrace
+							if backtrace = Sunniesnow::Charter.charts[File.basename data[:chart], '.*']&.events[data[:id]]&.backtrace
 								puts "Event #{data[:id]} in #{data[:chart]} was defined at"
 								puts backtrace
 							else
@@ -275,10 +275,7 @@ Sunniesnow::Charter::CLI::Subcommand.new :serve, option_parser do |host: '0.0.0.
 	build_proc = -> do
 		puts 'Building...'
 		puts build(live_reload_port:, production:, live_restart:) == 0 ? 'Finished' : 'Failed'
-		unless production
-			live_reload_clients.each { _1.send JSON.generate type: 'update' }
-			Sunniesnow::Charter.charts.each_value &:build_index
-		end
+		live_reload_clients.each { _1.send JSON.generate type: 'update' } unless production
 	end
 	filewatcher_thread = Thread.new do
 		build_proc.()
