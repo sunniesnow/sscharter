@@ -269,17 +269,18 @@ Sunniesnow::Charter::CLI::Subcommand.new :serve, option_parser do |host: '0.0.0.
 			end
 		end
 	end
-	url = CGI.escape "http://#{exposed_host}:#{port}/#{project_name}.ssc"
+	url = "http://#{exposed_host}:#{port}/#{project_name}.ssc"
 	filewatcher = Filewatcher.new [files_dir, sources_dir, *include_files]
-	Launchy.open "https://sunniesnow.github.io/game/?level-file=online&level-file-online=#{url}" if open_browser
-	build_proc = -> do
-		puts 'Building...'
-		puts build(live_reload_port:, production:, live_restart:) == 0 ? 'Finished' : 'Failed'
+	Launchy.open "https://sunniesnow.github.io/game/?level-file=online&level-file-online=#{CGI.escape url}" if open_browser
+	build_proc = ->is_first do
+		puts is_first ? 'Building...' : 'Rebuilding...'
+		success = build(live_reload_port:, production:, live_restart:) == 0
+		puts success ? is_first ? "Finished; access at #{url}" : 'Finished' : 'Failed'
 		live_reload_clients.each { _1.send JSON.generate type: 'update' } unless production
 	end
 	filewatcher_thread = Thread.new do
-		build_proc.()
-		filewatcher.watch { |changes| build_proc.() }
+		build_proc.(true)
+		filewatcher.watch { |changes| build_proc.(false) }
 		server.shutdown
 		EM.stop unless production
 	end
