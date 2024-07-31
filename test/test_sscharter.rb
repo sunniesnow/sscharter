@@ -494,4 +494,27 @@ class TestSscharter < Minitest::Test
 		assert_equal event4.duration_beats, 0
 	end
 
+	def test_remove
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+
+		group1 = chart.group do
+			t rand(100), rand(100)
+			b 1
+			f rand(100), rand(100), rand*PI*2
+			b 2
+		end
+		group2 = chart.group do
+			t rand(100), rand(100)
+			b 1
+			f rand(100), rand(100), rand*PI*2
+			b 2
+		end
+		assert_equal chart.events.length, 4
+		chart.remove *group1
+		assert_equal chart.events.length, 2
+		assert_equal chart.events, group2
+	end
+
 end

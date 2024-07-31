@@ -82,7 +82,7 @@ class Sunniesnow::Charter
 			@bpm_changes = bpm_changes
 			@properties = properties
 			@offset = 0.0
-			process_backtrace
+			@backtrace = caller.filter { _1.sub! /^#{PROJECT_DIR}\//, '' }
 		end
 
 		def time_at_relative_beat delta_beat
@@ -125,10 +125,6 @@ class Sunniesnow::Charter
 		def inspect
 			"#<#@type at #@beat#{@duration_beats && " for #@duration_beats"} offset #@offset: " +
 			@properties.map { |k, v| "#{k}=#{v.inspect}" }.join(', ') + '>'
-		end
-
-		def process_backtrace
-			@backtrace = caller.filter { _1.sub! /^#{PROJECT_DIR}\//, '' }
 		end
 	end
 
@@ -498,6 +494,10 @@ class Sunniesnow::Charter
 		@tip_point_mode_stack.pop
 		@current_tip_point_stack.pop
 		result
+	end
+
+	def remove *events
+		events.each { @events.delete _1 }
 	end
 
 	def event type, duration_beats = nil, **properties
