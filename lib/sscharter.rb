@@ -515,7 +515,7 @@ class Sunniesnow::Charter
 		return unless tip_point_start
 		@groups.each do |group|
 			group.push tip_point_start
-			break if group.equal? @current_tip_point_group
+			break if group.equal?(@current_tip_point_group) && @tip_point_mode_stack.last != :drop
 		end
 	end
 
