@@ -517,4 +517,22 @@ class TestSscharter < Minitest::Test
 		assert_equal chart.events, group2
 	end
 
+	def test_group_nested_in_tip_point
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+
+		group2 = nil
+		group1 = chart.tip_point_chain rand, rand, rand do
+			group2 = group do
+				t rand(100), rand(100)
+			end
+			t rand(100), rand(100)
+		end
+		assert_equal chart.events.length, 3
+		assert_equal group1.length, 3
+		assert_equal group2.length, 1
+		assert_equal group1.first, group2.first
+	end
+
 end

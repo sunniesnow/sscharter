@@ -441,26 +441,12 @@ class Sunniesnow::Charter
 		@bpm_changes.time_at beat
 	end
 
-	def tip_point_chain *args, preserve_beat: true, **opts, &block
-		tip_point :chain, *args, **opts do
-			group preserve_beat: preserve_beat, &block
-		end#.tap { @tip_point_peak += 1 }
-	end
-	alias tp_chain tip_point_chain
-
-	def tip_point_drop *args, preserve_beat: true, **opts, &block
-		tip_point :drop, *args, **opts do
-			group preserve_beat: preserve_beat, &block
+	%i[chain drop none].each do |mode|
+		define_method "tip_point_#{mode}" do |*args, **opts, &block|
+			tip_point mode, *args, **opts, &block
 		end
+		alias_method "tp_#{mode}", "tip_point_#{mode}"
 	end
-	alias tp_drop tip_point_drop
-
-	def tip_point_none preserve_beat: true, &block
-		tip_point :none do
-			group preserve_beat: preserve_beat, &block
-		end
-	end
-	alias tp_none tip_point_none
 
 	def group preserve_beat: true, &block
 		raise ArgumentError, 'no block given' unless block
@@ -480,7 +466,7 @@ class Sunniesnow::Charter
 		result
 	end
 
-	def tip_point mode, *args, **opts, &block
+	def tip_point mode, *args, preserve_beat: true, **opts, &block
 		@tip_point_mode_stack.push mode
 		if mode == :none
 			@current_tip_point_stack.push nil
@@ -489,10 +475,14 @@ class Sunniesnow::Charter
 			@current_tip_point_stack.push @tip_point_peak
 			@tip_point_peak += 1
 		end
-		result = block.()
+		result = group preserve_beat: do
+			@current_tip_point_group = @groups.last
+			instance_eval &block
+		end
 		@tip_point_start_to_add_stack.pop
 		@tip_point_mode_stack.pop
 		@current_tip_point_stack.pop
+		@current_tip_point_group = nil
 		result
 	end
 
@@ -522,7 +512,11 @@ class Sunniesnow::Charter
 	def push_tip_point_start start_event
 		start_event[:tip_point] = @current_tip_point_stack.last.to_s
 		tip_point_start = @tip_point_start_to_add_stack.last&.get_start_placeholder start_event
-		@groups.each { _1.push tip_point_start } if tip_point_start
+		return unless tip_point_start
+		@groups.each do |group|
+			group.push tip_point_start
+			break if group.equal? @current_tip_point_group
+		end
 	end
 
 	def transform events, &block
