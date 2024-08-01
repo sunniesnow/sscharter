@@ -343,6 +343,7 @@ class Sunniesnow::Charter
 		@bpm_changes = nil
 		@tip_point_mode_stack = [:none]
 		@current_tip_point_stack = []
+		@current_tip_point_group_stack = []
 		@tip_point_peak = 0
 		@current_duplicate = 0
 		@tip_point_start_to_add_stack = [nil]
@@ -476,13 +477,13 @@ class Sunniesnow::Charter
 			@tip_point_peak += 1
 		end
 		result = group preserve_beat: do
-			@current_tip_point_group = @groups.last
+			@current_tip_point_group_stack.push @groups.last
 			instance_eval &block
 		end
 		@tip_point_start_to_add_stack.pop
 		@tip_point_mode_stack.pop
 		@current_tip_point_stack.pop
-		@current_tip_point_group = nil
+		@current_tip_point_group_stack.pop
 		result
 	end
 
@@ -515,7 +516,7 @@ class Sunniesnow::Charter
 		return unless tip_point_start
 		@groups.each do |group|
 			group.push tip_point_start
-			break if group.equal?(@current_tip_point_group) && @tip_point_mode_stack.last != :drop
+			break if group.equal?(@current_tip_point_group_stack.last) && @tip_point_mode_stack.last != :drop
 		end
 	end
 
