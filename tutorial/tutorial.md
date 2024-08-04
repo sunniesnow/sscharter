@@ -224,17 +224,7 @@ bundle exec sscharter serve --port 1314
 You can edit `Rakefile` to make `rake serve` use that port.
 
 > [!TIP]
-> It is already convenient that Sunniesnow automatically reloads the level file for you.
-> However, you may also want it to restart the level for you, too.
-> To do this, use
->
-> ```shell
-> bundle exec sscharter serve --live-restart
-> ```
->
-> You can edit `Rakefile` to make `rake serve` use that option.
->
-> However, if you do not even want the live reload feature,
+> If you do not even want the live reload feature,
 > you can turn it off by using
 >
 > ```shell
@@ -250,7 +240,7 @@ The default settings of Sunniesnow are tuned for gameplay instead of charting,
 so you may want to change some settings to help you write the chart.
 Use this link to set these settings quickly:
 
-https://sunniesnow.github.io/game/?volume-se=1&se-with-music=true&chart-offset=0&autoplay=true&progress-adjustable=true&hide-pause-ui=true&resume-preparation-time=0&always-update-fx=true&debug=true&fullscreen-on-start=false
+https://sunniesnow.github.io/game/?volume-se=1&se-with-music=true&chart-offset=0&autoplay=true&progress-adjustable=true&hide-pause-ui=true&resume-preparation-time=0&always-update-fx=true&debug=true&fullscreen-on-start=false&sscharter=true&sscharter-live-restart=true
 
 First, the most important part of rhythm game charting is to ensure that notes are pefectly aligned with the music.
 To help you with that, configure the following settings:
@@ -293,6 +283,12 @@ if the chart you are playing is served by sscharter (without the `--production` 
 the sscharter server will tell you (in the terminal) where the event is defined
 when you reveal the event details in Sunniesnow.
 This gives the ability of reverse searching.
+
+Finally, although it is already convenient to have the level file
+reloaded automatically when you save changes to the source codes,
+you can enable [`sscharter-live-restart`](https://sunniesnow.github.io/game/help.html#sscharter-live-restart)
+to make it more convenient.
+This setting will make the game restarted automatically when you save changes to the source codes.
 
 Other useful settings:
 
