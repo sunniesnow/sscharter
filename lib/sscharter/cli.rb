@@ -220,10 +220,9 @@ option_parser = OptionParser.new do |o|
 	o.on '--port=PORT', Integer, 'Port number'
 	o.on '--live-reload-port=PORT', Integer, 'live_reload port number'
 	o.on '--[no-]production', 'Disable live_reload'
-	o.on '--[no-]live-restart', 'Enable live_restart'
 	o.on '--[no-]open-browser', 'Open browser'
 end
-Sunniesnow::Charter::CLI::Subcommand.new :serve, option_parser do |host: '0.0.0.0', exposed_host: 'localhost', port: 8011, live_reload_port: 31108, production: false, live_restart: false, open_browser: true|
+Sunniesnow::Charter::CLI::Subcommand.new :serve, option_parser do |host: '0.0.0.0', exposed_host: 'localhost', port: 8011, live_reload_port: 31108, production: false, open_browser: true|
 	return 1 unless config = Sunniesnow::Charter::CLI.config
 	dir = Sunniesnow::Charter::PROJECT_DIR
 	project_name = config[:project_name] || File.basename(dir)
@@ -274,7 +273,7 @@ Sunniesnow::Charter::CLI::Subcommand.new :serve, option_parser do |host: '0.0.0.
 	Launchy.open "https://sunniesnow.github.io/game/?level-file=online&level-file-online=#{CGI.escape url}" if open_browser
 	build_proc = ->is_first do
 		puts is_first ? 'Building...' : 'Rebuilding...'
-		success = build(live_reload_port:, production:, live_restart:) == 0
+		success = build(live_reload_port:, production:) == 0
 		puts success ? is_first ? "Finished; access at #{url}" : 'Finished' : 'Failed'
 		live_reload_clients.each { _1.send JSON.generate type: 'update' } unless production
 	end
