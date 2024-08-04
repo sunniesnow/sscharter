@@ -218,8 +218,8 @@ option_parser = OptionParser.new do |o|
 	o.on '--host=HOST', String, 'Host name'
 	o.on '--exposed-host=HOST', String, 'Exposed host name'
 	o.on '--port=PORT', Integer, 'Port number'
-	o.on '--live-reload-port=PORT', Integer, 'live_reload port number'
-	o.on '--[no-]production', 'Disable live_reload'
+	o.on '--live-reload-port=PORT', Integer, 'live reload port number'
+	o.on '--[no-]production', 'Disable live reload'
 	o.on '--[no-]open-browser', 'Open browser'
 end
 Sunniesnow::Charter::CLI::Subcommand.new :serve, option_parser do |host: '0.0.0.0', exposed_host: 'localhost', port: 8011, live_reload_port: 31108, production: false, open_browser: true|
