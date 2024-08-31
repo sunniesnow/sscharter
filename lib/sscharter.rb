@@ -488,7 +488,7 @@ class Sunniesnow::Charter
 	end
 
 	def remove *events
-		events.each { @events.delete _1 }
+		events.each { |event| @groups.each { _1.delete event } }
 	end
 
 	def event type, duration_beats = nil, **properties

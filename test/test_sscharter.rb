@@ -578,4 +578,21 @@ class TestSscharter < Minitest::Test
 		assert_equal group1, [note1]
 	end
 
+	def test_remove_and_duplicate
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+
+		group1 = chart.group do
+			notes = chart.group do
+				t rand(100), rand(100)
+				t rand(100), rand(100)
+			end
+			chart.remove notes.last
+		end
+		group2 = chart.duplicate group1
+		assert_equal chart.events.length, 2
+		assert_equal chart.events, [*group1, *group2]
+	end
+
 end
