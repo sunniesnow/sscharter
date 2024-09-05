@@ -84,7 +84,6 @@ class TestSscharter < Minitest::Test
 		assert_raises(Charter::OffsetError) { chart.event :placeholder }
 
 		chart.offset offset = rand
-		assert_equal offset, chart.instance_variable_get(:@current_offset)
 		assert_equal 0r, chart.instance_variable_get(:@current_beat)
 		chart.beat 10
 		assert_equal 10r, chart.instance_variable_get(:@current_beat)
@@ -593,6 +592,63 @@ class TestSscharter < Minitest::Test
 		group2 = chart.duplicate group1
 		assert_equal chart.events.length, 2
 		assert_equal chart.events, [*group1, *group2]
+	end
+
+	def test_mark
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+
+		note1 = note2 = current_beat = last_beat = nil
+		group1 = chart.tp_chain rand, rand, rand do
+			note1 = t rand(100), rand(100)
+			last_beat = b 1
+			mark :test1
+		end
+		group2 = chart.at :test1, preserve_beat: true do
+			note2 = t rand(100), rand(100)
+			current_beat = b 1
+		end
+		note3 = chart.t rand(100), rand(100)
+		assert_equal group1.length, 3
+		assert_equal group2, [note2]
+		assert_equal note1[:tip_point], note2[:tip_point]
+		assert_equal note2.beat, last_beat
+		assert_equal note3.beat, current_beat
+
+		note4 = nil
+		chart.mark :test2
+		group4 = chart.at :test2 do
+			note4 = t rand(100), rand(100)
+			b 1
+		end
+		note5 = chart.t rand(100), rand(100)
+		assert_equal group4, [note4]
+		assert_equal note4.beat, current_beat
+		assert_equal note5.beat, current_beat
+	end
+
+	def test_mark_and_tp_drop
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+
+		note1 = note2 = note3 = nil
+		group1 = chart.tp_drop rand, rand, rand do
+			note1 = t rand(100), rand(100)
+			b 1
+			mark :test1
+		end
+		group2 = chart.at :test1 do
+			note2 = t rand(100), rand(100)
+			b 1
+		end
+		group3 = chart.tp_chain rand, rand, rand do
+			note3 = t rand(100), rand(100)
+			b 1
+		end
+		assert_equal group1.length, 4
+		assert_equal [note1, note2, note3].map { _1[:tip_point] }.uniq.length, 3
 	end
 
 end

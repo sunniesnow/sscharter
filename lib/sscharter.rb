@@ -324,6 +324,7 @@ class Sunniesnow::Charter
 		@name = name
 		init_chart_info
 		init_state
+		init_bookmarks
 	end
 
 	def init_chart_info
@@ -337,8 +338,11 @@ class Sunniesnow::Charter
 		@events = []
 	end
 
+	def init_bookmarks
+		@bookmarks = {}
+	end
+
 	def init_state
-		@current_offset = nil
 		@current_beat = nil
 		@bpm_changes = nil
 		@tip_point_mode_stack = [:none]
@@ -399,9 +403,8 @@ class Sunniesnow::Charter
 
 	def offset offset
 		raise ArgumentError, 'offset must be a number' unless offset.is_a? Numeric
-		@current_offset = offset.to_f
 		@current_beat = 0r
-		@bpm_changes = BpmChangeList.new @current_offset
+		@bpm_changes = BpmChangeList.new offset.to_f
 	end
 
 	def bpm bpm
@@ -449,21 +452,65 @@ class Sunniesnow::Charter
 		alias_method "tp_#{mode}", "tip_point_#{mode}"
 	end
 
+	def backup_beat
+		{current_beat: @current_beat, bpm_changes: @bpm_changes}
+	end
+
+	def restore_beat backup
+		@current_beat = backup[:current_beat]
+		@bpm_changes = backup[:bpm_changes]
+	end
+
 	def group preserve_beat: true, &block
 		raise ArgumentError, 'no block given' unless block
 		@groups.push result = []
-		unless preserve_beat
-			last_beat = @current_beat
-			last_offset = @current_offset
-			last_bpm_changes = @bpm_changes
-		end
+		beat_backup = backup_beat unless preserve_beat
 		instance_eval &block
-		unless preserve_beat
-			@current_beat = last_beat
-			@current_offset = last_offset
-			@bpm_changes = last_bpm_changes
-		end
+		restore_beat beat_backup unless preserve_beat
 		@groups.delete_if { result.equal? _1 }
+		result
+	end
+
+	def backup_state
+		{
+			current_beat: @current_beat,
+			bpm_changes: @bpm_changes,
+			tip_point_mode_stack: @tip_point_mode_stack.dup,
+			current_tip_point_stack: @current_tip_point_stack.dup,
+			current_tip_point_group_stack: @current_tip_point_group_stack.dup,
+			current_duplicate: @current_duplicate,
+			tip_point_start_to_add_stack: @tip_point_start_to_add_stack.dup,
+			groups: @groups.dup
+		}
+	end
+
+	def restore_state backup
+		@current_beat = backup[:current_beat]
+		@bpm_changes = backup[:bpm_changes]
+		@tip_point_mode_stack = backup[:tip_point_mode_stack]
+		@current_tip_point_stack = backup[:current_tip_point_stack]
+		@current_tip_point_group_stack = backup[:current_tip_point_group_stack]
+		@current_duplicate = backup[:current_duplicate]
+		@tip_point_start_to_add_stack = backup[:tip_point_start_to_add_stack]
+		@groups = backup[:groups]
+		nil
+	end
+
+	def mark name
+		@bookmarks[name] = backup_state
+		name
+	end
+
+	def at name, preserve_beat: false, update_mark: false, &block
+		raise ArgumentError, 'no block given' unless block
+		raise ArgumentError, "unknown bookmark #{name}" unless bookmark = @bookmarks[name]
+		backup = backup_state
+		restore_state bookmark
+		result = group &block
+		mark name if update_mark
+		beat_backup = backup_beat if preserve_beat
+		restore_state backup
+		restore_beat beat_backup if preserve_beat
 		result
 	end
 
