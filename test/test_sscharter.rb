@@ -651,4 +651,25 @@ class TestSscharter < Minitest::Test
 		assert_equal [note1, note2, note3].map { _1[:tip_point] }.uniq.length, 3
 	end
 
+	def test_update_mark
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+
+		note1 = note2 = beat1 = beat2 = nil
+		group1 = chart.tp_chain rand, rand, rand do
+			beat1 = b 1
+			mark :test1
+		end
+		chart.at :test1, update_mark: true do
+			note1 = t rand(100), rand(100)
+			beat2 = b 1
+		end
+		chart.at :test1 do
+			note2 = t rand(100), rand(100)
+		end
+		assert_equal note1.beat, beat1
+		assert_equal note2.beat, beat2
+	end
+
 end
