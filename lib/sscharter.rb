@@ -517,6 +517,7 @@ class Sunniesnow::Charter
 	def tip_point mode, *args, preserve_beat: true, **opts, &block
 		@tip_point_mode_stack.push mode
 		if mode == :none
+			@tip_point_start_to_add_stack.push nil
 			@current_tip_point_stack.push nil
 		else
 			@tip_point_start_to_add_stack.push TipPointStart.new *args, **opts

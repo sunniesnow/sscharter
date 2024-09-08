@@ -449,24 +449,48 @@ class TestSscharter < Minitest::Test
 		assert_operator tp1, :!=, tp3
 		assert_operator tp3, :!=, tp5
 		assert_operator tp1, :!=, tp5
+	end
 
-		group1 = nil
-		chain4 = chart.tip_point_chain 0, 0, 0 do
+	def test_tip_point_none
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+
+		group = nil
+		chain = chart.tip_point_chain 0, 0, 0 do
 			t rand(100), rand(100)
 			b 1
-			group1 = tip_point_none do
+			group = tip_point_none do
 				t rand(100), rand(100)
 				b 1
 			end
 			t rand(100), rand(100)
 			b 1
 		end
-		assert_equal chain4.length, 4
-		assert_equal group1.length, 1
-		assert_equal chain4.map(&:type), %i[tap placeholder tap tap]
-		tp1, tp2, tp3, tp4 = chain4.map { _1[:tip_point] }
+		assert_equal chain.length, 4
+		assert_equal group.length, 1
+		assert_equal chain.map(&:type), %i[tap placeholder tap tap]
+		tp1, tp2, tp3, tp4 = chain.map { _1[:tip_point] }
 		assert_equal tp1, tp2
 		assert_equal tp2, tp4
+		assert_nil tp3
+
+		drop = chart.tip_point_drop 0, 0, 1 do
+			t rand(100), rand(100)
+			b 1
+			group = tip_point_none do
+				t rand(100), rand(100)
+				b 1
+			end
+			t rand(100), rand(100)
+			b 1
+		end
+		assert_equal drop.length, 5
+		assert_equal group.length, 1
+		assert_equal drop.map(&:type), %i[tap placeholder tap tap placeholder]
+		tp1, tp2, tp3, tp4, tp5 = drop.map { _1[:tip_point] }
+		assert_equal tp1, tp2
+		assert_equal tp4, tp5
 		assert_nil tp3
 	end
 
