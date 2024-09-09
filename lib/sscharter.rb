@@ -354,6 +354,118 @@ class Sunniesnow::Charter
 		@groups = [@events]
 	end
 
+	def to_sunniesnow **opts
+		result = Sunniesnow::Chart.new **opts
+		result.title = @title
+		result.artist = @artist
+		result.charter = @charter
+		result.difficulty_name = @difficulty_name
+		result.difficulty_color = @difficulty_color
+		result.difficulty = @difficulty
+		result.difficulty_sup = @difficulty_sup
+		@events.each { result.events.push _1.to_sunniesnow }
+		result
+	end
+
+	def output_json **opts
+		to_sunniesnow(**opts).to_json
+	end
+
+	def inspect
+		"#<Sunniesnow::Charter #@name>"
+	end
+
+	def time_at beat = @current_beat
+		raise OffsetError.new __method__ unless @bpm_changes
+		@bpm_changes.time_at beat
+	end
+
+	def backup_beat
+		{current_beat: @current_beat, bpm_changes: @bpm_changes}
+	end
+
+	def restore_beat backup
+		@current_beat = backup[:current_beat]
+		@bpm_changes = backup[:bpm_changes]
+	end
+
+	def backup_state
+		{
+			current_beat: @current_beat,
+			bpm_changes: @bpm_changes,
+			tip_point_mode_stack: @tip_point_mode_stack.dup,
+			current_tip_point_stack: @current_tip_point_stack.dup,
+			current_tip_point_group_stack: @current_tip_point_group_stack.dup,
+			current_duplicate: @current_duplicate,
+			tip_point_start_to_add_stack: @tip_point_start_to_add_stack.dup,
+			groups: @groups.dup
+		}
+	end
+
+	def restore_state backup
+		@current_beat = backup[:current_beat]
+		@bpm_changes = backup[:bpm_changes]
+		@tip_point_mode_stack = backup[:tip_point_mode_stack]
+		@current_tip_point_stack = backup[:current_tip_point_stack]
+		@current_tip_point_group_stack = backup[:current_tip_point_group_stack]
+		@current_duplicate = backup[:current_duplicate]
+		@tip_point_start_to_add_stack = backup[:tip_point_start_to_add_stack]
+		@groups = backup[:groups]
+		nil
+	end
+
+	def event type, duration_beats = nil, **properties
+		raise OffsetError.new __method__ unless @bpm_changes
+		event = Event.new type, @current_beat, duration_beats, @bpm_changes, **properties
+		@groups.each { _1.push event }
+		return event unless event.tip_pointable?
+		case @tip_point_mode_stack.last
+		when :chain
+			push_tip_point_start event
+			@tip_point_start_to_add_stack[-1] = nil
+		when :drop
+			push_tip_point_start event
+			@current_tip_point_stack[-1] = @tip_point_peak
+			@tip_point_peak += 1
+		when :none
+			# pass
+		end
+		event
+	end
+
+	def push_tip_point_start start_event
+		start_event[:tip_point] = @current_tip_point_stack.last.to_s
+		tip_point_start = @tip_point_start_to_add_stack.last&.get_start_placeholder start_event
+		return unless tip_point_start
+		@groups.each do |group|
+			group.push tip_point_start
+			break if group.equal?(@current_tip_point_group_stack.last) && @tip_point_mode_stack.last != :drop
+		end
+	end
+
+	def tip_point mode, *args, preserve_beat: true, **opts, &block
+		@tip_point_mode_stack.push mode
+		if mode == :none
+			@tip_point_start_to_add_stack.push nil
+			@current_tip_point_stack.push nil
+		else
+			@tip_point_start_to_add_stack.push TipPointStart.new *args, **opts
+			@current_tip_point_stack.push @tip_point_peak
+			@tip_point_peak += 1
+		end
+		result = group preserve_beat: do
+			@current_tip_point_group_stack.push @groups.last
+			instance_eval &block
+		end
+		@tip_point_start_to_add_stack.pop
+		@tip_point_mode_stack.pop
+		@current_tip_point_stack.pop
+		@current_tip_point_group_stack.pop
+		result
+	end
+
+	# Below are methods intended to be used in the DSL
+
 	def title title
 		raise ArgumentError, 'title must be a string' unless title.is_a? String
 		@title = title
@@ -439,156 +551,6 @@ class Sunniesnow::Charter
 		end
 	end
 	alias b! beat!
-
-	def time_at beat = @current_beat
-		raise OffsetError.new __method__ unless @bpm_changes
-		@bpm_changes.time_at beat
-	end
-
-	%i[chain drop none].each do |mode|
-		define_method "tip_point_#{mode}" do |*args, **opts, &block|
-			tip_point mode, *args, **opts, &block
-		end
-		alias_method "tp_#{mode}", "tip_point_#{mode}"
-	end
-
-	def backup_beat
-		{current_beat: @current_beat, bpm_changes: @bpm_changes}
-	end
-
-	def restore_beat backup
-		@current_beat = backup[:current_beat]
-		@bpm_changes = backup[:bpm_changes]
-	end
-
-	def group preserve_beat: true, &block
-		raise ArgumentError, 'no block given' unless block
-		@groups.push result = []
-		beat_backup = backup_beat unless preserve_beat
-		instance_eval &block
-		restore_beat beat_backup unless preserve_beat
-		@groups.delete_if { result.equal? _1 }
-		result
-	end
-
-	def backup_state
-		{
-			current_beat: @current_beat,
-			bpm_changes: @bpm_changes,
-			tip_point_mode_stack: @tip_point_mode_stack.dup,
-			current_tip_point_stack: @current_tip_point_stack.dup,
-			current_tip_point_group_stack: @current_tip_point_group_stack.dup,
-			current_duplicate: @current_duplicate,
-			tip_point_start_to_add_stack: @tip_point_start_to_add_stack.dup,
-			groups: @groups.dup
-		}
-	end
-
-	def restore_state backup
-		@current_beat = backup[:current_beat]
-		@bpm_changes = backup[:bpm_changes]
-		@tip_point_mode_stack = backup[:tip_point_mode_stack]
-		@current_tip_point_stack = backup[:current_tip_point_stack]
-		@current_tip_point_group_stack = backup[:current_tip_point_group_stack]
-		@current_duplicate = backup[:current_duplicate]
-		@tip_point_start_to_add_stack = backup[:tip_point_start_to_add_stack]
-		@groups = backup[:groups]
-		nil
-	end
-
-	def mark name
-		@bookmarks[name] = backup_state
-		name
-	end
-
-	def at name, preserve_beat: false, update_mark: false, &block
-		raise ArgumentError, 'no block given' unless block
-		raise ArgumentError, "unknown bookmark #{name}" unless bookmark = @bookmarks[name]
-		backup = backup_state
-		restore_state bookmark
-		result = group &block
-		mark name if update_mark
-		beat_backup = backup_beat if preserve_beat
-		restore_state backup
-		restore_beat beat_backup if preserve_beat
-		result
-	end
-
-	def tip_point mode, *args, preserve_beat: true, **opts, &block
-		@tip_point_mode_stack.push mode
-		if mode == :none
-			@tip_point_start_to_add_stack.push nil
-			@current_tip_point_stack.push nil
-		else
-			@tip_point_start_to_add_stack.push TipPointStart.new *args, **opts
-			@current_tip_point_stack.push @tip_point_peak
-			@tip_point_peak += 1
-		end
-		result = group preserve_beat: do
-			@current_tip_point_group_stack.push @groups.last
-			instance_eval &block
-		end
-		@tip_point_start_to_add_stack.pop
-		@tip_point_mode_stack.pop
-		@current_tip_point_stack.pop
-		@current_tip_point_group_stack.pop
-		result
-	end
-
-	def remove *events
-		events.each { |event| @groups.each { _1.delete event } }
-	end
-
-	def event type, duration_beats = nil, **properties
-		raise OffsetError.new __method__ unless @bpm_changes
-		event = Event.new type, @current_beat, duration_beats, @bpm_changes, **properties
-		@groups.each { _1.push event }
-		return event unless event.tip_pointable?
-		case @tip_point_mode_stack.last
-		when :chain
-			push_tip_point_start event
-			@tip_point_start_to_add_stack[-1] = nil
-		when :drop
-			push_tip_point_start event
-			@current_tip_point_stack[-1] = @tip_point_peak
-			@tip_point_peak += 1
-		when :none
-			# pass
-		end
-		event
-	end
-
-	def push_tip_point_start start_event
-		start_event[:tip_point] = @current_tip_point_stack.last.to_s
-		tip_point_start = @tip_point_start_to_add_stack.last&.get_start_placeholder start_event
-		return unless tip_point_start
-		@groups.each do |group|
-			group.push tip_point_start
-			break if group.equal?(@current_tip_point_group_stack.last) && @tip_point_mode_stack.last != :drop
-		end
-	end
-
-	def transform events, &block
-		raise ArgumentError, 'no block given' unless block
-		events = [events] if events.is_a? Event
-		transform = Transform.new
-		transform.instance_eval &block
-		events.each { transform.apply _1 }
-	end
-
-	def duplicate events, new_tip_points: true
-		result = []
-		events.each do |event|
-			next if event.type == :placeholder && !new_tip_points
-			result.push event = event.dup
-			if event[:tip_point] && new_tip_points
-				event[:tip_point] = "#@current_duplicate #{event[:tip_point]}"
-			end
-			@groups.each { _1.push event }
-		end
-		@current_duplicate += 1 if new_tip_points
-		result
-	end
 
 	def tap x, y, text = ''
 		if !x.is_a?(Numeric) || !y.is_a?(Numeric)
@@ -686,25 +648,65 @@ class Sunniesnow::Charter
 		end
 	end
 
-	def to_sunniesnow **opts
-		result = Sunniesnow::Chart.new **opts
-		result.title = @title
-		result.artist = @artist
-		result.charter = @charter
-		result.difficulty_name = @difficulty_name
-		result.difficulty_color = @difficulty_color
-		result.difficulty = @difficulty
-		result.difficulty_sup = @difficulty_sup
-		@events.each { result.events.push _1.to_sunniesnow }
+	def duplicate events, new_tip_points: true
+		result = []
+		events.each do |event|
+			next if event.type == :placeholder && !new_tip_points
+			result.push event = event.dup
+			if event[:tip_point] && new_tip_points
+				event[:tip_point] = "#@current_duplicate #{event[:tip_point]}"
+			end
+			@groups.each { _1.push event }
+		end
+		@current_duplicate += 1 if new_tip_points
 		result
 	end
 
-	def output_json **opts
-		to_sunniesnow(**opts).to_json
+	def transform events, &block
+		raise ArgumentError, 'no block given' unless block
+		events = [events] if events.is_a? Event
+		transform = Transform.new
+		transform.instance_eval &block
+		events.each { transform.apply _1 }
 	end
 
-	def inspect
-		"#<Sunniesnow::Charter #@name>"
+	def group preserve_beat: true, &block
+		raise ArgumentError, 'no block given' unless block
+		@groups.push result = []
+		beat_backup = backup_beat unless preserve_beat
+		instance_eval &block
+		restore_beat beat_backup unless preserve_beat
+		@groups.delete_if { result.equal? _1 }
+		result
+	end
+
+	def remove *events
+		events.each { |event| @groups.each { _1.delete event } }
+	end
+
+	%i[chain drop none].each do |mode|
+		define_method "tip_point_#{mode}" do |*args, **opts, &block|
+			tip_point mode, *args, **opts, &block
+		end
+		alias_method "tp_#{mode}", "tip_point_#{mode}"
+	end
+
+	def mark name
+		@bookmarks[name] = backup_state
+		name
+	end
+
+	def at name, preserve_beat: false, update_mark: false, &block
+		raise ArgumentError, 'no block given' unless block
+		raise ArgumentError, "unknown bookmark #{name}" unless bookmark = @bookmarks[name]
+		backup = backup_state
+		restore_state bookmark
+		result = group &block
+		mark name if update_mark
+		beat_backup = backup_beat if preserve_beat
+		restore_state backup
+		restore_beat beat_backup if preserve_beat
+		result
 	end
 
 	def check(
