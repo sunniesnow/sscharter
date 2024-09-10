@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>tutorial - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+  var index_rel_prefix = "../";
+</script>
+
+<script src="../js/navigation.js" defer></script>
+<script src="../js/search.js" defer></script>
+<script src="../js/search_index.js" defer></script>
+<script src="../js/searcher.js" defer></script>
+<script src="../js/darkfish.js" defer></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search (/) for a class, method, ..." spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+<div class="nav-section">
+  <h3>Table of Contents</h3>
+
+
+
+  <ul class="link-list" role="directory">
+              <li>
+            <details open>
+              <summary>      <a href="#label-Tutorial+for+sscharter">Tutorial for sscharter</a>
+</summary>
+              <ul class="link-list" role="directory">
+                          <li>      <a href="#label-Introduction">Introduction</a>
+          <li>      <a href="#label-Prerequisites">Prerequisites</a>
+          <li>      <a href="#label-Install+sscharter">Install sscharter</a>
+          <li>      <a href="#label-Step+0-3A+decide+the+music">Step 0: decide the music</a>
+          <li>      <a href="#label-Step+1-3A+create+a+project">Step 1: create a project</a>
+          <li>
+            <details open>
+              <summary>      <a href="#label-Step+2-3A+set+up+workflow">Step 2: set up workflow</a>
+</summary>
+              <ul class="link-list" role="directory">
+                          <li>      <a href="#label-Configure+Sunniesnow+to+suit+charting">Configure Sunniesnow to suit charting</a>
+          <li>      <a href="#label-Text+editor+configuration">Text editor configuration</a>
+
+              </ul>
+            </details>
+          </li>
+          <li>      <a href="#label-What+does+each+line+in+src-2Fmaster.rb+mean-3F">What does each line in <code>src/master.rb</code> mean?</a>
+          <li>      <a href="#label-Step+3-3A+write+the+chart+metadata">Step 3: write the chart metadata</a>
+          <li>      <a href="#label-Step+4-3A+determine+the+offset+and+BPM">Step 4: determine the offset and BPM</a>
+          <li>
+            <details open>
+              <summary>      <a href="#label-Step+5-3A+write+the+chart">Step 5: write the chart</a>
+</summary>
+              <ul class="link-list" role="directory">
+                          <li>      <a href="#label-Write+notes">Write notes</a>
+          <li>      <a href="#label-Background+patterns">Background patterns</a>
+          <li>      <a href="#label-Groups-2C+duplicates-2C+and+transformations">Groups, duplicates, and transformations</a>
+          <li>      <a href="#label-Navigate+among+beats">Navigate among beats</a>
+          <li>      <a href="#label-BPM+changes">BPM changes</a>
+          <li>      <a href="#label-Tip+points">Tip points</a>
+
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details open>
+              <summary>      <a href="#label-Advanced+charting+techniques">Advanced charting techniques</a>
+</summary>
+              <ul class="link-list" role="directory">
+                          <li>      <a href="#label-Use+Git+as+a+version+manager">Use Git as a version manager</a>
+          <li>      <a href="#label-Useful+loops">Useful loops</a>
+          <li>      <a href="#label-Homography">Homography</a>
+          <li>      <a href="#label-Tip+points+and+placeholders">Tip points and placeholders</a>
+          <li>      <a href="#label-Multiple+offsets+and+timing+tweaking">Multiple offsets and timing tweaking</a>
+          <li>      <a href="#label-JSON+post-processing">JSON post-processing</a>
+
+              </ul>
+            </details>
+          </li>
+          <li>      <a href="#label-Step+6-3A+review+your+chart+and+write+the+README">Step 6: review your chart and write the README</a>
+          <li>      <a href="#label-Step+7-3A+distribute+the+level+file">Step 7: distribute the level file</a>
+
+              </ul>
+            </details>
+          </li>
+
+  </ul>
+</div>
+
+
+  <div id="project-metadata">
+    
+<div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+    <li><a href="../README_md.html">README</a>
+    <li><a href="../tutorial/tutorial_md.html">tutorial</a>
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page tutorial/tutorial.md">
+
+<h1 id="label-Tutorial+for+sscharter">Tutorial for sscharter<span><a href="#label-Tutorial+for+sscharter">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<h2 id="label-Introduction">Introduction<span><a href="#label-Introduction">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Sscharter is a Ruby DSL serving as a charting tool for <a href="https://sunniesnow.github.io">Sunniesnow</a>. Different from other charting tools, sscharter does not have a GUI.</p>
+
+<p>By using a programming language, charters can write charts more creatively. If the chart has many patterns, it can be much more efficient than using a GUI charting tool. However, programming languages can be difficult to learn.</p>
+
+<h2 id="label-Prerequisites">Prerequisites<span><a href="#label-Prerequisites">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Here are some prerequisites for using sscharter. Check all of them before continuing this tutorial:</p>
+<ul><li>
+<p>You need to have a basic knowledge of how to use a command line interface (CLI). If you do not, you may find <a href="https://tutorial.djangogirls.org/en/intro_to_command_line/">this introduction</a> helpful.</p>
+</li><li>
+<p>You need to <a href="https://www.ruby-lang.org/en/documentation/installation/">install Ruby</a>.</p>
+</li><li>
+<p>You need to has a basic understanding of how to program. If you have programmed before, you will be fine because Ruby is a easy-to-begin language. If you have not, <a href="https://pine.fm/LearnToProgram/">this</a> is a good place to start.</p>
+</li><li>
+<p>You need a basic audio editing software and a basic text editing software. If you do not have any, you can use <a href="https://www.audacityteam.org/">Audacity</a> and <a href="https://code.visualstudio.com/">Visual Studio Code</a>.</p>
+</li><li>
+<p>You need to be familiar with the game <a href="../Sunniesnow.html"><code>Sunniesnow</code></a> (which I assume you do because otherwise you would not be reading this now). Better, you should be familiar with how a level file of <a href="../Sunniesnow.html"><code>Sunniesnow</code></a> is structured by reading <a href="https://sunniesnow.github.io/doc/">the documentation</a>.</p>
+</li></ul>
+
+<h2 id="label-Install+sscharter">Install sscharter<span><a href="#label-Install+sscharter">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Assume you have installed Ruby. Then, run</p>
+
+<pre class="ruby"><span class="ruby-identifier">gem</span> <span class="ruby-identifier">install</span> <span class="ruby-identifier">sscharter</span>
+</pre>
+
+<p>You are now good to go!</p>
+
+<h2 id="label-Step+0-3A+decide+the+music">Step 0: decide the music<span><a href="#label-Step+0-3A+decide+the+music">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>You need to decide the music you want to chart for! Because you are assumed to be familiar with rhythm games, I do not need to tell you what kinds of music are suitable for rhythm games. However, I need to remind you that before you start charting, either</p>
+<ul><li>
+<p>you make sure the artist announced publicly that anyone can chart for the music or permitted some sorts of usage that covers charting, or</p>
+</li><li>
+<p>you got contact with the artist, explained to them that you want to chart for the music and how you would distribute your chart, and got their permission.</p>
+</li></ul>
+
+<p>If you did not do any of the above, you need to keep in mind that you are a bad boy and may face some sort of consequences (I do not know. I am not a lawyer).</p>
+
+<p>For this tutorial, I will use {<em>Big-D</em> by Shaolin Dub}[https://freemusicarchive.org/music/Shaolin_Dub/joint-force/big-d/]. It is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC-BY-NC-ND-4.0</a>. You can download it from the link or use the following command (if you have installed <a href="https://curl.se/">cURL</a>). By downloading it, you accept its license.</p>
+
+<pre>curl https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/MQ8JO0BqKl2UADzKg74rwoY7mapqBT4uWpQYciTJ.mp3 -o &#39;Shaolin Dub - Big-D.mp3&#39;</pre>
+
+<h2 id="label-Step+1-3A+create+a+project">Step 1: create a project<span><a href="#label-Step+1-3A+create+a+project">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>If you have already <a href="#install-sscharter">installed sscharter</a> and downloaded the audio file for your music using the command above, you can now create a project for your chart by running the following command:</p>
+
+<pre>sscharter init big-d &#39;Shaolin Dub - Big-D.mp3&#39;</pre>
+
+<p>The parameter <code>big-d</code> is the path to the project directory, and its basename will be set as the name of the project (but you are free to change it later). The parameter <code>Shaolin Dub - Big-D.mp3</code> is the path to the audio file. You can continue to add more parameters to the command to include more files that you want t o include in the final level file. See <a href="https://sunniesnow.github.io/doc/">the documentation</a> for what you may want to include. If you forget to include some of the files that you want to include at this step, you can add them later whenever you want.</p>
+
+<p>After running the command, the audio file will be copied into the project directory, and it is no longer needed for the rest of the tutorial. You may delete it if you want.</p>
+
+<p>Open the directory <code>big-d</code>, and you will see this directory structure:</p>
+
+<pre class="ruby"><span class="ruby-identifier">big</span><span class="ruby-operator">-</span><span class="ruby-identifier">d</span>
+<span class="ruby-identifier">├──</span> <span class="ruby-identifier">files</span>
+<span class="ruby-identifier">│  </span> <span class="ruby-identifier">└──</span> <span class="ruby-constant">Shaolin</span> <span class="ruby-constant">Dub</span> <span class="ruby-operator">-</span> <span class="ruby-constant">Big</span><span class="ruby-operator">-</span><span class="ruby-constant">D</span>.<span class="ruby-identifier">mp3</span>
+<span class="ruby-identifier">├──</span> <span class="ruby-constant">Gemfile</span>
+<span class="ruby-identifier">├──</span> .<span class="ruby-identifier">gitignore</span>
+<span class="ruby-identifier">├──</span> <span class="ruby-constant">Rakefile</span>
+<span class="ruby-identifier">├──</span> <span class="ruby-constant">README</span>.<span class="ruby-identifier">md</span>
+<span class="ruby-identifier">├──</span> <span class="ruby-identifier">src</span>
+<span class="ruby-identifier">│  </span> <span class="ruby-identifier">└──</span> <span class="ruby-identifier">master</span>.<span class="ruby-identifier">rb</span>
+<span class="ruby-identifier">└──</span> .<span class="ruby-identifier">sscharter</span>.<span class="ruby-identifier">yml</span>
+</pre>
+
+<p>Here are some explanation for each of them.</p>
+<ul><li>
+<p><code>Gemfile</code> specifies the gem dependencies of this project. By default your project depends on sscharter, bundler, and rake. You can add more dependencies if you want. For more information about it, see <a href="https://bundler.io/man/gemfile.5.html">the official documentation</a>.</p>
+</li><li>
+<p><code>.gitignore</code> specifies the files that should not be tracked by Git. If you do not use Git as the version manager for your project, it does nothing.</p>
+</li><li>
+<p><code>Rakefile</code> contains some tasks that can be run by <a href="https://ruby.github.io/rake/">Rake</a>.</p>
+</li><li>
+<p><code>README.md</code> is the <a href="../README_md.html">README</a> file of your project.</p>
+</li><li>
+<p><code>.sscharter.yml</code> is the sscharter configuration for your project.</p>
+</li><li>
+<p><code>files</code> is the directory whose files will be included in the final level file. You can change the directory in <code>.sscharter.yml</code>.</p>
+</li><li>
+<p><code>src</code> is the directory that contains the source codes of your project. You can change the directory in <code>.sscharter.yml</code>.</p>
+</li></ul>
+
+<p>Open <code>.sscharter.yml</code> using your text editor. Here are the contents that you should see:</p>
+
+<pre>---
+project_name: big-d
+build_dir: build
+files_dir: files
+sources_dir: src
+include:
+  - README.md</pre>
+
+<p>Here are some explanation for each of them.</p>
+<ul><li>
+<p><code>project_name</code> is the name of your project. It will be the filename without extension of the generated level file.</p>
+</li><li>
+<p><code>build_dir</code> is the directory that will contain the generated level file.</p>
+</li><li>
+<p><code>files_dir</code> is the directory whose files will be included in the final level file.</p>
+</li><li>
+<p><code>sources_dir</code> is the directory that contains the source codes of your project.</p>
+</li><li>
+<p><code>include</code> is the list of files outside <code>files_dir</code> that will be included in the final level file. You can use wildcard characters in the filenames.</p>
+</li></ul>
+
+<p>You can also use your text editor to open the file <code>src/master.rb</code> for what a source codes file look like:</p>
+
+<pre class="ruby"><span class="ruby-comment"># frozen_string_literal: true</span>
+
+<span class="ruby-constant">Sunniesnow</span><span class="ruby-operator">::</span><span class="ruby-constant">Charter</span>.<span class="ruby-identifier">open</span> <span class="ruby-string">&#39;master&#39;</span> <span class="ruby-keyword">do</span>
+
+<span class="ruby-identifier">title</span> <span class="ruby-string">&#39;The title of the music&#39;</span>
+<span class="ruby-identifier">artist</span> <span class="ruby-string">&#39;The artist of the music&#39;</span>
+<span class="ruby-identifier">charter</span> <span class="ruby-string">&#39;Your name&#39;</span>
+<span class="ruby-identifier">difficulty_name</span> <span class="ruby-string">&#39;Master&#39;</span>
+<span class="ruby-identifier">difficulty_color</span> <span class="ruby-string">&#39;#8c68f3&#39;</span>
+<span class="ruby-identifier">difficulty</span> <span class="ruby-string">&#39;12&#39;</span>
+<span class="ruby-identifier">difficulty_sup</span> <span class="ruby-string">&#39;+&#39;</span> <span class="ruby-comment"># optional</span>
+
+<span class="ruby-identifier">offset</span> <span class="ruby-value">0</span>
+<span class="ruby-identifier">bpm</span> <span class="ruby-value">120</span>
+
+<span class="ruby-identifier">tp_chain</span> <span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-identifier">t</span> <span class="ruby-value">-50</span>, <span class="ruby-value">0</span>, <span class="ruby-string">&#39;hello&#39;</span>
+  <span class="ruby-identifier">b</span> <span class="ruby-value">1</span> <span class="ruby-comment"># proceed by 1 beat</span>
+  <span class="ruby-identifier">t</span> <span class="ruby-value">50</span>, <span class="ruby-value">0</span>, <span class="ruby-string">&#39;world&#39;</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>You will learn what these codes mean soon later!</p>
+
+<h2 id="label-Step+2-3A+set+up+workflow">Step 2: set up workflow<span><a href="#label-Step+2-3A+set+up+workflow">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Now, in the project directory, run</p>
+
+<pre class="ruby"><span class="ruby-identifier">bundle</span> <span class="ruby-identifier">install</span>
+</pre>
+
+<p>It should be done quickly if your network is good. Change the gem source in <code>Gemfile</code> if you have trouble retrieving from the default source.</p>
+
+<p>After that, run</p>
+
+<pre class="ruby"><span class="ruby-identifier">rake</span>
+</pre>
+
+<p>Then, you should see a file <code>build/big-d.ssc</code> generated. This file is a level file of <a href="../Sunniesnow.html"><code>Sunniesnow</code></a>. You can upload it on the webpage of <a href="../Sunniesnow.html"><code>Sunniesnow</code></a> to play it.</p>
+
+<p>However, it is kind of inconvenient if you have to run <code>rake</code> and reupload the level file every time you make a change to the source codes. You can use the following command to make it more convenient:</p>
+
+<pre class="ruby"><span class="ruby-identifier">rake</span> <span class="ruby-identifier">serve</span>
+</pre>
+
+<p>This command will open the <a href="../Sunniesnow.html"><code>Sunniesnow</code></a> webpage in your browser for you. The <code>online</code> field of <a href="../Sunniesnow.html"><code>Sunniesnow</code></a> is already filled with the address to the generated level file. Every time you save changes to the source codes, the program will automatically rebuild the level file. <a href="../Sunniesnow.html"><code>Sunniesnow</code></a> will reload the level file automatically if you are using the default settings.</p>
+
+<p>The port of the local server is 8011 by default. If you need to change the port to 1314 for example, you need to run</p>
+
+<pre>bundle exec sscharter serve --port 1314</pre>
+
+<p>You can edit <code>Rakefile</code> to make <code>rake serve</code> use that port.</p>
+
+<blockquote>
+<p>[!TIP] If you do not even want the live reload feature, you can turn it off by using</p>
+
+<pre class="ruby"><span class="ruby-identifier">bundle</span> <span class="ruby-identifier">exec</span> <span class="ruby-identifier">sscharter</span> <span class="ruby-identifier">serve</span> <span class="ruby-operator">-</span><span class="ruby-operator">-</span><span class="ruby-identifier">production</span>
+</pre>
+
+<p>This way, the level file generated is the same as that generated by <code>sscharter build</code>, which does not contain the info necessary for live reload.</p>
+</blockquote>
+
+<h3 id="label-Configure+Sunniesnow+to+suit+charting">Configure <a href="../Sunniesnow.html"><code>Sunniesnow</code></a> to suit charting<span><a href="#label-Configure+Sunniesnow+to+suit+charting">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>The default settings of <a href="../Sunniesnow.html"><code>Sunniesnow</code></a> are tuned for gameplay instead of charting, so you may want to change some settings to help you write the chart. Use this link to set these settings quickly:</p>
+
+<p><a href="https://sunniesnow.github.io/game/?volume-se=1&amp;se-with-music=true&amp;chart-offset=0&amp;autoplay=true&amp;progress-adjustable=true&amp;hide-pause-ui=true&amp;resume-preparation-time=0&amp;always-update-fx=true&amp;debug=true&amp;fullscreen-on-start=false&amp;sscharter=true&amp;sscharter-live-restart=true">sunniesnow.github.io/game/?volume-se=1&amp;se-with-music=true&amp;chart-offset=0&amp;autoplay=true&amp;progress-adjustable=true&amp;hide-pause-ui=true&amp;resume-preparation-time=0&amp;always-update-fx=true&amp;debug=true&amp;fullscreen-on-start=false&amp;sscharter=true&amp;sscharter-live-restart=true</a></p>
+
+<p>First, the most important part of rhythm game charting is to ensure that notes are pefectly aligned with the music. To help you with that, configure the following settings:</p>
+<ul><li>
+<p>set {<code>volume-se</code><a href="https://sunniesnow.github.io/game/help.html#volume-se">}</a> to a proper positive value,</p>
+</li><li>
+<p>enable {<code>se-with-music</code><a href="https://sunniesnow.github.io/game/help.html#se-with-music">}</a>, and</p>
+</li><li>
+<p>set {<code>chart-offset</code><a href="https://sunniesnow.github.io/game/help.html#chart-offset">}</a> to <code>0</code> (this is default).</p>
+</li></ul>
+
+<p>You can still set {<code>delay</code><a href="https://sunniesnow.github.io/game/help.html#delay">}</a> and {<code>offset</code><a href="https://sunniesnow.github.io/game/help.html#offset">}</a> to fit the audio and display latency of your device. You can still ensure the notes are aligned with the music by listening to the sound effects. To learn what the differences between these two settings and <code>chart-offset</code>, read <a href="https://sunniesnow.github.io/game/help.html#differences-between-different-offsets">differences between different offsets</a>.</p>
+
+<p>Configure the following settings to have a video-player-like experience:</p>
+<ul><li>
+<p>enable {<code>autoplay</code><a href="https://sunniesnow.github.io/game/help.html#autoplay">}</a>,</p>
+</li><li>
+<p>enable {<code>progress-adjustable</code><a href="https://sunniesnow.github.io/game/help.html#progress-adjustable">}</a>,</p>
+</li><li>
+<p>enable {<code>hide-pause-ui</code><a href="https://sunniesnow.github.io/game/help.html#hide-pause-ui">}</a>,</p>
+</li><li>
+<p>enable {<code>always-update-fx</code><a href="https://sunniesnow.github.io/game/help.html#always-update-fx">}</a>, and</p>
+</li><li>
+<p>set {<code>resume-preparation-time</code><a href="https://sunniesnow.github.io/game/help.html#resume-preparation-time">}</a> to <code>0</code>.</p>
+</li></ul>
+
+<p>You can drag the progress bar or hit &lt;kbd&gt;ArrowLeft&lt;/kbd&gt; or &lt;kbd&gt;ArrowRight&lt;/kbd&gt; to adjust the progress. See the help contents of {<code>progress-adjustable</code><a href="https://sunniesnow.github.io/game/help.html#progress-adjustable">}</a> to learn other controls available in this mode.</p>
+
+<p>Enable {<code>debug</code><a href="https://sunniesnow.github.io/game/help.html#debug">}</a>, and you can see the current progress of the music, the judgement region of notes, the coordinates of where you click your mouse, etc. You can also pin coordinates on the screen by clicking while holding &lt;kbd&gt;Ctrl&lt;/kbd&gt;. Other controls for pinning coordinates in this mode are introduced in the help contents of {<code>debug</code><a href="https://sunniesnow.github.io/game/help.html#debug">}</a>. When the game is paused in debug mode, you can also click a note, background note, or background pattern to reveal the event details, including the event ID, its time and properties, and (if it is a note) which combo number it is at. The most useful feature of the debug mode for charting with sscharter is that, if the chart you are playing is served by sscharter (without the <code>--production</code> flag), the sscharter server will tell you (in the terminal) where the event is defined when you reveal the event details in <a href="../Sunniesnow.html"><code>Sunniesnow</code></a>. This gives the ability of reverse searching.</p>
+
+<p>Finally, although it is already convenient to have the level file reloaded automatically when you save changes to the source codes, you can enable {<code>sscharter-live-restart</code><a href="https://sunniesnow.github.io/game/help.html#sscharter-live-restart">}</a> to make it more convenient. This setting will make the game restarted automatically when you save changes to the source codes.</p>
+
+<p>Other useful settings:</p>
+<ul><li>
+<p>Disable {<code>fullscreen-on-start</code><a href="https://sunniesnow.github.io/game/help.html#fullscreen-on-start">}</a>. Fullscreen is good for gamplay but is disturbing for charting.</p>
+</li><li>
+<p>Use the option {<code>start</code><a href="https://sunniesnow.github.io/game/help.html#start">}</a> to start the music at a certain time. You can use the progress you got from debug mode UI to set it.</p>
+</li></ul>
+
+<h3 id="label-Text+editor+configuration">Text editor configuration<span><a href="#label-Text+editor+configuration">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>The workflow can be enhanced with a good text editor. Here is a setup with Visual Studio Code (abbreviated as VS Code in the following) without any external extensions.</p>
+
+<p>Create a file <code>.vscode/tasks.json</code> in your project and write:</p>
+
+<pre class="ruby">{
+    <span class="ruby-value">&quot;version&quot;:</span> <span class="ruby-string">&quot;2.0.0&quot;</span>,
+    <span class="ruby-value">&quot;tasks&quot;:</span> [
+        {
+            <span class="ruby-value">&quot;label&quot;:</span> <span class="ruby-string">&quot;Serve&quot;</span>,
+            <span class="ruby-value">&quot;type&quot;:</span> <span class="ruby-string">&quot;shell&quot;</span>,
+            <span class="ruby-value">&quot;command&quot;:</span> <span class="ruby-string">&quot;rake serve&quot;</span>,
+            <span class="ruby-value">&quot;presentation&quot;:</span> {
+                <span class="ruby-value">&quot;reveal&quot;:</span> <span class="ruby-string">&quot;always&quot;</span>
+            }
+        },
+        {
+            <span class="ruby-value">&quot;label&quot;:</span> <span class="ruby-string">&quot;Build&quot;</span>,
+            <span class="ruby-value">&quot;type&quot;:</span> <span class="ruby-string">&quot;shell&quot;</span>,
+            <span class="ruby-value">&quot;command&quot;:</span> <span class="ruby-string">&quot;rake build&quot;</span>,
+            <span class="ruby-value">&quot;group&quot;:</span> <span class="ruby-string">&quot;build&quot;</span>
+        }
+    ]
+}
+</pre>
+
+<p>Then, edit <code>Rakefile</code> to disable browser launching and enable live restart:</p>
+
+<pre class="ruby"><span class="ruby-identifier">task</span> <span class="ruby-value">:serve</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-identifier">exec</span> <span class="ruby-string">&#39;bundle exec sscharter serve --no-open-browser --live-restart&#39;</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>Hit &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;P&lt;/kbd&gt; in VS Code, type “Simple Browser”, and you will see an option to open a webpage using the simple browser feature of VS Code. Select that option, and then there is a popup telling you to enter the web address. Type “<a href="https://sunniesnow.github.io/game">sunniesnow.github.io/game</a>” (or the very long link that sets all the settings for charting quickly shown <a href="#configure-sunniesnow-to-suit-charting">above</a>) and then enter. After that, drag the simple browser tab to make it alongside with the main editor (the split editor feature of VS Code).</p>
+
+<p>Then, hit &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Shift&lt;/kbd&gt;+&lt;kbd&gt;P&lt;/kbd&gt; and type “Run Task”. There is an option with which you can run a task configured in <code>.vscode/tasks.json</code>. Select that option, and then select the “Serve” task. (After that, VS Code asks you whether to scan the output. You can skip that.) A new widget will open in the bottom (the integrated terminal feature of VS Code) showing the terminal output of sscharter. After sscharter finishes building the level file, a URL to the level file will be shown. Copy that URL into the {<code>level-file-online</code><a href="https://sunniesnow.github.io/game/help.html#level-file-online">}</a> setting. Then, hit the start button in <a href="../Sunniesnow.html"><code>Sunniesnow</code></a> to check that you can play the chart.</p>
+
+<p>After that, configure <a href="../Sunniesnow.html"><code>Sunniesnow</code></a> to suit charting as described <a href="#configure-sunniesnow-to-suit-charting">above</a>. You now have a decent charting setup.</p>
+
+<p>When you want to reverse search an event, you can pause the game in debug mode and click the event (note, background note, or background pattern). You can then see the its definition location in the terminal output below. In VS Code, you can navigate to the location in the editor by clicking the file path and line number in the terminal output while holding &lt;kbd&gt;Ctrl&lt;/kbd&gt; (or other modifier keys depending on your configuration).</p>
+
+<p>The following is a screenshot of the setup:</p>
+
+<p><img src="https://i.imgur.com/O3nhKX4.png"></p>
+
+<h2 id="label-What+does+each+line+in+src-2Fmaster.rb+mean-3F">What does each line in <code>src/master.rb</code> mean?<span><a href="#label-What+does+each+line+in+src-2Fmaster.rb+mean-3F">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Now, you are ready to write the chart! Open <code>src/master.rb</code> using your text editor. Here I explain what each line in this file means.</p>
+
+<pre class="ruby"><span class="ruby-constant">Sunniesnow</span><span class="ruby-operator">::</span><span class="ruby-constant">Charter</span>.<span class="ruby-identifier">open</span> <span class="ruby-string">&#39;master&#39;</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-comment"># ...</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>This means that you are opening a chart called “master”. This will lead to a chart file called <code>master.json</code> in the generated level file. You can open multiple charts in a single source codes file, and you can also open the same chart in multiple source codes files (but in that case the loading order matters).</p>
+
+<p>The contents inside the <code>do</code>…<code>end</code> block are the contents of the chart. You can write anything you like there.</p>
+
+<pre class="ruby"><span class="ruby-identifier">title</span> <span class="ruby-string">&#39;The title of the music&#39;</span>
+<span class="ruby-identifier">artist</span> <span class="ruby-string">&#39;The artist of the music&#39;</span>
+<span class="ruby-identifier">charter</span> <span class="ruby-string">&#39;Your name&#39;</span>
+<span class="ruby-identifier">difficulty_name</span> <span class="ruby-string">&#39;Master&#39;</span>
+<span class="ruby-identifier">difficulty_color</span> <span class="ruby-string">&#39;#8c68f3&#39;</span>
+<span class="ruby-identifier">difficulty</span> <span class="ruby-string">&#39;12&#39;</span>
+<span class="ruby-identifier">difficulty_sup</span> <span class="ruby-string">&#39;+&#39;</span> <span class="ruby-comment"># optional</span>
+</pre>
+
+<p>These lines are the metadata of the chart. They already explain pretty much themselves. Just fill them in!</p>
+
+<p>By the way, there is a trick about the <code>difficulty_color</code> for your convenience. If you want default difficulty colors from Lyrica, you can use one of these:</p>
+
+<pre class="ruby"><span class="ruby-identifier">difficulty_color</span> <span class="ruby-value">:easy</span>
+<span class="ruby-identifier">difficulty_color</span> <span class="ruby-value">:normal</span>
+<span class="ruby-identifier">difficulty_color</span> <span class="ruby-value">:hard</span>
+<span class="ruby-identifier">difficulty_color</span> <span class="ruby-value">:master</span>
+<span class="ruby-identifier">difficulty_color</span> <span class="ruby-value">:special</span>
+</pre>
+
+<p>Then, here comes the offset and BPM part:</p>
+
+<pre class="ruby"><span class="ruby-identifier">offset</span> <span class="ruby-value">0</span>
+<span class="ruby-identifier">bpm</span> <span class="ruby-value">120</span>
+</pre>
+
+<p>This means:</p>
+<ul><li>
+<p>The zeroth beat of the music starts at time equaling to 0 seconds.</p>
+</li><li>
+<p>The BPM of the music starting at the zeroth beat is 120.</p>
+</li></ul>
+
+<p>You can change the BPM later at any beat by using <code>bpm</code>. You can also use <code>offset</code> multiple times, but every time you run <code>offset</code>, the beat is reset to zero, and you have to set the BPM over again.</p>
+
+<p>Now here comes the main part:</p>
+
+<pre class="ruby"><span class="ruby-identifier">tp_chain</span> <span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-identifier">t</span> <span class="ruby-value">-50</span>, <span class="ruby-value">0</span>, <span class="ruby-string">&#39;hello&#39;</span>
+  <span class="ruby-identifier">b</span> <span class="ruby-value">1</span> <span class="ruby-comment"># proceed by 1 beat</span>
+  <span class="ruby-identifier">t</span> <span class="ruby-value">50</span>, <span class="ruby-value">0</span>, <span class="ruby-string">&#39;world&#39;</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>This means:</p>
+<ul><li>
+<p>Start a tip point chain. The tip point spawns at:</p>
+</li><li>
+<p>coordinates $(0,0)$ relative to the first tip-pointable event in the chain, and</p>
+</li><li>
+<p>time 1 second before the first tip-pointable event in the chain.</p>
+</li><li>
+<p>Add a tap note at coordinates $(-50,0)$ to the tip point chain. The tap note has text “hello” on it.</p>
+</li><li>
+<p>Proceed by 1 beat. Now the current beat is 1 instead of 0.</p>
+</li><li>
+<p>Add a tap note at coordinates $(50,0)$ to the tip point chain. The tap note has text “world” on it.</p>
+</li><li>
+<p>End the tip point chain.</p>
+</li></ul>
+
+<p>They are actually very straightforward!</p>
+
+<p>Now, you are ready to write your own chart.</p>
+
+<h2 id="label-Step+3-3A+write+the+chart+metadata">Step 3: write the chart metadata<span><a href="#label-Step+3-3A+write+the+chart+metadata">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Delete all contents inside the outmost <code>do</code>…<code>end</code> block. Then, write the metadata of the chart:</p>
+
+<pre class="ruby"><span class="ruby-identifier">title</span> <span class="ruby-string">&#39;Big-D&#39;</span>
+<span class="ruby-identifier">artist</span> <span class="ruby-string">&#39;Shaolin Dub&#39;</span>
+<span class="ruby-identifier">charter</span> <span class="ruby-string">&#39;UlyssesZhan&#39;</span> <span class="ruby-comment"># replace this with your name</span>
+<span class="ruby-identifier">difficulty_name</span> <span class="ruby-string">&#39;Master&#39;</span>
+<span class="ruby-identifier">difficulty_color</span> <span class="ruby-value">:master</span>
+<span class="ruby-identifier">difficulty</span> <span class="ruby-string">&#39;10&#39;</span>
+</pre>
+
+<p>You are then writing the chart for the master difficulty, with difficulty being 10.</p>
+
+<p>Now, the whole source codes file should look like this:</p>
+
+<pre class="ruby"><span class="ruby-comment"># frozen_string_literal: true</span>
+
+<span class="ruby-constant">Sunniesnow</span><span class="ruby-operator">::</span><span class="ruby-constant">Charter</span>.<span class="ruby-identifier">open</span> <span class="ruby-string">&#39;master&#39;</span> <span class="ruby-keyword">do</span>
+
+<span class="ruby-identifier">title</span> <span class="ruby-string">&#39;Big-D&#39;</span>
+<span class="ruby-identifier">artist</span> <span class="ruby-string">&#39;Shaolin Dub&#39;</span>
+<span class="ruby-identifier">charter</span> <span class="ruby-string">&#39;UlyssesZhan&#39;</span> <span class="ruby-comment"># replace this with your name</span>
+<span class="ruby-identifier">difficulty_name</span> <span class="ruby-string">&#39;Master&#39;</span>
+<span class="ruby-identifier">difficulty_color</span> <span class="ruby-value">:master</span>
+<span class="ruby-identifier">difficulty</span> <span class="ruby-string">&#39;10&#39;</span>
+
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h2 id="label-Step+4-3A+determine+the+offset+and+BPM">Step 4: determine the offset and BPM<span><a href="#label-Step+4-3A+determine+the+offset+and+BPM">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Now, you need to determine the offset and BPM of the music and write the information into the source codes file. Use your favorite audio editing software to open the music (I use Audacity here).</p>
+
+<p>To determine them, inside a section of the music with consistent BPM, find a beat that is clear to recognize (up to milliseconds precision for the best).</p>
+
+<p><img src="https://i.imgur.com/rI5UXgm.png"></p>
+
+<p>Then, find the time of the beat. You can read off the time at the “Audio Position” field in Audacity, which says 7.023 seconds here.</p>
+
+<p>Then, find the last beat that is clear to recognize.</p>
+
+<p><img src="https://i.imgur.com/eJw6ZaJ.png"></p>
+
+<p>Then, find the time of the beat. It is 180.071 seconds.</p>
+
+<p>You now need to know how many beats are there between the two beats. You can first approximately measure the length of, say, 8 beats, and then divide the length between the two beats by the length of 8 beats to estimate how many “8 beats” are there. Because we can easily hear that number of beats modulo 4 is 2, we can use the fact to check our result of calculation (the result of the division should be close to something point 25 or something point 75). The result should be approximately $49.75$. Then, we can calculate the BPM now:</p>
+
+<pre>60\,\mathrm{s/min}\cdot
+\frac{49.75\times8\,\mathrm{beats}}{180.071\,\mathrm s-7.023\,\mathrm s}
+\approx137.996\,\mathrm{beats/min}.</pre>
+
+<p>So the BPM is approximately 138.</p>
+
+<p>To get the offset, we just need to extrapolate the time of the zeroth beat. We can count that the first clear beat we chose is the 16th beat, so we can use the BPM and the time of the 16th beat to extrapolate the time of the zeroth beat:</p>
+
+<pre>7.023\,\mathrm s-16\,\mathrm{beats}\cdot
+\frac{60\,\mathrm{s/min}}{138\,\mathrm{beats/min}}
+\approx0.066\,\mathrm s.</pre>
+
+<p>Now that we got the offset and BPM, we can write them into the source codes file:</p>
+
+<pre class="ruby"><span class="ruby-identifier">offset</span> <span class="ruby-value">0.066</span>
+<span class="ruby-identifier">bpm</span> <span class="ruby-value">138</span>
+</pre>
+
+<p>The whole source codes file should now look like this:</p>
+
+<pre class="ruby"><span class="ruby-comment"># frozen_string_literal: true</span>
+
+<span class="ruby-constant">Sunniesnow</span><span class="ruby-operator">::</span><span class="ruby-constant">Charter</span>.<span class="ruby-identifier">open</span> <span class="ruby-string">&#39;master&#39;</span> <span class="ruby-keyword">do</span>
+
+<span class="ruby-identifier">title</span> <span class="ruby-string">&#39;Big-D&#39;</span>
+<span class="ruby-identifier">artist</span> <span class="ruby-string">&#39;Shaolin Dub&#39;</span>
+<span class="ruby-identifier">charter</span> <span class="ruby-string">&#39;UlyssesZhan&#39;</span> <span class="ruby-comment"># replace this with your name</span>
+<span class="ruby-identifier">difficulty_name</span> <span class="ruby-string">&#39;Master&#39;</span>
+<span class="ruby-identifier">difficulty_color</span> <span class="ruby-value">:master</span>
+<span class="ruby-identifier">difficulty</span> <span class="ruby-string">&#39;10&#39;</span>
+
+<span class="ruby-identifier">offset</span> <span class="ruby-value">0.066</span>
+<span class="ruby-identifier">bpm</span> <span class="ruby-value">138</span>
+
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h2 id="label-Step+5-3A+write+the+chart">Step 5: write the chart<span><a href="#label-Step+5-3A+write+the+chart">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Now, you are ready to write the main part of the chart!</p>
+
+<h3 id="label-Write+notes">Write notes<span><a href="#label-Write+notes">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>Write the following code:</p>
+
+<pre class="ruby"><span class="ruby-identifier">hold</span> <span class="ruby-value">-25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span> <span class="ruby-comment"># a hold note at (-25,0) with the duration of 1/2 beats</span>
+<span class="ruby-identifier">beat</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span>         <span class="ruby-comment"># go to beat 3/4</span>
+<span class="ruby-identifier">hold</span> <span class="ruby-value">25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>  <span class="ruby-comment"># a hold note at (25,0) with the duration of 1/2 beats</span>
+<span class="ruby-identifier">beat</span> <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>     <span class="ruby-comment"># go to beat 3</span>
+<span class="ruby-identifier">hold</span> <span class="ruby-value">0</span>, <span class="ruby-value">25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>  <span class="ruby-comment"># a hold note at (0,25) with the duration of 1/2 beats</span>
+<span class="ruby-identifier">beat</span> <span class="ruby-value">1</span>            <span class="ruby-comment"># go to beat 4</span>
+
+<span class="ruby-identifier">hold</span> <span class="ruby-value">-25</span>, <span class="ruby-value">-25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>
+<span class="ruby-identifier">beat</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span>
+<span class="ruby-identifier">hold</span> <span class="ruby-value">25</span>, <span class="ruby-value">-25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>
+<span class="ruby-identifier">beat</span> <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+<span class="ruby-identifier">hold</span> <span class="ruby-value">0</span>, <span class="ruby-value">-50</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>
+<span class="ruby-identifier">beat</span> <span class="ruby-value">1</span>
+</pre>
+
+<p>By writing these, you added 6 hold notes to the chart. Each <code>hold</code> adds a hold note to the chart. The first argument is the $x$-coordinate of the hold note, the second argument is the $y$-coordinate of the hold note, and the third argument is the duration of the hold note in beats. There is an optional fourth argument, which is the text on the hold note (defaults to empty string). Each <code>beat</code> call proceeds the current beat by the argument you specifies.</p>
+
+<blockquote>
+<p>Here is a notice for those who are not familiar with Ruby: expression like <code>1/2r</code> means the rational number $1/2$. In sscharter, you need to specify beats in integers or rational numbers to avoid rounding errors. Here is an example of how rational numbers avoid rounding errors:</p>
+
+<pre class="ruby"><span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">10r</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">5r</span> <span class="ruby-operator">==</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">10r</span> <span class="ruby-comment"># =&gt; true</span>
+<span class="ruby-value">0.1</span> <span class="ruby-operator">+</span> <span class="ruby-value">0.2</span> <span class="ruby-operator">==</span> <span class="ruby-value">0.3</span> <span class="ruby-comment"># =&gt; false</span>
+</pre>
+
+<p>The rounding error would not be huge even if being added up many times, but it is still better to avoid it.</p>
+
+<p>If you are tired of appending <code>r</code> to every rational number, you may use</p>
+
+<pre class="ruby"><span class="ruby-constant">Integer</span>.<span class="ruby-identifier">alias_method</span> <span class="ruby-value">:/</span>, <span class="ruby-value">:quo</span>
+</pre>
+
+<p>to make the division operation between integers automatically return rational numbers.</p>
+</blockquote>
+
+<p>You can also abbreviate <code>hold</code> to <code>h</code> and <code>beat</code> to <code>b</code>, like this:</p>
+
+<pre class="ruby"><span class="ruby-identifier">h</span> <span class="ruby-value">-25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span>
+<span class="ruby-identifier">h</span> <span class="ruby-value">25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+<span class="ruby-identifier">h</span> <span class="ruby-value">0</span>, <span class="ruby-value">25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span>
+</pre>
+
+<blockquote>
+<p>Here is another notice for those who are not familiar with Ruby. In Ruby, the semicolon <code>;</code> can be used to separate multiple statements in a single line. Therefore, <code>h -25, 0, 1/2r; b 3/4r</code> is equivalent to</p>
+
+<pre class="ruby"><span class="ruby-identifier">h</span> <span class="ruby-value">-25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>
+<span class="ruby-identifier">b</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span>
+</pre>
+</blockquote>
+
+<p>Here is a list of all the note types you can use:</p>
+
+<table role="table">
+<thead>
+<tr>
+<th>Note type</th>
+<th>Syntax</th>
+<th>Abbreviation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tap</td>
+<td>‘tap x, y, text=“”`</td>
+<td>‘t`</td>
+</tr>
+<tr>
+<td>hold</td>
+<td>‘hold x, y, duration_beats, text=“”`</td>
+<td>‘h`</td>
+</tr>
+<tr>
+<td>drag</td>
+<td>‘drag x, y`</td>
+<td>‘d`</td>
+</tr>
+<tr>
+<td>flick</td>
+<td>‘flick x, y, direction, text=“”`</td>
+<td>‘f`</td>
+</tr>
+<tr>
+<td>background note</td>
+<td>‘bg_note x, y, duration_beats=0, text=“”`</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<p>The duration of a background note can be zero, but that of a hold note cannot.</p>
+
+<p>The direction of a flick note can be a number specifying the angle in <strong>radians</strong> (zero is to the right, and increasing angle is counterclockwise), or it can be one of the following symbols:</p>
+
+<table role="table">
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Direction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘:right`, `:r`</td>
+<td>$0$</td>
+</tr>
+<tr>
+<td>‘:up_right`, `:ur`, `:ru`</td>
+<td>$pi/4$</td>
+</tr>
+<tr>
+<td>‘:up`, `:u`</td>
+<td>$pi/2$</td>
+</tr>
+<tr>
+<td>‘:up_left`, `:ul`, `:lu`</td>
+<td>$3pi/4$</td>
+</tr>
+<tr>
+<td>‘:left`, `:l`</td>
+<td>$pi$</td>
+</tr>
+<tr>
+<td>‘:down_left`, `:dl`, `:ld`</td>
+<td>$-3pi/4$</td>
+</tr>
+<tr>
+<td>‘:down`, `:d`</td>
+<td>$-pi/2$</td>
+</tr>
+<tr>
+<td>‘:down_right`, `:dr`, `:rd`</td>
+<td>$-pi/4$</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>Here is another notice for those who are not familiar with Ruby. In Ruby, the parentheses around the arguments of a method call can be omitted. Therefore, <code>tap 25, 0, &#39;hi&#39;</code> is equivalent to <code>tap(25, 0, &#39;hi&#39;)</code>.</p>
+</blockquote>
+
+<p>Now, the whole source codes file should look like this:</p>
+
+<pre class="ruby"><span class="ruby-comment"># frozen_string_literal: true</span>
+
+<span class="ruby-constant">Sunniesnow</span><span class="ruby-operator">::</span><span class="ruby-constant">Charter</span>.<span class="ruby-identifier">open</span> <span class="ruby-string">&#39;master&#39;</span> <span class="ruby-keyword">do</span>
+
+<span class="ruby-identifier">title</span> <span class="ruby-string">&#39;Big-D&#39;</span>
+<span class="ruby-identifier">artist</span> <span class="ruby-string">&#39;Shaolin Dub&#39;</span>
+<span class="ruby-identifier">charter</span> <span class="ruby-string">&#39;UlyssesZhan&#39;</span> <span class="ruby-comment"># replace this with your name</span>
+<span class="ruby-identifier">difficulty_name</span> <span class="ruby-string">&#39;Master&#39;</span>
+<span class="ruby-identifier">difficulty_color</span> <span class="ruby-value">:master</span>
+<span class="ruby-identifier">difficulty</span> <span class="ruby-string">&#39;10&#39;</span>
+
+<span class="ruby-identifier">offset</span> <span class="ruby-value">0.066</span>
+<span class="ruby-identifier">bpm</span> <span class="ruby-value">138</span>
+
+<span class="ruby-identifier">h</span> <span class="ruby-value">-25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span>
+<span class="ruby-identifier">h</span> <span class="ruby-value">25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+<span class="ruby-identifier">h</span> <span class="ruby-value">0</span>, <span class="ruby-value">25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span>
+
+<span class="ruby-identifier">h</span> <span class="ruby-value">-25</span>, <span class="ruby-value">-25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span>
+<span class="ruby-identifier">h</span> <span class="ruby-value">25</span>, <span class="ruby-value">-25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+<span class="ruby-identifier">h</span> <span class="ruby-value">0</span>, <span class="ruby-value">-50</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span>
+
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>You may build the level file and play it on <a href="../Sunniesnow.html"><code>Sunniesnow</code></a> to see what you have done! If everything is alright, you should see a chart like this:</p>
+
+<p><img src="https://i.imgur.com/zPUtgGr.png"></p>
+
+<p>If you see something similar, congratulations!</p>
+
+<h3 id="label-Background+patterns">Background patterns<span><a href="#label-Background+patterns">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>There are totally 8 different kinds of background patterns:</p>
+
+<table role="table">
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>big text</td>
+<td>‘big_text duration_beats=0, text`</td>
+</tr>
+<tr>
+<td>grid</td>
+<td>‘grid duration_beats=0`</td>
+</tr>
+<tr>
+<td>hexagon</td>
+<td>‘hexagon duration_beats=0`</td>
+</tr>
+<tr>
+<td>checkerboard</td>
+<td>‘checkerboard duration_beats=0`</td>
+</tr>
+<tr>
+<td>diamond grid</td>
+<td>‘diamond_grid duration_beats=0`</td>
+</tr>
+<tr>
+<td>pentagon</td>
+<td>‘pentagon duration_beats=0`</td>
+</tr>
+<tr>
+<td>turntable</td>
+<td>‘turntable duration_beats=0`</td>
+</tr>
+<tr>
+<td>hexagram</td>
+<td>‘hexagram duration_beats=0`</td>
+</tr>
+</tbody>
+</table>
+
+<p>Most of them only has one optional argument, specifying the duration. The big text is different in that it needs an additional required argument, specifying the contents of the texts.</p>
+
+<blockquote>
+<p>[!NOTE] The mathematical details about the shapes of these patterns are specified in <a href="https://sunniesnow.github.io/doc/chart.html">the documentation</a>.</p>
+</blockquote>
+
+<p>You may now try adding a grid pattern to the chart:</p>
+
+<pre class="ruby"><span class="ruby-identifier">offset</span> <span class="ruby-value">0.066</span>
+<span class="ruby-identifier">bpm</span> <span class="ruby-value">138</span>
+
+<span class="ruby-identifier">grid</span> <span class="ruby-value">16</span> <span class="ruby-comment"># add a grid pattern with duration 16 beats</span>
+
+<span class="ruby-comment"># notes...</span>
+<span class="ruby-identifier">h</span> <span class="ruby-value">-25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span>
+</pre>
+
+<h3 id="label-Groups-2C+duplicates-2C+and+transformations">Groups, duplicates, and transformations<span><a href="#label-Groups-2C+duplicates-2C+and+transformations">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>You have already written the chart for the first 8 beats of <em>Big-D</em>. Then, you want to have the same for the next 8 beats. How would you do that?</p>
+
+<p>Well, an obvious solution is to copy and paste the code you have written. However, this has some drawbacks:</p>
+<ul><li>
+<p>If at some point you want to change the pattern, you have to change it at multiple places.</p>
+</li><li>
+<p>When you read the codes, it would not be obvious at a glance that “hey, this part is the same as that part!”</p>
+</li></ul>
+
+<p>Come on, you are programming! Are not there some better ways? Fortunately, there are, and there are multiple ways to do that.</p>
+
+<p>First, you can define a method, and call that method twice:</p>
+
+<pre class="ruby"><span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">pattern</span> <span class="ruby-comment"># the method name `pattern` is arbitrary, set what you like</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">-25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">0</span>, <span class="ruby-value">25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span>
+
+  <span class="ruby-identifier">h</span> <span class="ruby-value">-25</span>, <span class="ruby-value">-25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">25</span>, <span class="ruby-value">-25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">0</span>, <span class="ruby-value">-50</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">pattern</span>
+<span class="ruby-identifier">pattern</span>
+</pre>
+
+<p>Another way of doing this is to create a group of notes and duplicate them. You can write these:</p>
+
+<pre class="ruby"><span class="ruby-identifier">notes</span> = <span class="ruby-identifier">group</span> <span class="ruby-keyword">do</span> <span class="ruby-comment"># the variable name `notes` is arbitrary, set what you like</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">-25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">0</span>, <span class="ruby-value">25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span>
+
+  <span class="ruby-identifier">h</span> <span class="ruby-value">-25</span>, <span class="ruby-value">-25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">25</span>, <span class="ruby-value">-25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">0</span>, <span class="ruby-value">-50</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">new_notes</span> = <span class="ruby-identifier">duplicate</span> <span class="ruby-identifier">notes</span> <span class="ruby-comment"># duplicate them to get a group of new notes</span>
+<span class="ruby-identifier">transform</span>(<span class="ruby-identifier">new_notes</span>) { <span class="ruby-identifier">beat_translate</span> <span class="ruby-value">8</span> } <span class="ruby-comment"># translate those new notes by 8 beats</span>
+<span class="ruby-identifier">b</span> <span class="ruby-value">8</span> <span class="ruby-comment"># calling `transform` does not affect current beat, so proceed by 8 beats now</span>
+</pre>
+
+<p>In this example, the variable <code>notes</code> is assigned the return value of <code>group</code>, which is actually an array of the events inside the code block in the call of <code>group</code>. The variable <code>new_notes</code> is assigned the return value of <code>duplicate</code>, which is another array of other events, which are copies of the events in <code>notes</code>.</p>
+
+<blockquote>
+<p>In Ruby, code blocks can be written as a <code>do</code>…<code>end</code> block <strong>or</strong> a curly-enclosed block (<code>{</code>…<code>}</code>). They have equivalent effects but have different precedences, and by convention, if the code block contains only one line of codes, people use a curly-enclosed block to make it seem more compact.</p>
+</blockquote>
+
+<p>Transformations are more powerful than just translating in time. There are many other transformations you can apply to notes. Here is a list:</p>
+
+<table role="table">
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘translate dx, dy`</td>
+<td>translating in space by vector $(mathtt{dx},mathtt{dy})$</td>
+</tr>
+<tr>
+<td>‘horizontal_flip`</td>
+<td>flipping horizontally</td>
+</tr>
+<tr>
+<td>‘vertical_flip`</td>
+<td>flipping vertically</td>
+</tr>
+<tr>
+<td>‘rotate angle`</td>
+<td>rotating by ‘angle` (in radians) counterclockwise</td>
+</tr>
+<tr>
+<td>‘scale sx, sy=sx`</td>
+<td>scaling by ‘sx` in $x$ and by `sy` in $y$; negative values are also valid</td>
+</tr>
+<tr>
+<td>‘compound_linear xx, xy, yx, yy`</td>
+<td>applying a linear transformation specified by numbers in a matrix</td>
+</tr>
+<tr>
+<td>‘beat_translate delta_beat`</td>
+<td>translating in time by ‘delta_beat` beats</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>For those who are not familiar with linear algebra, some of the transformations on a 2-dimensional shape can be specified by a $2times2$ matrix. Those transformations are called <strong>linear transformations</strong>. The matrix is called the <strong>transformation matrix</strong>. The transformation is done like this:</p>
+
+<pre>x&#39;=\mathtt{xx}\cdot x+\mathtt{xy}\cdot y,\quad
+y&#39;=\mathtt{yx}\cdot x+\mathtt{yy}\cdot y.</pre>
+
+<p>[!NOTE] When doing spatial transformations, you do not need to worry about the direction of flick notes. They are taken care of as well.</p>
+
+<p>For background patterns, they are ignored when doing spatial transformations. They are still affected by temporal transformations, though.</p>
+</blockquote>
+
+<p>Therefore, you can also apply, say, a horizontal flip on the duplicated notes like this:</p>
+
+<pre class="ruby"><span class="ruby-identifier">notes</span> = <span class="ruby-identifier">group</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-comment"># ...</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">transform</span> <span class="ruby-identifier">duplicate</span> <span class="ruby-identifier">notes</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-identifier">horizontal_flip</span>
+  <span class="ruby-identifier">beat_translate</span> <span class="ruby-value">8</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>Transformations can also be used to bulk edit notes. Imagine that you have already written a bunch of notes with their coordinates, but you then decided them move them (say, translating by vector $<code>(25,25)</code>$). You can use <code>transform</code> to do that:</p>
+
+<pre class="ruby"><span class="ruby-identifier">notes</span> = <span class="ruby-identifier">group</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-comment"># ...</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">transform</span>(<span class="ruby-identifier">notes</span>) { <span class="ruby-identifier">translate</span> <span class="ruby-value">25</span>, <span class="ruby-value">25</span> }
+</pre>
+
+<blockquote>
+<p>Because argument of <code>rotate</code> is in radians, you may want to use the Math constant $pi$. In Ruby, it is <code>Math::PI</code>. If you use this constant a lot, you may want to write <code>include Math</code> at the beginning of the source codes file so that you can just write <code>PI</code> instead of <code>Math::PI</code> every time.</p>
+</blockquote>
+
+<h3 id="label-Navigate+among+beats">Navigate among beats<span><a href="#label-Navigate+among+beats">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>You have already learned how to use <code>beat</code> to proceed the current beat by a certain amount of beats. It can also navigate backwards by using negative numbers.</p>
+
+<p>You can get the current beat number by using <code>beat</code> without arguments:</p>
+
+<pre class="ruby"><span class="ruby-identifier">offset</span> <span class="ruby-value">0.066</span> <span class="ruby-comment"># using `offset` will reset the current beat to zero</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">beat</span> <span class="ruby-comment"># this will output 0 in the terminal, because the current beat is 0</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">b</span> <span class="ruby-comment"># `b` is an abbreviation of `beat`, so this will also output 0</span>
+<span class="ruby-identifier">beat</span> <span class="ruby-value">1</span> <span class="ruby-comment"># proceed the current beat by 1 beat</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">beat</span> <span class="ruby-comment"># this will output 1 in the terminal, because the current beat is 1</span>
+<span class="ruby-identifier">b</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span> <span class="ruby-comment"># proceed the current beat by 3/4 beats</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">b</span> <span class="ruby-comment"># this will output 7/4 in the terminal, because the current beat is 7/4</span>
+<span class="ruby-identifier">b</span> <span class="ruby-value">-1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span> <span class="ruby-comment"># go back by 1/2 beats</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">b</span> <span class="ruby-comment"># outputs 5/4</span>
+<span class="ruby-identifier">b</span> <span class="ruby-value">-2</span> <span class="ruby-comment"># go back by 2 beats, even if the current beat is only 5/4</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">b</span> <span class="ruby-comment"># outputs -3/4</span>
+</pre>
+
+<blockquote>
+<p>In Ruby, the method <code>p</code> is used to output any object in the terminal in a human-readable form. You can use it to debug your program.</p>
+</blockquote>
+
+<p>You can use <code>beat!</code> (whose abbreviation is <code>b!</code>) to set the current beat directly, instead of specifying the amount of beats to proceed relative to the current beat:</p>
+
+<pre class="ruby"><span class="ruby-identifier">beat!</span> <span class="ruby-value">10</span> <span class="ruby-comment"># set the current beat to 10</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">beat</span> <span class="ruby-comment"># outputs 10</span>
+<span class="ruby-identifier">b!</span> <span class="ruby-value">-5</span> <span class="ruby-comment"># set the current beat to -5</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">b</span> <span class="ruby-comment"># outputs -5</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">beat!</span> <span class="ruby-comment"># this outputs -5 because you may also use `beat!` without arguments to get the current beat</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">b!</span> <span class="ruby-comment"># this also outputs -5</span>
+</pre>
+
+<p>You can use <code>time_at</code> to get the time (in seconds) of a certain beat:</p>
+
+<pre class="ruby"><span class="ruby-identifier">offset</span> <span class="ruby-value">0.1</span>
+<span class="ruby-identifier">bpm</span> <span class="ruby-value">120</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">time_at</span> <span class="ruby-value">0</span> <span class="ruby-comment"># outputs 0.1, meaning that beat 0 is at 0.1 seconds</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">time_at</span> <span class="ruby-value">1</span> <span class="ruby-comment"># outputs 0.6, meaning that beat 1 is at 0.6 seconds</span>
+<span class="ruby-identifier">b!</span> <span class="ruby-value">10</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">time_at</span> <span class="ruby-comment"># when using `time_at` without arguments, it will use the current beat; outputs 5.1</span>
+
+<span class="ruby-identifier">offset</span> <span class="ruby-value">0.2</span> <span class="ruby-comment"># this resets current beat to 0</span>
+<span class="ruby-identifier">bpm</span> <span class="ruby-value">120</span> <span class="ruby-comment"># calling `offset` clears BPM info, so you need to set it again</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">time_at</span> <span class="ruby-comment"># outputs 0.2, meaning that beat 0 is at 0.2 seconds</span>
+</pre>
+
+<p>Having <code>beat!</code>, you can now travel back to some point in time to write some notes there:</p>
+
+<pre class="ruby"><span class="ruby-identifier">checkpoint</span> = <span class="ruby-identifier">b</span>
+
+<span class="ruby-comment"># write something here...</span>
+
+<span class="ruby-identifier">b!</span> <span class="ruby-identifier">checkpoint</span> <span class="ruby-comment"># travel back to the checkpoint</span>
+
+<span class="ruby-comment"># write something here...</span>
+</pre>
+
+<p>However, there is another way of doing this. You can encapsulate the first set of notes in a <code>group</code> that does <em>not preserve beat</em>, which means that the current beat is set to how it was at the start of the group when the group finishes, like this:</p>
+
+<pre class="ruby"><span class="ruby-identifier">group</span> <span class="ruby-value">preserve_beat:</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-comment"># write something here...</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-comment"># write something here...</span>
+</pre>
+
+<h3 id="label-BPM+changes">BPM changes<span><a href="#label-BPM+changes">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<blockquote>
+<p>[!NOTE] Because <em>Big-D</em> does not have BPM changes, this part of the tutorial will not be used in the actual chart of <em>Big-D</em>. You may still try it out, though.</p>
+</blockquote>
+
+<p>You can use <code>bpm</code> to set the BPM starting at the current beat.</p>
+
+<pre class="ruby"><span class="ruby-identifier">offset</span> <span class="ruby-value">0</span>
+<span class="ruby-identifier">bpm</span> <span class="ruby-value">120</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">time_at</span> <span class="ruby-comment"># outputs 0.0</span>
+<span class="ruby-identifier">b</span> <span class="ruby-value">1</span> <span class="ruby-comment"># proceed by 1 beat</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">time_at</span> <span class="ruby-comment"># outputs 0.5</span>
+<span class="ruby-identifier">bpm</span> <span class="ruby-value">60</span> <span class="ruby-comment"># set the BPM starting at the current beat to 60</span>
+<span class="ruby-identifier">b</span> <span class="ruby-value">1</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">time_at</span> <span class="ruby-comment"># outputs 1.5</span>
+</pre>
+
+<p>As we can see, BPM changes only affect the beats <strong>after</strong> they were set. Beats before the BPM changes are not affected. However, this means that you cannot get the time before the first BPM you set:</p>
+
+<pre class="ruby"><span class="ruby-identifier">offset</span> <span class="ruby-value">0</span>
+<span class="ruby-identifier">bpm</span> <span class="ruby-value">120</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">time_at</span> <span class="ruby-value">-1</span> <span class="ruby-comment"># raises an error!</span>
+</pre>
+
+<h3 id="label-Tip+points">Tip points<span><a href="#label-Tip+points">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>Sscharter regards tap, hold, drag, and flick as <em>tip-pointable</em> events. Note that although <a href="../Sunniesnow.html"><code>Sunniesnow</code></a> also regards background notes as tip-pointable, sscharter does not. Tip-pointable events can be connected by tip points, and one tip-pointable event can be connected by at most one tip point. A set of events that are connected by the same tip point compose a <em>tip point chain</em>.</p>
+
+<p>There are two methods for you to write tip points: <code>tip_point_chain</code> and <code>tip_point_drop</code>, and they are respectively abbreviated as <code>tp_chain</code> and <code>tp_drop</code>. Before introducing them, I need to first explain how to specify where and when a tip point spawns. There are two ways to specify where the tip point spawns:</p>
+<ul><li>
+<p>Specifying the coordinates relative to the first tip-pointable event in the tip point chain. This is the default way. You specify the $x$-coordinate and $y$-coordinate by the first two arguments of <code>tip_point_chain</code> or <code>tip_point_drop</code>.</p>
+</li><li>
+<p>Specifying the absolute coordinates of the position where the tip point spawns. To specify the position in this way, you need to add a keyword argument <code>relative: false</code> to the call of <code>tip_point_chain</code> or <code>tip_point_drop</code>.</p>
+</li></ul>
+
+<p>There are four ways to specify when the tip point spawns:</p>
+<ul><li>
+<p>Specifying how much time, in seconds, before the first tip-pointable event in the tip point chain the tip point will have spawned. This is the default way. The time is specified by the third argument in the call of <code>tip_point_chain</code> or <code>tip_point_drop</code>.</p>
+</li><li>
+<p>Specifying the speed of the tip point between its spawning and the first tip-pointable event in the tip point chain. To specify the speed, you need to use the keyword argument <code>speed:</code> in the call of <code>tip_point_chain</code> or <code>tip_point_drop</code>.</p>
+</li><li>
+<p>Specifying how many beats before the first tip-pointable event in the tip point chain the tip point will have spawned. To specify the beats, you need to use the keyword argument <code>relative_beat:</code> in the call of <code>tip_point_chain</code> or <code>tip_point_drop</code>.</p>
+</li><li>
+<p>Specifying the beat speed (unit length per beat) of the tip point between its spawning and the first tip-pointable event in the tip point chain. To specify the beat speed, you need to use the keyword argument <code>beat_speed:</code> in the call of <code>tip_point_chain</code> or <code>tip_point_drop</code>. The beat speed may be specified as a float number, and this is the only case where something related to beats is not preferred to be specified as a rational number.</p>
+</li></ul>
+
+<p>Besides the two methods <code>tip_point_chain</code> and <code>tip_point_drop</code>, there is another method <code>tip_point_none</code> (abbreviated as <code>tp_none</code>) for you to specify that those events in the code block are not connected by tip points. This is useful when you nest those methods inside each other. Different from <code>tip_point_chain</code> and <code>tip_point_drop</code>, the method <code>tip_point_none</code> does not take any arguments (besides <code>preserve_beat</code>, which will be mentioned later).</p>
+
+<p>We can summarize all of them in the following table:</p>
+<table>
+  <tr>
+    <th>Method</th>
+    <td><code>tip_point_chain</code></td>
+    <td><code>tip_point_drop</code></td>
+    <td><code>tip_point_none</code></td>
+  </tr>
+  <tr>
+    <th><code>relative_time</code></th>
+    <td><code>tip_point_chain x=0, y=0, relative_time=0.0, relative: true</code></td>
+    <td><code>tip_point_drop x=0, y=0, relative_time=0.0, relative: true</code></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th><code>speed</code></th>
+    <td><code>tip_point_chain x=0, y=0, relative: true, speed:</code></td>
+    <td><code>tip_point_drop x=0, y=0, relative: true, speed:</code></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th><code>relative_beat</code></th>
+    <td><code>tip_point_chain x=0, y=0, relative: true, relative_beat:</code></td>
+    <td><code>tip_point_drop x=0, y=0, relative: true, relative_beat:</code></td>
+    <td></td>
+  </tr>
+  <tr>
+    <th><code>beat_speed</code></th>
+    <td><code>tip_point_chain x=0, y=0, relative: true, beat_speed:</code></td>
+    <td><code>tip_point_drop x=0, y=0, relative: true, beat_speed:</code></td>
+    <td></td>
+  </tr>
+</table>
+<p>You can only choose one of the four ways to specify the position and time of the spawning of a tip point. If you specify more than one of them, an error will be raised.</p>
+
+<blockquote>
+<p>In Ruby, keyword arguments are specified after the normal arguments. You need to explicitly write the name of the keyword argument followed by a colon in the method call. For example, in the expression</p>
+
+<pre class="ruby"><span class="ruby-identifier">tp_chain</span> <span class="ruby-value">0</span>, <span class="ruby-value">100</span>, <span class="ruby-value">speed:</span> <span class="ruby-value">100</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-comment"># ...</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>the argument <code>speed:</code> is a keyword argument in the call of <code>tp_chain</code>. The value of the keyword argument is <code>100</code>.</p>
+</blockquote>
+
+<p>Knowing how to specify the position and time of the spawning of a tip point, then creating tip points is just as easy as filling events in the code block in the call of <code>tip_point_chain</code> or <code>tip_point_drop</code>.</p>
+
+<p>Now I need to explain the difference of <code>tip_point_chain</code> and <code>tip_point_drop</code>. <code>tip_point_chain</code> creates only one tip point chain, and the tip point connects every tip-pointable event in the code block; <code>tip_point_drop</code> creates as many tip point chains as the number of tip-pointable events in the code block, and each tip point chain connects only one tip-pointable event.</p>
+
+<p>As an example, let’s connect the notes in the first 8 beats of <em>Big-D</em> by tip points:</p>
+
+<pre class="ruby"><span class="ruby-identifier">tp_chain</span> <span class="ruby-value">0</span>, <span class="ruby-value">100</span>, <span class="ruby-value">speed:</span> <span class="ruby-value">100</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">-25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">0</span>, <span class="ruby-value">25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span>
+
+  <span class="ruby-identifier">h</span> <span class="ruby-value">-25</span>, <span class="ruby-value">-25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">25</span>, <span class="ruby-value">-25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">0</span>, <span class="ruby-value">-50</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>If you want to duplicate those tip-pointed notes, you do not need to encapsulate them with another layer of <code>group</code>. The return value of <code>tip_point_chain</code> or <code>tip_point_drop</code> is already an array of the events in the code block. Therefore, you can just do this:</p>
+
+<pre class="ruby"><span class="ruby-identifier">notes</span> = <span class="ruby-identifier">tp_chain</span> <span class="ruby-value">0</span>, <span class="ruby-value">100</span>, <span class="ruby-value">speed:</span> <span class="ruby-value">100</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-comment"># notes...</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">transform</span> <span class="ruby-identifier">duplicate</span> <span class="ruby-identifier">notes</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-comment"># transforms...</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<blockquote>
+<p>[!NOTE] Just like <code>group</code>, <code>tip_point_chain</code> and <code>tip_point_drop</code> may also not preserve beat. You can let them not preserve beat by specifying the keyword argument <code>preserve_beat: false</code>:</p>
+
+<pre class="ruby"><span class="ruby-identifier">tp_chain</span> <span class="ruby-value">0</span>, <span class="ruby-value">100</span>, <span class="ruby-value">speed:</span> <span class="ruby-value">100</span>, <span class="ruby-value">preserve_beat:</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-comment"># notes...</span>
+<span class="ruby-keyword">end</span>
+</pre>
+</blockquote>
+
+<p>Now, the whole source codes file should look like this:</p>
+
+<pre class="ruby"><span class="ruby-comment"># frozen_string_literal: true</span>
+
+<span class="ruby-constant">Sunniesnow</span><span class="ruby-operator">::</span><span class="ruby-constant">Charter</span>.<span class="ruby-identifier">open</span> <span class="ruby-string">&#39;master&#39;</span> <span class="ruby-keyword">do</span>
+
+<span class="ruby-identifier">title</span> <span class="ruby-string">&#39;Big-D&#39;</span>
+<span class="ruby-identifier">artist</span> <span class="ruby-string">&#39;Shaolin Dub&#39;</span>
+<span class="ruby-identifier">charter</span> <span class="ruby-string">&#39;UlyssesZhan&#39;</span> <span class="ruby-comment"># replace this with your name</span>
+<span class="ruby-identifier">difficulty_name</span> <span class="ruby-string">&#39;Master&#39;</span>
+<span class="ruby-identifier">difficulty_color</span> <span class="ruby-value">:master</span>
+<span class="ruby-identifier">difficulty</span> <span class="ruby-string">&#39;10&#39;</span>
+
+<span class="ruby-identifier">offset</span> <span class="ruby-value">0.066</span>
+<span class="ruby-identifier">bpm</span> <span class="ruby-value">138</span>
+
+<span class="ruby-identifier">grid</span> <span class="ruby-value">16</span>
+
+<span class="ruby-identifier">notes</span> = <span class="ruby-identifier">tp_chain</span> <span class="ruby-value">0</span>, <span class="ruby-value">100</span>, <span class="ruby-value">speed:</span> <span class="ruby-value">100</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">-25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">25</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">0</span>, <span class="ruby-value">25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span>
+
+  <span class="ruby-identifier">h</span> <span class="ruby-value">-25</span>, <span class="ruby-value">-25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">3</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">25</span>, <span class="ruby-value">-25</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">4r</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+  <span class="ruby-identifier">h</span> <span class="ruby-value">0</span>, <span class="ruby-value">-50</span>, <span class="ruby-value">1</span><span class="ruby-operator">/</span><span class="ruby-value">2r</span>; <span class="ruby-identifier">b</span> <span class="ruby-value">1</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">transform</span> <span class="ruby-identifier">duplicate</span> <span class="ruby-identifier">notes</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-identifier">horizontal_flip</span>
+  <span class="ruby-identifier">beat_translate</span> <span class="ruby-value">8</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>You may build the level file and play it on <a href="../Sunniesnow.html"><code>Sunniesnow</code></a> to see what you have done!</p>
+
+<p><img src="https://i.imgur.com/ksu5sVW.png"></p>
+
+<p>When duplicating tip-pointed events, the duplicated events are not connected by the same tip point as the original events. However, if two original events are connected by the same tip point, their duplicates are also connected by the same tip point, too. If you want the duplicated events to be connected by the same tip point as the original events, you can add set the keyword argument <code>new_tip_points:</code> to <code>false</code> in the call of <code>duplicate</code>:</p>
+
+<pre class="ruby"><span class="ruby-identifier">notes</span> = <span class="ruby-identifier">tp_chain</span> <span class="ruby-value">0</span>, <span class="ruby-value">100</span>, <span class="ruby-value">speed:</span> <span class="ruby-value">100</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-comment"># notes...</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">transform</span> <span class="ruby-identifier">duplicate</span> <span class="ruby-identifier">notes</span>, <span class="ruby-value">new_tip_points:</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-comment"># transforms...</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h2 id="label-Advanced+charting+techniques">Advanced charting techniques<span><a href="#label-Advanced+charting+techniques">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>TODO.</p>
+
+<h3 id="label-Use+Git+as+a+version+manager">Use Git as a version manager<span><a href="#label-Use+Git+as+a+version+manager">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>You ever want to keep track of the changes you made to the chart? You ever wish to revert to a previous version of the chart? You ever want to collaborate with others on the chart? You can use <a href="https://git-scm.com/">Git</a> to implement these version control features.</p>
+
+<p>First, install Git. Then, run <code>git init</code> in your project directory to make it a Git repository. Every time you want to save the current version of the chart, you can run <code>git add .</code> to stage all the changes, and then run <code>git commit -m &quot;Your commit message here&quot;</code> to commit the changes. Git may prompt you to set up your name and email address, then just do so by following the instructions.</p>
+
+<p>A detailed tutorial on how to use Git is beyond the scope of this tutorial, so I may just refer you to the official <a href="https://git-scm.com/docs/gittutorial">tutorial</a> of Git.</p>
+
+<h3 id="label-Useful+loops">Useful loops<span><a href="#label-Useful+loops">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<h3 id="label-Homography">Homography<span><a href="#label-Homography">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<h3 id="label-Tip+points+and+placeholders">Tip points and placeholders<span><a href="#label-Tip+points+and+placeholders">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<h3 id="label-Multiple+offsets+and+timing+tweaking">Multiple offsets and timing tweaking<span><a href="#label-Multiple+offsets+and+timing+tweaking">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<h3 id="label-JSON+post-processing">JSON post-processing<span><a href="#label-JSON+post-processing">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<h2 id="label-Step+6-3A+review+your+chart+and+write+the+README">Step 6: review your chart and write the <a href="../README_md.html">README</a><span><a href="#label-Step+6-3A+review+your+chart+and+write+the+README">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Now, you have finished writing the chart! Please always play the chart yourself on <a href="../Sunniesnow.html"><code>Sunniesnow</code></a> to see if it is enjoyable to play it. You should also try playing it in mirror mode (horizontal flip and/or vertical flip) so that you do not apply too much of your charting memories to playing the chart.</p>
+
+<p>Then, it is time to finish writing the <a href="../README_md.html">README</a>. A template for the <a href="../README_md.html">README</a> file should have already been generated for you by sscharter. Use your text editor to edit it!</p>
+
+<h2 id="label-Step+7-3A+distribute+the+level+file">Step 7: distribute the level file<span><a href="#label-Step+7-3A+distribute+the+level+file">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Congratulations! You finished your chart. Now, you can distribute the level file to people who may want to play it.</p>
+
+<p>If you want your chart to be available as an online level of <a href="../Sunniesnow.html"><code>Sunniesnow</code></a>, you need to &lt;a href=“<a href="mailto:UlyssesZhan">UlyssesZhan</a> &lt;ulysseszhan@gmail.com&gt;”&gt;contact the author of <a href="../Sunniesnow.html"><code>Sunniesnow</code></a>&lt;/a&gt;.</p>
+
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.7.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

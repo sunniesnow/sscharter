@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class Sunniesnow::Charter::Transform - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+  var index_rel_prefix = "../../";
+</script>
+
+<script src="../../js/navigation.js" defer></script>
+<script src="../../js/search.js" defer></script>
+<script src="../../js/search_index.js" defer></script>
+<script src="../../js/searcher.js" defer></script>
+<script src="../../js/darkfish.js" defer></script>
+
+<link href="../../css/fonts.css" rel="stylesheet">
+<link href="../../css/rdoc.css" rel="stylesheet">
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../../table_of_contents.html#pages">Pages</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search (/) for a class, method, ..." spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    
+<div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  <p class="link"><a href="../../Object.html">Object</a>
+</div>
+
+    
+<div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+    <li><span class="include">Math</span>
+  </ul>
+</div>
+
+    
+    
+<!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    <li ><a href="#method-c-new">::new</a>
+    <li ><a href="#method-i-apply">#apply</a>
+    <li ><a href="#method-i-beat_translate">#beat_translate</a>
+    <li ><a href="#method-i-compound_linear">#compound_linear</a>
+    <li ><a href="#method-i-horizontal_flip">#horizontal_flip</a>
+    <li ><a href="#method-i-rotate">#rotate</a>
+    <li ><a href="#method-i-scale">#scale</a>
+    <li ><a href="#method-i-translate">#translate</a>
+    <li ><a href="#method-i-vertical_flip">#vertical_flip</a>
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-Sunniesnow::Charter::Transform">
+  <h1 id="class-Sunniesnow::Charter::Transform" class="class">
+    class Sunniesnow::Charter::Transform
+  </h1>
+
+  <section class="description">
+    
+<p>Implements homography</p>
+
+  </section>
+
+  <section id="5Buntitled-5D" class="documentation-section">
+
+
+
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
+
+      <div id="attribute-i-t1" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">t1</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+      <div id="attribute-i-tt" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">tt</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+      <div id="attribute-i-xx" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">xx</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+      <div id="attribute-i-xy" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">xy</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+      <div id="attribute-i-xz" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">xz</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+      <div id="attribute-i-yx" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">yx</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+      <div id="attribute-i-yy" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">yy</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+      <div id="attribute-i-yz" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">yz</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+      <div id="attribute-i-zx" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">zx</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+      <div id="attribute-i-zy" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">zy</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+      <div id="attribute-i-zz" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">zz</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+    </section>
+
+
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+      <div id="method-c-new" class="method-detail ">
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">new</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/sscharter.rb, line 136</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>
+  <span class="ruby-ivar">@xx</span> = <span class="ruby-ivar">@yy</span> = <span class="ruby-ivar">@zz</span> = <span class="ruby-value">1.0</span>
+  <span class="ruby-ivar">@xy</span> = <span class="ruby-ivar">@xz</span> = <span class="ruby-ivar">@yx</span> = <span class="ruby-ivar">@yz</span> = <span class="ruby-ivar">@zx</span> = <span class="ruby-ivar">@zy</span> = <span class="ruby-value">0.0</span>
+  <span class="ruby-ivar">@t1</span> = <span class="ruby-value">0r</span>
+  <span class="ruby-ivar">@tt</span> = <span class="ruby-value">1r</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+    </section>
+
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+      <div id="method-i-apply" class="method-detail ">
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">apply</span><span
+              class="method-args">(event)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="apply-source">
+            <pre><span class="ruby-comment"># File lib/sscharter.rb, line 143</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">apply</span> <span class="ruby-identifier">event</span>
+  <span class="ruby-identifier">event</span>.<span class="ruby-identifier">beat</span> = <span class="ruby-ivar">@t1</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@tt</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">beat</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">x</span> = <span class="ruby-identifier">event</span>[<span class="ruby-value">:x</span>]
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">y</span> = <span class="ruby-identifier">event</span>[<span class="ruby-value">:y</span>]
+  <span class="ruby-identifier">rx</span> = <span class="ruby-identifier">xx</span><span class="ruby-operator">*</span><span class="ruby-identifier">x</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">xy</span><span class="ruby-operator">*</span><span class="ruby-identifier">y</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">xz</span>
+  <span class="ruby-identifier">ry</span> = <span class="ruby-identifier">yx</span><span class="ruby-operator">*</span><span class="ruby-identifier">x</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">yy</span><span class="ruby-operator">*</span><span class="ruby-identifier">y</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">yz</span>
+  <span class="ruby-identifier">d</span> = <span class="ruby-identifier">zx</span><span class="ruby-operator">*</span><span class="ruby-identifier">x</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">zy</span><span class="ruby-operator">*</span><span class="ruby-identifier">y</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">zz</span>
+  <span class="ruby-identifier">event</span>[<span class="ruby-value">:x</span>] = <span class="ruby-identifier">xp</span> = <span class="ruby-identifier">rx</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">d</span>
+  <span class="ruby-identifier">event</span>[<span class="ruby-value">:y</span>] = <span class="ruby-identifier">yp</span> = <span class="ruby-identifier">ry</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">d</span>
+  
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">event</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">angle</span> = <span class="ruby-identifier">event</span>[<span class="ruby-value">:angle</span>]
+  <span class="ruby-identifier">dx</span> = <span class="ruby-identifier">cos</span> <span class="ruby-identifier">angle</span>
+  <span class="ruby-identifier">dy</span> = <span class="ruby-identifier">sin</span> <span class="ruby-identifier">angle</span>
+  <span class="ruby-identifier">cross</span> = <span class="ruby-identifier">y</span><span class="ruby-operator">*</span><span class="ruby-identifier">dx</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">x</span><span class="ruby-operator">*</span><span class="ruby-identifier">dy</span>
+
+  <span class="ruby-identifier">cx0</span> = <span class="ruby-identifier">zy</span><span class="ruby-operator">*</span><span class="ruby-identifier">xx</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">xy</span><span class="ruby-operator">*</span><span class="ruby-identifier">zx</span>
+  <span class="ruby-identifier">cxx</span> = <span class="ruby-identifier">zz</span><span class="ruby-operator">*</span><span class="ruby-identifier">xx</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">xz</span><span class="ruby-operator">*</span><span class="ruby-identifier">zx</span>
+  <span class="ruby-identifier">cxy</span> = <span class="ruby-identifier">zz</span><span class="ruby-operator">*</span><span class="ruby-identifier">xy</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">xz</span><span class="ruby-operator">*</span><span class="ruby-identifier">zy</span>
+  <span class="ruby-identifier">dxp</span> = <span class="ruby-identifier">cx0</span><span class="ruby-operator">*</span><span class="ruby-identifier">cross</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">cxx</span><span class="ruby-operator">*</span><span class="ruby-identifier">dx</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">cxy</span><span class="ruby-operator">*</span><span class="ruby-identifier">dy</span>
+
+  <span class="ruby-identifier">cy0</span> = <span class="ruby-identifier">zx</span><span class="ruby-operator">*</span><span class="ruby-identifier">yy</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">yx</span><span class="ruby-operator">*</span><span class="ruby-identifier">zy</span>
+  <span class="ruby-identifier">cyy</span> = <span class="ruby-identifier">zz</span><span class="ruby-operator">*</span><span class="ruby-identifier">yy</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">yz</span><span class="ruby-operator">*</span><span class="ruby-identifier">zy</span>
+  <span class="ruby-identifier">cyx</span> = <span class="ruby-identifier">zz</span><span class="ruby-operator">*</span><span class="ruby-identifier">yx</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">yz</span><span class="ruby-operator">*</span><span class="ruby-identifier">zx</span>
+  <span class="ruby-identifier">dyp</span> = <span class="ruby-identifier">cy0</span><span class="ruby-operator">*</span><span class="ruby-operator">-</span><span class="ruby-identifier">cross</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">cyy</span><span class="ruby-operator">*</span><span class="ruby-identifier">dy</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">cyx</span><span class="ruby-operator">*</span><span class="ruby-identifier">dx</span>
+
+  <span class="ruby-identifier">event</span>[<span class="ruby-value">:angle</span>] = <span class="ruby-identifier">atan2</span> <span class="ruby-identifier">dyp</span>, <span class="ruby-identifier">dxp</span>
+  <span class="ruby-identifier">event</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-beat_translate" class="method-detail ">
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">beat_translate</span><span
+              class="method-args">(delta_beat)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="beat_translate-source">
+            <pre><span class="ruby-comment"># File lib/sscharter.rb, line 210</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">beat_translate</span> <span class="ruby-identifier">delta_beat</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;delta_beat must be a number&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">delta_beat</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Numeric</span>
+  <span class="ruby-identifier">warn</span> <span class="ruby-string">&#39;Rational is recommended over Float for delta_beat&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">delta_beat</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Float</span>
+  <span class="ruby-ivar">@t1</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">delta_beat</span>.<span class="ruby-identifier">to_r</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-compound_linear" class="method-detail ">
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">compound_linear</span><span
+              class="method-args">(xx, xy, yx, yy)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="compound_linear-source">
+            <pre><span class="ruby-comment"># File lib/sscharter.rb, line 172</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">compound_linear</span> <span class="ruby-identifier">xx</span>, <span class="ruby-identifier">xy</span>, <span class="ruby-identifier">yx</span>, <span class="ruby-identifier">yy</span>
+  <span class="ruby-ivar">@xx</span>, <span class="ruby-ivar">@xy</span>, <span class="ruby-ivar">@xz</span>, <span class="ruby-ivar">@yx</span>, <span class="ruby-ivar">@yy</span>, <span class="ruby-ivar">@yz</span> = [
+    <span class="ruby-identifier">xx</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@xx</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">xy</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@yx</span>,
+    <span class="ruby-identifier">xx</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@xy</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">xy</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@yy</span>,
+    <span class="ruby-identifier">xx</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@xz</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">xy</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@yz</span>,
+    <span class="ruby-identifier">yx</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@xx</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">yy</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@yx</span>,
+    <span class="ruby-identifier">yx</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@xy</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">yy</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@yy</span>,
+    <span class="ruby-identifier">yx</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@xz</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">yy</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@yz</span>,
+  ]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-horizontal_flip" class="method-detail ">
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">horizontal_flip</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="horizontal_flip-source">
+            <pre><span class="ruby-comment"># File lib/sscharter.rb, line 189</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">horizontal_flip</span>
+  <span class="ruby-identifier">compound_linear</span> <span class="ruby-value">-1</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-value">1</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-rotate" class="method-detail ">
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">rotate</span><span
+              class="method-args">(angle)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="rotate-source">
+            <pre><span class="ruby-comment"># File lib/sscharter.rb, line 197</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">rotate</span> <span class="ruby-identifier">angle</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;angle must be a number&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">angle</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Numeric</span>
+  <span class="ruby-identifier">warn</span> <span class="ruby-string">&#39;Are you using degrees as angle unit instead of radians?&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">angle</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">angle</span> <span class="ruby-operator">%</span> <span class="ruby-value">45</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+  <span class="ruby-identifier">c</span> = <span class="ruby-identifier">cos</span> <span class="ruby-identifier">angle</span>
+  <span class="ruby-identifier">s</span> = <span class="ruby-identifier">sin</span> <span class="ruby-identifier">angle</span>
+  <span class="ruby-identifier">compound_linear</span> <span class="ruby-identifier">c</span>, <span class="ruby-operator">-</span><span class="ruby-identifier">s</span>, <span class="ruby-identifier">s</span>, <span class="ruby-identifier">c</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-scale" class="method-detail ">
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">scale</span><span
+              class="method-args">(sx, sy = sx)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="scale-source">
+            <pre><span class="ruby-comment"># File lib/sscharter.rb, line 205</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">scale</span> <span class="ruby-identifier">sx</span>, <span class="ruby-identifier">sy</span> = <span class="ruby-identifier">sx</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;sx and sy must be numbers&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">sx</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Numeric</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sy</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Numeric</span>)
+  <span class="ruby-identifier">compound_linear</span> <span class="ruby-identifier">sx</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">sy</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-translate" class="method-detail ">
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">translate</span><span
+              class="method-args">(dx, dy)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="translate-source">
+            <pre><span class="ruby-comment"># File lib/sscharter.rb, line 183</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">translate</span> <span class="ruby-identifier">dx</span>, <span class="ruby-identifier">dy</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;dx and dy must be numbers&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">dx</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Numeric</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">dy</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Numeric</span>)
+  <span class="ruby-ivar">@xz</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">dx</span>
+  <span class="ruby-ivar">@yz</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">dy</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-vertical_flip" class="method-detail ">
+        <div class="method-header">
+          <div class="method-heading">
+            <span class="method-name">vertical_flip</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+        </div>
+
+        <div class="method-description">
+          
+
+          <div class="method-source-code" id="vertical_flip-source">
+            <pre><span class="ruby-comment"># File lib/sscharter.rb, line 193</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">vertical_flip</span>
+  <span class="ruby-identifier">compound_linear</span> <span class="ruby-value">1</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-value">-1</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.7.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
