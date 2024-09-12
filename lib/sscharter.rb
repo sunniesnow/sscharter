@@ -30,6 +30,8 @@ class Sunniesnow::Charter
 	class BpmChangeList
 
 		class BpmChange
+			include Comparable
+
 			attr_accessor :beat, :bps
 
 			def initialize beat, bpm
@@ -51,6 +53,8 @@ class Sunniesnow::Charter
 
 		def add beat, bpm
 			@list.push BpmChange.new beat, bpm
+			@list.sort!
+			self
 		end
 
 		def time_at beat
@@ -286,16 +290,6 @@ class Sunniesnow::Charter
 	}.freeze
 
 	DIRECTIONS = {
-		right: 0.0,
-		up_right: Math::PI / 4,
-		up: Math::PI / 2,
-		up_left: Math::PI * 3 / 4,
-		left: Math::PI,
-		down_left: -Math::PI * 3 / 4,
-		down: -Math::PI / 2,
-		down_right: -Math::PI / 4
-	}
-	{
 		right: %i[r],
 		up_right: %i[ur ru],
 		up: %i[u],
@@ -304,22 +298,60 @@ class Sunniesnow::Charter
 		down_left: %i[dl ld],
 		down: %i[d],
 		down_right: %i[dr rd]
-	}.each do |direction_name, aliases|
-		aliases.each { DIRECTIONS[_1] = DIRECTIONS[direction_name] }
-	end
+	}.each_with_object({
+		right: 0.0,
+		up_right: Math::PI / 4,
+		up: Math::PI / 2,
+		up_left: Math::PI * 3 / 4,
+		left: Math::PI,
+		down_left: -Math::PI * 3 / 4,
+		down: -Math::PI / 2,
+		down_right: -Math::PI / 4
+	}) do |(direction_name, aliases), directions|
+		aliases.each { directions[_1] = directions[direction_name] }
+	end.freeze
+	
 	DIRECTIONS.freeze
 
-	singleton_class.attr_reader :charts
+	class << self
+		# A hash containing all the charts opened by {::open}.
+		# The keys are the names of the charts, and the values are the {Sunniesnow::Charter} objects.
+		# @return [Hash<String, Sunniesnow::Charter>]
+		attr_reader :charts
+	end
 	@charts = {}
 
+	# An array of events.
+	# @return [Array<Sunniesnow::Charter::Event>]
 	attr_reader :events
 
+	# Create a new chart or open an existing chart for editing.
+	# The +name+ is used to check whether the chart already exists.
+	# If a new chart needs to be created, it is added to {.charts}.
+	#
+	# The given +block+ will be evaluated in the context of the chart
+	# (inside the block, +self+ is the same as the return value, a {Charter} instance).
+	# This method is intended to be called at the top level of a Ruby script
+	# to open a context for writing a Sunniesnow chart using the DSL.
+	#
+	# In the examples in the documentation of other methods,
+	# it is assumed that they are run inside a block passed to this method.
+	#
+	# @param name [String] the name of the chart.
+	# @return [Sunniesnow::Charter] the chart.
+	# @example
+	#   Sunniesnow::Charter.open 'master' do
+	#     # write the chart here
+	#   end
 	def self.open name, &block
 		result = @charts[name] ||= new name
 		result.instance_eval &block if block
 		result
 	end
 
+	# Create a new chart.
+	# Usually you should use {.open} instead of this method.
+	# @param name [String] the name of the chart.
 	def initialize name
 		@name = name
 		init_chart_info
@@ -464,28 +496,63 @@ class Sunniesnow::Charter
 		result
 	end
 
-	# Below are methods intended to be used in the DSL
+	# @!group DSL methods
 
+	# Set the title of the music for the chart.
+	# This will be reflected in the return value of {#to_sunniesnow}.
+	# @see Sunniesnow::Chart#title
+	# @param title [String] the title of the music.
+	# @return [String] the title of the music, the same as the argument +title+.
+	# @raise [ArgumentError] if +title+ is not a String.
 	def title title
 		raise ArgumentError, 'title must be a string' unless title.is_a? String
 		@title = title
 	end
 
+	# Set the artist of the music for the chart.
+	# This will be reflected in the return value of {#to_sunniesnow}.
+	# @see Sunniesnow::Chart#artist
+	# @param artist [String] the artist of the music.
+	# @return [String] the artist of the music, the same as the argument +artist+.
+	# @raise [ArgumentError] if +artist+ is not a String.
 	def artist artist
 		raise ArgumentError, 'artist must be a string' unless artist.is_a? String
 		@artist = artist
 	end
 
+	# Set the name of the chart author for the chart.
+	# This will be reflected in the return value of {#to_sunniesnow}.
+	# @see Sunniesnow::Chart#charter
+	# @param charter [String] the name of the charter.
+	# @return [String] the name of the chart author, the same as the argument +charter+.
+	# @raise [ArgumentError] if +charter+ is not a String.
 	def charter charter
 		raise ArgumentError, 'charter must be a string' unless charter.is_a? String
 		@charter = charter
 	end
 
+	# Set the name of the difficulty for the chart.
+	# This will be reflected in the return value of {#to_sunniesnow}.
+	# @see Sunniesnow::Chart#difficulty_name
+	# @param difficulty_name [String] the name of the difficulty.
+	# @return [String] the name of the difficulty, the same as the argument +difficulty_name+.
+	# @raise [ArgumentError] if +difficulty_name+ is not a String.
 	def difficulty_name difficulty_name
 		raise ArgumentError, 'difficulty_name must be a string' unless difficulty_name.is_a? String
 		@difficulty_name = difficulty_name
 	end
 
+	# Set the color of the difficulty for the chart.
+	# This will be reflected in the return value of {#to_sunniesnow}.
+	#
+	# The argument +difficulty_color+ can be a color name (a key of {COLORS}),
+	# an RGB color in hexadecimal format (e.g. +'#8c68f3'+, +'#8CF'+),
+	# an RGB color in decimal format (e.g. +'rgb(140, 104, 243)'+),
+	# or an integer representing an RGB color (e.g. +0x8c68f3+).
+	# @see Sunniesnow::Chart#difficulty_color
+	# @param difficulty_color [Symbol, String, Integer] the color of the difficulty.
+	# @return [String] the color of the difficulty in hexadecimal format (e.g. +'#8c68f3'+).
+	# @raise [ArgumentError] if +difficulty_color+ is not a valid color format.
 	def difficulty_color difficulty_color
 		@difficulty_color = case difficulty_color
 		when Symbol
@@ -505,25 +572,98 @@ class Sunniesnow::Charter
 		end
 	end
 
+	# Set the difficulty level for the chart.
+	# This will be reflected in the return value of {#to_sunniesnow}.
+	#
+	# The argument +difficulty+ should be a string representing the difficulty level.
+	# Anything other than a string will be converted to a string using +to_s+.
+	# @see Sunniesnow::Chart#difficulty
+	# @param difficulty [String] the difficulty level.
+	# @return [String] the difficulty level (converted to a string).
 	def difficulty difficulty
 		@difficulty = difficulty.to_s
 	end
 
+	# Set the difficulty superscript for the chart.
+	# This will be reflected in the return value of {#to_sunniesnow}.
+	#
+	# The argument +difficulty_sup+ should be a string representing the difficulty superscript.
+	# Anything other than a string will be converted to a string using +to_s+.
+	# @see Sunniesnow::Chart#difficulty_sup
+	# @param difficulty_sup [String] the difficulty superscript.
+	# @return [String] the difficulty superscript (converted to a string).
 	def difficulty_sup difficulty_sup
 		@difficulty_sup = difficulty_sup.to_s
 	end
 
+	# Set the offset.
+	# This is the time in seconds of the zeroth beat.
+	# This method must be called before any other methods that require a beat,
+	# or an {OffsetError} will be raised.
+	#
+	# After calling this method, the current beat (see {#beat} and {#beat!}) is set to zero,
+	# and a new BPM needs to be set using {#bpm}.
+	# Only after that can the time of any positive beat be calculated.
+	#
+	# Though not commonly useful, this method can be called multiple times in a chart.
+	# A new call of this method does not affect the events and BPM changes set before.
+	# Technically, each event is associated with a BPM change list (see {Event#bpm_changes}),
+	# and each call of this method creates a new BPM change list,
+	# which is used for the events set after.
+	# @param offset [Numeric] the offset in seconds.
+	# @return [BpmChangeList] the BPM changes.
+	# @see BpmChangeList
+	# @raise [ArgumentError] if +offset+ is not a number.
+	# @example
+	#   offset 0.1
+	#   p time_at # Outputs 0.1, which is the offset
+	#   offset 0.2
+	#   p time_at # Outputs 0.2, which is the updated offset by the second call
 	def offset offset
 		raise ArgumentError, 'offset must be a number' unless offset.is_a? Numeric
 		@current_beat = 0r
 		@bpm_changes = BpmChangeList.new offset.to_f
 	end
 
+	# Set the BPM starting at the current beat.
+	# This method must be called after {#offset}.
+	# The method can be called multiple times,
+	# which is useful when the music changes its tempo from time to time.
+	#
+	# Internally, this simply calls {BpmChangeList#add} on the BPM changes created by {#offset}.
+	# @param bpm [Numeric] the BPM.
+	# @raise [OffsetError] if {#offset} has not been called.
+	# @return [BpmChangeList] the BPM changes.
 	def bpm bpm
 		raise OffsetError.new __method__ unless @bpm_changes
 		@bpm_changes.add @current_beat, bpm
 	end
 
+	# Increments the current beat by the given delta set by +delta_beat+.
+	# It is recommended that +delta_beat+ be a Rational or an Integer for accuracy.
+	# Float will be converted to Rational, and a warning will be issued
+	# when a Float is used.
+	#
+	# This method is also useful for inspecting the current beat.
+	# If the method is called without an argument, it simply returns the current beat.
+	# For this purpose, this method is equivalent to {#beat!}.
+	#
+	# This method must be called after {#offset}.
+	# @param delta_beat [Rational, Integer] the delta to increment the current beat by.
+	# @raise [OffsetError] if {#offset} has not been called.
+	# @return [Rational] the new current beat.
+	# @see #beat!
+	# @example Increment the current beat and inspect it
+	#   offset 0.1; bpm 120
+	#   p b       # Outputs 0, this is the initial value
+	#   p b 1     # Outputs 1, because it is incremented by 1 when it was 0
+	#   p b 1/2r  # Outputs 3/2, because it is incremented by 3/2 when it was 1
+	#   p time_at # Outputs 0.85, which is offset + 60s / BPM * beat
+	# @example Time the notes
+	#   offset 0.1; bpm 120
+	#   t 0, 0; b 1
+	#   t 50, 0; b 1
+	#   # Now there are two tap notes, one at beat 0, and the other at beat 1
 	def beat delta_beat = 0
 		raise OffsetError.new __method__ unless @current_beat
 		case delta_beat
@@ -538,6 +678,24 @@ class Sunniesnow::Charter
 	end
 	alias b beat
 
+	# Sets the current beat to the given value.
+	# It is recommended that +beat+ be a Rational or an Integer for accuracy.
+	# Float will be converted to Rational, and a warning will be issued.
+	#
+	# When called without an argument, this method does nothing and returns the current beat.
+	# For this purpose, this method is equivalent to {#beat}.
+	#
+	# This method must be called after {#offset}.
+	# @param beat [Rational, Integer] the new current beat.
+	# @raise [OffsetError] if {#offset} has not been called.
+	# @return [Rational] the new current beat.
+	# @see #beat
+	# @example Set the current beat and inspect it
+	#   offset 0.1; bpm 120
+	#   p b!      # Outputs 0, this is the initial value
+	#   p b! 1    # Outputs 1, because it is set to 1
+	#   p b! 1/2r # Outputs 1/2, because it is set to 1/2
+	#   p time_at # Outputs 0.35, which is offset + 60s / BPM * beat
 	def beat! beat = @current_beat
 		raise OffsetError.new __method__ unless @current_beat
 		case beat
@@ -552,6 +710,24 @@ class Sunniesnow::Charter
 	end
 	alias b! beat!
 
+	# Creates a tap note at the given coordinates with the given text.
+	# The coordinates +x+ and +y+ must be numbers.
+	# The argument +text+ is the text to be displayed on the note
+	# (it is converted to a string via +to_s+ if it is not a string).
+	#
+	# Technically, this adds an event of type +:tap+ to the chart at the current time
+	# with properties containing the information provided by +x+, +y+, and +text+.
+	# @param x [Numeric] the x-coordinate of the note.
+	# @param y [Numeric] the y-coordinate of the note.
+	# @param text [String] the text to be displayed on the note.
+	# @return [Event] the event representing the tap note.
+	# @raise [ArgumentError] if +x+ or +y+ is not a number.
+	# @example
+	#   offset 0.1; bpm 120
+	#   t 0, 0, 'Hello'
+	#   t 50, 0, 'world'
+	#   # Now there are two simultaneous tap notes at (0, 0) and (50, 0)
+	#   # with texts 'Hello' and 'world' respectively
 	def tap x, y, text = ''
 		if !x.is_a?(Numeric) || !y.is_a?(Numeric)
 			raise ArgumentError, 'x and y must be numbers'
@@ -560,6 +736,29 @@ class Sunniesnow::Charter
 	end
 	alias t tap
 
+	# Creates a hold note at the given coordinates with the given duration and text.
+	# The coordinates +x+ and +y+ must be numbers.
+	# The argument +duration_beats+ is the duration of the hold note in beats.
+	# It needs to be a positive Rational or Integer.
+	# If it is a Float, it will be converted to a Rational, and a warning will be issued.
+	# The argument +text+ is the text to be displayed on the note
+	# (it is converted to a string via +to_s+ if it is not a string).
+	#
+	# Technically, this adds an event of type +:hold+ to the chart at the current time
+	# with properties containing the information provided by +x+, +y+, +duration_beats+, and +text+.
+	# @param x [Numeric] the x-coordinate of the note.
+	# @param y [Numeric] the y-coordinate of the note.
+	# @param duration_beats [Rational, Integer] the duration of the hold note in beats.
+	# @param text [String] the text to be displayed on the note.
+	# @return [Event] the event representing the hold note.
+	# @raise [ArgumentError] if +x+, +y+, or +duration_beats+ is not a number,
+	#   or if +duration_beats+ is not positive.
+	# @example
+	#   offset 0.1; bpm 120
+	#   h 0, 0, 1, 'Hello'
+	#   h 50, 0, 2, 'world'
+	#   # Now there are two hold notes at (0, 0) and (50, 0)
+	#   # with durations 1 and 2 beats and texts 'Hello' and 'world' respectively
 	def hold x, y, duration_beats, text = ''
 		if !x.is_a?(Numeric) || !y.is_a?(Numeric) || !duration_beats.is_a?(Numeric)
 			raise ArgumentError, 'x, y, and duration must be numbers'
@@ -574,6 +773,20 @@ class Sunniesnow::Charter
 	end
 	alias h hold
 
+	# Creates a drag note at the given coordinates.
+	# The coordinates +x+ and +y+ must be numbers.
+	#
+	# Technically, this adds an event of type +:drag+ to the chart at the current time
+	# with properties containing the information provided by +x+ and +y+.
+	# @param x [Numeric] the x-coordinate of the note.
+	# @param y [Numeric] the y-coordinate of the note.
+	# @return [Event] the event representing the drag note.
+	# @raise [ArgumentError] if +x+ or +y+ is not a number.
+	# @example
+	#   offset 0.1; bpm 120
+	#   d 0, 0
+	#   d 50, 0
+	#   # Now there are two drag notes at (0, 0) and (50, 0)
 	def drag x, y
 		if !x.is_a?(Numeric) || !y.is_a?(Numeric)
 			raise ArgumentError, 'x and y must be numbers'
@@ -582,6 +795,32 @@ class Sunniesnow::Charter
 	end
 	alias d drag
 
+	# Creates a flick note at the given coordinates with the given direction and text.
+	# The coordinates +x+ and +y+ must be numbers.
+	# The argument +direction+ is the direction of the flick note in radians or a symbol.
+	# If it is a symbol, it should be one of the keys of {DIRECTIONS}
+	# (which are +:right+, +:up_right+, etc., abbreviated as +:r+, +:ur+ etc.).
+	# If it is a number, it should be a number representing the angle in radians,
+	# specifying the angle rorated anticlockwise starting from the positive x-direction.
+	# The argument +text+ is the text to be displayed on the note
+	# (it is converted to a string via +to_s+ if it is not a string).
+	#
+	# Technically, this adds an event of type +:flick+ to the chart at the current time
+	# with properties containing the information provided by +x+, +y+, +direction+, and +text+.
+	# @param x [Numeric] the x-coordinate of the note.
+	# @param y [Numeric] the y-coordinate of the note.
+	# @param direction [Numeric, Symbol] the direction of the flick note in radians or a symbol.
+	# @param text [String] the text to be displayed on the note.
+	# @return [Event] the event representing the flick note.
+	# @raise [ArgumentError] if +x+ or +y+ is not a number,
+	#   if +direction+ is not a symbol or a number,
+	#   or if the direction is a symbol that does not represent a known direction.
+	# @example
+	#   offset 0.1; bpm 120
+	#   f 0, 0, :r, 'Hello'
+	#   f 50, 0, Math::PI / 4, 'world'
+	#   # Now there are two flick notes at (0, 0) and (50, 0)
+	#   # with directions right and up right and texts 'Hello' and 'world' respectively
 	def flick x, y, direction, text = ''
 		if !x.is_a?(Numeric) || !y.is_a?(Numeric)
 			raise ArgumentError, 'x and y must be numbers'
@@ -599,6 +838,32 @@ class Sunniesnow::Charter
 	end
 	alias f flick
 
+	# Creates a background note at the given coordinates with the given duration and text.
+	# The coordinates +x+ and +y+ must be numbers.
+	# The argument +duration_beats+ is the duration of the background note in beats.
+	# It needs to be a non-negative Rational or Integer.
+	# If it is a Float, it will be converted to a Rational, and a warning will be issued.
+	# The argument +text+ is the text to be displayed on the note
+	# (it is converted to a string via +to_s+ if it is not a string).
+	#
+	# Both the +duration_beats+ and the +text+ arguments are optional.
+	# When there are three arguments given in total,
+	# the method determines whether the third is +duration_beats+ or +text+ based on its type.
+	#
+	# Technically, this adds an event of type +:bg_note+ to the chart at the current time
+	# with properties containing the information provided by +x+, +y+, +duration_beats+, and +text+.
+	# @param x [Numeric] the x-coordinate of the note.
+	# @param y [Numeric] the y-coordinate of the note.
+	# @param duration_beats [Rational, Integer] the duration of the background note in beats.
+	# @param text [String] the text to be displayed on the note.
+	# @return [Event] the event representing the background note.
+	# @raise [ArgumentError] if +x+, +y+, or +duration_beats+ is not a number,
+	#   or if +duration_beats+ is negative.
+	# @example
+	#   offset 0.1; bpm 120
+	#   bg_note 0, 0, 1, 'Hello' # duration is 1, text is 'Hello'
+	#   bg_note 50, 0, 'world'   # duration is 0, text is 'world'
+	#   bg_note -50, 0, 2        # duration is 2, text is ''
 	def bg_note x, y, duration_beats = 0, text = nil
 		if text.nil?
 			if duration_beats.is_a? String
@@ -620,6 +885,23 @@ class Sunniesnow::Charter
 		event :bg_note, duration_beats.to_r, x: x.to_f, y: y.to_f, text: text.to_s
 	end
 
+	# Creates a big text.
+	# The argument +duration_beats+ is the duration of the big text in beats.
+	# It needs to be a non-negative Rational or Integer.
+	# If it is a Float, it will be converted to a Rational, and a warning will be issued.
+	# The argument +text+ is the text to be displayed.
+	#
+	# Technically, this adds an event of type +:big_text+ to the chart at the current time
+	# with properties containing the information provided by +duration_beats+ and +text+.
+	# @param duration_beats [Rational, Integer] the duration of the big text in beats.
+	# @param text [String] the text to be displayed.
+	# @return [Event] the event representing the big text.
+	# @raise [ArgumentError] if +duration_beats+ is not a number or is negative.
+	# @example
+	#   offset 0.1; bpm 120
+	#   big_text 1, 'Hello, world!' # duration is 1, text is 'Hello, world!'
+	#   b 1
+	#   big_text 'Goodbye!'         # duration is 0, text is 'Goodbye!'
 	def big_text duration_beats = 0, text
 		unless duration_beats.is_a? Numeric
 			raise ArgumentError, 'duration_beats must be a number'
@@ -633,6 +915,30 @@ class Sunniesnow::Charter
 		event :big_text, duration_beats.to_r, text: text.to_s
 	end
 
+	# @!macro [attach] bg_pattern
+	#   @!method $1(duration_beats = 0)
+	#   Creates a $2 background pattern.
+	#   The argument +duration_beats+ is the duration of the background pattern in beats.
+	#   It needs to be a non-negative Rational or Integer.
+	#   If it is a Float, it will be converted to a Rational, and a warning will be issued.
+	#
+	#   Technically, this adds an event of type +:bg_pattern+ to the chart at the current time
+	#   with properties containing the information provided by +duration_beats+.
+	#   @param duration_beats [Rational, Integer] the duration of the background pattern in beats.
+	#   @return [Event] the event representing the background pattern.
+	#   @raise [ArgumentError] if +duration_beats+ is not a number or is negative.
+	#   @example
+	#     offset 0.1; bpm 120
+	#     $1 1 # duration is 1
+	#     b 1
+	#     $1 0 # duration is 0
+	# @!parse bg_pattern :grid, 'grid'
+	# @!parse bg_pattern :hexagon, 'hexagon'
+	# @!parse bg_pattern :checkerboard, 'checkerboard'
+	# @!parse bg_pattern :diamond_grid, 'diamond grid'
+	# @!parse bg_pattern :pentagon, 'pentagon'
+	# @!parse bg_pattern :turntable, 'turntable'
+	# @!parse bg_pattern :hexagram, 'hexagram'
 	%i[grid hexagon checkerboard diamond_grid pentagon turntable hexagram].each do |method_name|
 		define_method method_name do |duration_beats = 0|
 			unless duration_beats.is_a? Numeric
@@ -648,6 +954,21 @@ class Sunniesnow::Charter
 		end
 	end
 
+	# Duplicate all events in a given array.
+	# This method is useful when you want to duplicate a set of events.
+	# The argument +events+ is an array of events to be duplicated.
+	# The argument +new_tip_points+ is a boolean indicating whether to create new tip points.
+	# If it is +true+, new tip points will be created for the duplicated events.
+	# If it is +false+, each duplicated event shares the same tip point as the original event.
+	# @param events [Array<Event>] the events to be duplicated.
+	# @param new_tip_points [Boolean] whether to create new tip points for the duplicated events.
+	# @return [Array<Event>] the duplicated events.
+	# @example Duplicate a note
+	#   offset 0.1; bpm 120
+	#   duplicate [t 0, 0]
+	# @example Duplicate notes that share tip points with the original notes
+	#   offset 0.1; bpm 120
+	#   duplicate tp_chain(0, 100, 1) { t 0, 0 }
 	def duplicate events, new_tip_points: true
 		result = []
 		events.each do |event|
@@ -735,5 +1056,7 @@ class Sunniesnow::Charter
 			end
 		end
 	end
+
+	# @!endgroup
 
 end

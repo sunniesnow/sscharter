@@ -20,7 +20,7 @@ jobs:
           gem install bundler
           bundle install
       - name: Generate documentation
-        run: bundle exec rake rdoc
+        run: bundle exec rake yard
       - name: Upload documentation
         uses: actions/upload-artifact@v4
         with:

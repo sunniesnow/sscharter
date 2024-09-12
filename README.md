@@ -1,4 +1,4 @@
-# Sscharter
+# sscharter
 
 A Ruby DSL for writing Sunniesnow charts.
 
@@ -7,7 +7,7 @@ A Ruby DSL for writing Sunniesnow charts.
 [Install Ruby](https://www.ruby-lang.org/en/documentation/installation/).
 Then, run
 
-```shell
+```
 gem install sscharter
 ```
 
@@ -27,4 +27,4 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/sunnie
 
 ## Code of Conduct
 
-Everyone interacting in the Sscharter project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/sscharter/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the sscharter project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/sunniesnow/sscharter/blob/master/CODE_OF_CONDUCT.md).

@@ -2,14 +2,35 @@
 
 require 'json'
 
+# A class to represent a chart.
+# Basically a wrapper around the metadata and events ({Sunniesnow::Event}) of a chart.
 class Sunniesnow::Chart
 
 	using Sunniesnow::Utils
 
-	attr_accessor :title, :artist, :charter
-	attr_accessor :difficulty_name, :difficulty_color, :difficulty, :difficulty_sup
+	# The title of the music.
+	# This is one of the metadata of the chart which will be reflected in the generated JSON
+	# (see {#to_json}). Also, see
+	# {chart file specifications}[https://sunniesnow.github.io/doc/chart.html#title]
+	# for more info.
+	attr_accessor :title
+	
+	attr_accessor :artist
+	attr_accessor :charter
+	attr_accessor :difficulty_name
+	attr_accessor :difficulty_color
+	attr_accessor :difficulty
+	attr_accessor :difficulty_sup
+
+	# An array of Sunniesnow::Event.
 	attr_reader :events
 
+	# @param [Integer] live_reload_port The port to use for live reload.
+	#   It is useless if +production+ is +true+.
+	# @param [Boolean] production Whether the chart is in production or not.
+	#   If +true+, the generated JSON (see {#to_json}) will not contain
+	#   necessary information for sscharter integration in Sunniesnow
+	#   (such as the live reload feature and reverse search feature).
 	def initialize live_reload_port: 31108, production: false
 		@title = ''
 		@artist = ''
@@ -23,6 +44,10 @@ class Sunniesnow::Chart
 		@production = production
 	end
 
+	##
+	# Convert to JSON.
+	# A Sunniesnow chart is always a JSON file in the level file.
+	# This method is used to generate that JSON file.
 	def to_json *args
 		hash = {
 			title: @title,

@@ -2,7 +2,7 @@
 
 require 'bundler/gem_tasks'
 require 'rake/testtask'
-require 'rdoc/task'
+require 'yard'
 
 Rake::TestTask.new :test do |t|
 	t.libs << 'test'
@@ -10,12 +10,9 @@ Rake::TestTask.new :test do |t|
 	t.test_files = FileList['test/**/test_*.rb']
 end
 
-RDoc::Task.new do |t|
-	t.main = 'README.md'
-	t.rdoc_dir = 'doc'
-	t.rdoc_files.include 'README.md', 'tutorial/tutorial.md', 'lib/**/*.rb'
-	t.options << '--tab-width'
-	t.options << '2'
+YARD::Rake::YardocTask.new do |t|
+	t.files.concat %w[README.md]
+	t.options.concat %w[--title sscharter --output-dir doc --exclude lib/sscharter/cli.rb --readme]
 end
 
 task default: :test
