@@ -332,7 +332,7 @@ Then, edit `Rakefile` to disable browser launching and enable live restart:
 
 ```ruby
 task :serve do
-  exec 'bundle exec sscharter serve --no-open-browser --live-restart'
+  exec 'bundle exec sscharter serve --no-open-browser'
 end
 ```
 

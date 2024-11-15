@@ -983,6 +983,8 @@ class Sunniesnow::Charter
 		result
 	end
 
+	# Transform all events in a given array in time and/or space.
+	# Space transformation does not affect background patterns.
 	def transform events, &block
 		raise ArgumentError, 'no block given' unless block
 		events = [events] if events.is_a? Event
