@@ -696,4 +696,30 @@ class TestSscharter < Minitest::Test
 		assert_equal note2.beat, beat2
 	end
 
+	def test_tip_point_id
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+
+		note1 = note2 = note3 = note4 = nil
+		chart.tp_chain rand, rand, rand do
+			note1 = t rand(100), rand(100)
+		end
+		chart.tp_chain rand, rand, rand do
+		end
+		chart.tp_drop rand, rand, rand do
+			note2 = t rand(100), rand(100)
+			note3 = t rand(100), rand(100)
+		end
+		chart.tp_drop rand, rand, rand do
+		end
+		chart.tp_chain rand, rand, rand do
+			note4 = t rand(100), rand(100)
+		end
+		assert_equal note1[:tip_point], '0'
+		assert_equal note2[:tip_point], '1'
+		assert_equal note3[:tip_point], '2'
+		assert_equal note4[:tip_point], '3'
+	end
+
 end

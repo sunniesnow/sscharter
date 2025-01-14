@@ -453,12 +453,13 @@ class Sunniesnow::Charter
 		return event unless event.tip_pointable?
 		case @tip_point_mode_stack.last
 		when :chain
+			@tip_point_peak += 1 if @tip_point_start_to_add_stack.last
 			push_tip_point_start event
 			@tip_point_start_to_add_stack[-1] = nil
 		when :drop
+			@tip_point_peak += 1
 			push_tip_point_start event
 			@current_tip_point_stack[-1] = @tip_point_peak
-			@tip_point_peak += 1
 		when :none
 			# pass
 		end
@@ -483,7 +484,6 @@ class Sunniesnow::Charter
 		else
 			@tip_point_start_to_add_stack.push TipPointStart.new *args, **opts
 			@current_tip_point_stack.push @tip_point_peak
-			@tip_point_peak += 1
 		end
 		result = group preserve_beat: do
 			@current_tip_point_group_stack.push @groups.last
