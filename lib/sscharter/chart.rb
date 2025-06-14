@@ -4,13 +4,19 @@ require 'json'
 
 # A class to represent a chart.
 # Basically a wrapper around the metadata and events ({Sunniesnow::Event}) of a chart.
+# The main method is {#to_json}, which converts the chart to a JSON string
+# that is actually recognizable by Sunniesnow.
 class Sunniesnow::Chart
 
 	using Sunniesnow::Utils
 
+	# The schema URL for the output JSON.
+	# This will be set as the `$schema` property in the generated JSON.
+	SCHEMA = 'https://sunniesnow.github.io/schema/chart-1.0.json'
+
 	# The title of the music.
-	# This is one of the metadata of the chart which will be reflected in the generated JSON
-	# (see {#to_json}). Also, see
+	# This is one of the metadata of the chart which will be reflected in the generated JSON.
+	# Also, see
 	# {chart file specifications}[https://sunniesnow.github.io/doc/chart.html#title]
 	# for more info.
 	attr_accessor :title
@@ -50,6 +56,7 @@ class Sunniesnow::Chart
 	# This method is used to generate that JSON file.
 	def to_json *args
 		hash = {
+			'$schema': SCHEMA,
 			title: @title,
 			artist: @artist,
 			charter: @charter,
