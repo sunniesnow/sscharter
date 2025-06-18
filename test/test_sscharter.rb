@@ -722,4 +722,57 @@ class TestSscharter < Minitest::Test
 		assert_equal note4[:tip_point], '3'
 	end
 
+	def test_tip_point_immediate_nest
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+
+		note1 = note2 = nil
+		x1, y1, t1 = rand, rand, rand
+		x2, y2, t2 = rand, rand, rand
+		%i[chain drop].product %i[chain drop] do |mode1, mode2|
+			group1 = chart.tip_point mode1, x1, y1, t1 do
+				tip_point mode2, x2, y2, t2 do
+					note2 = t rand(100), rand(100)
+					b 1
+				end
+				note1 = t rand(100), rand(100)
+				b 1
+			end
+			placeholder2, placeholder1 = group1.select { _1.type == :placeholder }
+			assert_equal group1.length, 4
+			assert_equal note2[:tip_point], placeholder2[:tip_point]
+			assert_equal note1[:tip_point], placeholder1[:tip_point]
+			refute_equal note1[:tip_point], note2[:tip_point]
+			assert_in_delta placeholder2[:x] - note2[:x], x2, 1e-8
+			assert_in_delta placeholder2[:y] - note2[:y], y2, 1e-8
+			assert_in_delta placeholder1[:x] - note1[:x], x1, 1e-8
+			assert_in_delta placeholder1[:y] - note1[:y], y1, 1e-8
+		end
+	end
+
+	def test_omit_tip_point_chain_args
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+
+		note1 = note2 = group2 = nil
+		group1 = chart.tp_chain rand, rand, rand do
+			note1 = t rand(100), rand(100)
+			b 1
+			group2 = tp_chain do
+				note2 = t rand(100), rand(100)
+				b 1
+			end
+		end
+		placeholder1, placeholder2 = group1.select { _1.type == :placeholder }
+		assert_equal group1.length, 4
+		assert_equal group2.length, 2
+		refute_equal note1[:tip_point], note2[:tip_point]
+		assert_equal note1[:tip_point], placeholder1[:tip_point]
+		assert_equal note2[:tip_point], placeholder2[:tip_point]
+		assert_in_delta placeholder1[:x] - note1[:x], placeholder2[:x] - note2[:x], 1e-8
+		assert_in_delta placeholder1[:y] - note1[:y], placeholder2[:y] - note2[:y], 1e-8
+		assert_in_delta placeholder1.time - note1.time, placeholder2.time - note2.time, 1e-6
+	end
 end

@@ -22,13 +22,12 @@ module Sunniesnow
 			module_function
 
 			def config
-				config_filename = File.join PROJECT_DIR, '.sscharter.yml'
-				config_filename = File.join PROJECT_DIR, '.sscharter.yaml' unless File.exist? config_filename
-				unless File.exist? config_filename
-					puts 'No .sscharter.yml found'
+				filenames = %w[sscharter.yml sscharter.yaml .sscharter.yml .sscharter.yaml].map { File.join PROJECT_DIR, _1 }
+				unless filename = filenames.find { File.exist? _1 }
+					$stderr.puts 'Config file sscharter.yml not found'
 					return nil
 				end
-				YAML.load_file config_filename, symbolize_names: true
+				YAML.load_file filename, symbolize_names: true
 			end
 
 			singleton_class.attr_reader :commands
@@ -87,20 +86,18 @@ Sunniesnow::Charter::CLI::Subcommand.new :init, option_parser do |project_dir = 
 	FileUtils.cp_r files, files_dir
 	FileUtils.cd project_dir do
 		File.write 'Gemfile', <<~GEMFILE
-			# frozen_string_literal: true
 			source 'https://rubygems.org'
 			gem 'sscharter', '~> #{Sunniesnow::Charter::VERSION}'
 			gem 'rake', '~> #{Rake::VERSION}'
 			gem 'bundler', '~> #{Bundler::VERSION}'
 		GEMFILE
 		File.write 'Rakefile', <<~RAKEFILE
-			# frozen_string_literal: true
 			task default: :build
 			task :build do
 				exec 'bundle exec sscharter build'
 			end
 			task :serve do
-				exec 'bundle exec sscharter serve'
+				exec 'bundle exec sscharter serve --no-open-browser'
 			end
 		RAKEFILE
 		File.write '.gitignore', <<~GITIGNORE
@@ -108,7 +105,7 @@ Sunniesnow::Charter::CLI::Subcommand.new :init, option_parser do |project_dir = 
 			/tmp/
 			/build/
 		GITIGNORE
-		File.write '.sscharter.yml', <<~SSCHARTER
+		File.write 'sscharter.yml', <<~SSCHARTER
 			---
 			project_name: #{File.basename project_dir}
 			build_dir: build
@@ -136,21 +133,19 @@ Sunniesnow::Charter::CLI::Subcommand.new :init, option_parser do |project_dir = 
 		README
 		FileUtils.mkdir_p 'src'
 		File.write 'src/master.rb', <<~CHART
-			# frozen_string_literal: true
-
 			Sunniesnow::Charter.open 'master' do
 
 			title 'The title of the music'
 			artist 'The artist of the music'
 			charter 'Your name'
 			difficulty_name 'Master'
-			difficulty_color '#8c68f3'
+			difficulty_color :master
 			difficulty '12'
 
 			offset 0
 			bpm 120
 
-			tp_chain 0, 0, 1 do
+			tp_chain 0, 100, 1 do
 				t -50, 0, 'hello'
 				b 1 # proceed by 1 beat
 				t 50, 0, 'world'

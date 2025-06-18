@@ -107,7 +107,7 @@ big-d
 ├── README.md
 ├── src
 │   └── master.rb
-└── .sscharter.yml
+└── sscharter.yml
 ```
 
 Here are some explanation for each of them.
@@ -121,13 +121,13 @@ see [the official documentation](https://bundler.io/man/gemfile.5.html).
 If you do not use Git as the version manager for your project, it does nothing.
 - `Rakefile` contains some tasks that can be run by [Rake](https://ruby.github.io/rake/).
 - `README.md` is the README file of your project.
-- `.sscharter.yml` is the sscharter configuration for your project.
+- `sscharter.yml` is the sscharter configuration for your project.
 - `files` is the directory whose files will be included in the final level file.
-You can change the directory in `.sscharter.yml`.
+You can change the directory in `sscharter.yml`.
 - `src` is the directory that contains the source codes of your project.
-You can change the directory in `.sscharter.yml`.
+You can change the directory in `sscharter.yml`.
 
-Open `.sscharter.yml` using your text editor.
+Open `sscharter.yml` using your text editor.
 Here are the contents that you should see:
 
 ```yaml
@@ -952,6 +952,56 @@ end
 # write something here...
 ```
 
+Sometimes even `preserve_beat: false` is not convenient enough to write complicated note patterns.
+The `mark` and `at` methods can help you with more complicated charts.
+
+Use `mark` to mark a place and label it with a symbol of your choice
+(e.g. `:left_hand`), and use `at` to write notes at that point.
+
+```ruby
+group, preserve_beat: false do
+  # write something here...
+  mark :left_hand # mark the current place with the label `:left_hand`
+end
+
+group do
+  # write something here...
+  mark :right_hand # mark the current place with the label `:right_hand`
+end
+
+at :left_hand do
+  # write notes here as if continuing where `mark :left_hand` is
+end
+
+at :right_hand do
+  # write notes here as if continuing where `mark :right_hand` is
+end
+```
+
+You can also use `at` with `update_mark: true` to update the mark
+to the place where the block in `at` is ended.
+
+```ruby
+group do
+  # ...
+  mark :x
+  # ...
+end
+
+at :x, update_mark: true do
+  # ...
+end
+
+at :x do
+  # as if continuing the last `at :x, update_mark: true` block
+end
+```
+
+Usually, when `at` finishes, the current beat is set
+to whatever it was before `at` was called.
+You can keep the current beat by using `preserve_beat: true`
+in the call of `at`.
+
 ### BPM changes
 
 > [!NOTE]
@@ -1188,6 +1238,21 @@ notes = tp_chain 0, 100, speed: 100 do
 end
 transform duplicate notes, new_tip_points: false do
   # transforms...
+end
+```
+
+When you use `mark` inside a tip point block,
+the tip point state is also preserved when you use `at` later.
+For example:
+
+```ruby
+tp_chain 0, 100, 1 do
+  t 0, 0; b 1
+  mark :my_mark
+end
+
+at :my_mark do
+  t 100, 0 # this note will be connected by the same tip point
 end
 ```
 

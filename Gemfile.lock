@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sscharter (0.7.1)
+    sscharter (0.8.0)
       concurrent-ruby (~> 1.3)
       em-websocket (~> 0.5)
       filewatcher (~> 2.0)

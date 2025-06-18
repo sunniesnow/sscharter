@@ -382,6 +382,7 @@ class Sunniesnow::Charter
 		@current_tip_point_group_stack = []
 		@tip_point_peak = 0
 		@current_duplicate = 0
+		@tip_point_start_stack = [nil]
 		@tip_point_start_to_add_stack = [nil]
 		@groups = [@events]
 	end
@@ -429,6 +430,7 @@ class Sunniesnow::Charter
 			current_tip_point_stack: @current_tip_point_stack.dup,
 			current_tip_point_group_stack: @current_tip_point_group_stack.dup,
 			current_duplicate: @current_duplicate,
+			tip_point_start_stack: @tip_point_start_stack.dup,
 			tip_point_start_to_add_stack: @tip_point_start_to_add_stack.dup,
 			groups: @groups.dup
 		}
@@ -453,13 +455,16 @@ class Sunniesnow::Charter
 		return event unless event.tip_pointable?
 		case @tip_point_mode_stack.last
 		when :chain
-			@tip_point_peak += 1 if @tip_point_start_to_add_stack.last
+			if @tip_point_start_to_add_stack.last
+				@current_tip_point_stack[-1] = @tip_point_peak
+				@tip_point_peak += 1
+			end
 			push_tip_point_start event
 			@tip_point_start_to_add_stack[-1] = nil
 		when :drop
+			@current_tip_point_stack[-1] = @tip_point_peak
 			@tip_point_peak += 1
 			push_tip_point_start event
-			@current_tip_point_stack[-1] = @tip_point_peak
 		when :none
 			# pass
 		end
@@ -479,16 +484,26 @@ class Sunniesnow::Charter
 	def tip_point mode, *args, preserve_beat: true, **opts, &block
 		@tip_point_mode_stack.push mode
 		if mode == :none
+			@tip_point_start_stack.push nil
 			@tip_point_start_to_add_stack.push nil
 			@current_tip_point_stack.push nil
 		else
-			@tip_point_start_to_add_stack.push TipPointStart.new *args, **opts
-			@current_tip_point_stack.push @tip_point_peak
+			if args.empty? && opts.empty?
+				unless @tip_point_start_stack.last
+					raise TipPointError, 'cannot omit tip point arguments at top level or inside tip_point_none'
+				end
+				@tip_point_start_stack.push @tip_point_start_stack.last.dup
+			else
+				@tip_point_start_stack.push TipPointStart.new *args, **opts
+			end
+			@tip_point_start_to_add_stack.push @tip_point_start_stack.last
+			@current_tip_point_stack.push nil
 		end
 		result = group preserve_beat: do
 			@current_tip_point_group_stack.push @groups.last
 			instance_eval &block
 		end
+		@tip_point_start_stack.pop
 		@tip_point_start_to_add_stack.pop
 		@tip_point_mode_stack.pop
 		@current_tip_point_stack.pop
