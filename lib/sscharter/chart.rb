@@ -70,7 +70,7 @@ class Sunniesnow::Chart
 			version: Sunniesnow::Charter::VERSION,
 			port: @live_reload_port
 		} unless @production
-		hash.to_json
+		hash.to_json *args
 	end
 end
 

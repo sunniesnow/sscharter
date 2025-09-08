@@ -157,7 +157,7 @@ Sunniesnow::Charter::CLI::Subcommand.new :init, option_parser do |project_dir = 
 	puts "Project initialized at #{project_dir}"
 end
 
-def build **opts
+def build compression_level: Zip.default_compression, **opts, &block
 	return 1 unless config = Sunniesnow::Charter::CLI.config
 	dir = Sunniesnow::Charter::PROJECT_DIR
 	project_name = config[:project_name] || File.basename(dir)
@@ -176,7 +176,7 @@ def build **opts
 	FileUtils.mkdir_p build_dir
 	build_filename = File.join build_dir, "#{project_name}.ssc"
 	FileUtils.rm build_filename if File.exist? build_filename
-	Zip::File.open build_filename, create: true do |zip_file|
+	Zip::File.open build_filename, compression_level:, create: true do |zip_file|
 		Dir.glob File.join files_dir, '**', '*' do |filename|
 			zip_file.add filename["#{files_dir}/".length..], filename
 		end
@@ -187,25 +187,28 @@ def build **opts
 		end
 		Sunniesnow::Charter.charts.each do |name, chart|
 			begin
-				output = chart.output_json **opts
+				sunniesnow_chart = chart.to_sunniesnow **opts
 			rescue => e
 				puts 'An error happened. Report if this is a bug of sscharter.'
 				puts e.full_message
 				return 2
 			end
+			block.(name, sunniesnow_chart) if block
 			zip_file.get_output_stream "#{name}.json" do |file|
-				file.write output
+				file.write sunniesnow_chart.to_json
 			end
 		end
+		zip_file.each { _1.time = Time.at 0 }
 	end
 	0
 end
 
 option_parser = OptionParser.new do |o|
 	o.banner = 'Usage: sscharter build'
+	o.on '--compression-level=LEVEL', Integer, 'Compression level (0-9)'
 end
-Sunniesnow::Charter::CLI::Subcommand.new :build, option_parser do
-	build production: true
+Sunniesnow::Charter::CLI::Subcommand.new :build, option_parser do |compression_level: Zip.default_compression|
+	build compression_level:, production: true
 end
 
 option_parser = OptionParser.new do |o|
@@ -216,8 +219,17 @@ option_parser = OptionParser.new do |o|
 	o.on '--live-reload-port=PORT', Integer, 'live reload port number'
 	o.on '--[no-]production', 'Disable live reload'
 	o.on '--[no-]open-browser', 'Open browser'
+	o.on '--compression-level=LEVEL', Integer, 'Compression level (0-9)'
 end
-Sunniesnow::Charter::CLI::Subcommand.new :serve, option_parser do |host: '0.0.0.0', exposed_host: 'localhost', port: 8011, live_reload_port: 31108, production: false, open_browser: true|
+Sunniesnow::Charter::CLI::Subcommand.new :serve, option_parser do |\
+	host: '0.0.0.0',
+	exposed_host: 'localhost',
+	port: 8011,
+	live_reload_port: 31108,
+	production: false,
+	open_browser: true,
+	compression_level: (production ? Zip.default_compression : 0)
+|
 	return 1 unless config = Sunniesnow::Charter::CLI.config
 	dir = Sunniesnow::Charter::PROJECT_DIR
 	project_name = config[:project_name] || File.basename(dir)
@@ -263,18 +275,23 @@ Sunniesnow::Charter::CLI::Subcommand.new :serve, option_parser do |host: '0.0.0.
 			end
 		end
 	end
-	url = "http://#{exposed_host}:#{port}/#{project_name}.ssc"
+	base_url = "http://#{exposed_host}:#{port}"
+	url = URI.join base_url, "#{project_name}.ssc"
 	filewatcher = Filewatcher.new [files_dir, sources_dir, *include_files]
 	Launchy.open "https://sunniesnow.github.io/game/?level-file=online&level-file-online=#{CGI.escape url}" if open_browser
-	build_proc = ->is_first do
+	build_proc = ->is_first, only_charts do
 		puts is_first ? 'Building...' : 'Rebuilding...'
-		success = build(live_reload_port:, production:) == 0
-		puts success ? is_first ? "Finished; access at #{url}" : 'Finished' : 'Failed'
-		live_reload_clients.each { _1.send JSON.generate type: 'update' } unless production
+		build_result = build(live_reload_port:, production:, compression_level:) do |name, chart|
+			live_reload_clients.each { _1.send JSON.generate type: 'chartUpdate', name:, chart: } unless production
+		end
+		puts build_result == 0 ? is_first ? "Finished; access at #{url}" : 'Finished' : 'Failed'
+		live_reload_clients.each { _1.send JSON.generate type: 'update', onlyCharts: only_charts } unless production
 	end
 	filewatcher_thread = Thread.new do
-		build_proc.(true)
-		filewatcher.watch { |changes| build_proc.(false) }
+		build_proc.(true, false)
+		filewatcher.watch do |changes|
+			build_proc.(false, changes.all? { |filename, event| filename.start_with? sources_dir + '/' })
+		end
 		server.shutdown
 		EM.stop unless production
 	end
