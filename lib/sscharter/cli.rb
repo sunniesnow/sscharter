@@ -166,13 +166,17 @@ def build compression_level: Zip.default_compression, **opts, &block
 	sources_dir = File.join dir, config[:sources_dir] || 'src'
 	include_files = (config[:include] || []).map { File.join dir, _1 }
 	Sunniesnow::Charter.charts.clear
+	time = Time.now
 	Dir.glob File.join sources_dir, '*.rb' do |filename|
 		load filename
 	rescue Exception => e
 		puts "Error loading #{filename}:"
 		puts e.full_message
+		puts "Build aborted (took #{Time.now - time} seconds)"
 		return 1
 	end
+	puts "Built #{Sunniesnow::Charter.charts.size} chart(s) (took #{Time.now - time} seconds)"
+	time = Time.now
 	FileUtils.mkdir_p build_dir
 	build_filename = File.join build_dir, "#{project_name}.ssc"
 	FileUtils.rm build_filename if File.exist? build_filename
@@ -196,10 +200,15 @@ def build compression_level: Zip.default_compression, **opts, &block
 			block.(name, sunniesnow_chart) if block
 			zip_file.get_output_stream "#{name}.json" do |file|
 				file.write sunniesnow_chart.to_json
+			rescue => e
+				puts 'An error happened. Report if this is a bug of sscharter.'
+				puts e.full_message
+				return 2
 			end
 		end
 		zip_file.each { _1.time = Time.at 0 }
 	end
+	puts "Created #{project_name}.ssc (took #{Time.now - time} seconds)"
 	0
 end
 
