@@ -32,7 +32,7 @@ jobs:
     name: Push documentation
     needs: generate
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         name: Download documentation
         with:
           pattern: doc
