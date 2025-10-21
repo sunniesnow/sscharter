@@ -266,7 +266,7 @@ module Sunniesnow::Tools::SvgPath
 			@lengths = [0.0]
 			@last_initial = 0
 			@current = Vector2D.new 0.0, 0.0
-			data.gsub! /[a-df-zA-DF-Z]/, ' \0 ' # exclude E for scientific notation
+			data = data.gsub /[a-df-zA-DF-Z]/, ' \0 ' # exclude E for scientific notation
 			data.gsub! /[,\s]+/, ' '
 			data.strip!
 			parse_instructions data.split
