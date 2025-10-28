@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
 
 	# Uncomment to register a new dependency of your gem
 	spec.add_dependency 'rubyzip', '~> 3.1'
-	spec.add_dependency 'launchy', '~> 2.5'
+	spec.add_dependency 'launchy', '>= 2.5', '< 4.0'
 	spec.add_dependency 'webrick', '~> 1.8'
 	spec.add_dependency 'filewatcher', '~> 2.0'
 	spec.add_dependency 'em-websocket', '~> 0.5'
