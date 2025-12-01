@@ -31,7 +31,7 @@ GEM
       childprocess (~> 5.0)
       logger (~> 1.6)
     logger (1.7.0)
-    minitest (5.26.0)
+    minitest (5.26.1)
     module_methods (0.1.0)
     public_suffix (6.0.2)
     rake (13.3.1)
