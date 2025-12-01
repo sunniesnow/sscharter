@@ -36,7 +36,7 @@ GEM
     public_suffix (6.0.2)
     rake (13.3.1)
     rubyzip (3.2.1)
-    webrick (1.9.1)
+    webrick (1.9.2)
     yard (0.9.37)
 
 PLATFORMS
