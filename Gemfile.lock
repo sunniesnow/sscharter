@@ -37,7 +37,7 @@ GEM
     rake (13.3.1)
     rubyzip (3.2.2)
     webrick (1.9.2)
-    yard (0.9.37)
+    yard (0.9.38)
 
 PLATFORMS
   x64-mingw-ucrt
