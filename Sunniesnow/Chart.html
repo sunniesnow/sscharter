@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Sunniesnow::Chart
+  
+    &mdash; sscharter
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Sunniesnow::Chart";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Sunniesnow.html" title="Sunniesnow (module)">Sunniesnow</a></span></span>
+     &raquo; 
+    <span class="title">Chart</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Sunniesnow::Chart
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Sunniesnow::Chart</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/sscharter/chart.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>A class to represent a chart. Basically a wrapper around the metadata and events (<span class='object_link'><a href="Event.html" title="Sunniesnow::Event (class)">Event</a></span>) of a chart. The main method is <span class='object_link'><a href="#to_json-instance_method" title="Sunniesnow::Chart#to_json (method)">#to_json</a></span>, which converts the chart to a JSON string that is actually recognizable by Sunniesnow.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="SCHEMA-constant" class="">SCHEMA =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>The schema URL for the output JSON. This will be set as the ‘$schema` property in the generated JSON.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://sunniesnow.github.io/schema/chart-1.0.json</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#artist-instance_method" title="#artist (instance method)">#<strong>artist</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute artist.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#charter-instance_method" title="#charter (instance method)">#<strong>charter</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute charter.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#difficulty-instance_method" title="#difficulty (instance method)">#<strong>difficulty</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute difficulty.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#difficulty_color-instance_method" title="#difficulty_color (instance method)">#<strong>difficulty_color</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute difficulty_color.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#difficulty_name-instance_method" title="#difficulty_name (instance method)">#<strong>difficulty_name</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute difficulty_name.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#difficulty_sup-instance_method" title="#difficulty_sup (instance method)">#<strong>difficulty_sup</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute difficulty_sup.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#events-instance_method" title="#events (instance method)">#<strong>events</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>An array of Sunniesnow::Event.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#title-instance_method" title="#title (instance method)">#<strong>title</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The title of the music.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(live_reload_port: 31108, production: false)  &#x21d2; Chart </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of Chart.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_json-instance_method" title="#to_json (instance method)">#<strong>to_json</strong>(*args)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Convert to JSON.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(live_reload_port: 31108, production: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Sunniesnow::Chart (class)">Chart</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of Chart.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>live_reload_port</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>31108</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The port to use for live reload. It is useless if <code>production</code> is <code>true</code>.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>production</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Whether the chart is in production or not. If <code>true</code>, the generated JSON (see <span class='object_link'><a href="#to_json-instance_method" title="Sunniesnow::Chart#to_json (method)">#to_json</a></span>) will not contain necessary information for sscharter integration in Sunniesnow (such as the live reload feature and reverse search feature).</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter/chart.rb', line 40</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='label'>live_reload_port:</span> <span class='int'>31108</span><span class='comma'>,</span> <span class='label'>production:</span> <span class='kw'>false</span>
+	<span class='ivar'>@title</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+	<span class='ivar'>@artist</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+	<span class='ivar'>@charter</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+	<span class='ivar'>@difficulty_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+	<span class='ivar'>@difficulty_color</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>#000000</span><span class='tstring_end'>&#39;</span></span>
+	<span class='ivar'>@difficulty</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+	<span class='ivar'>@difficulty_sup</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+	<span class='ivar'>@events</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+	<span class='ivar'>@live_reload_port</span> <span class='op'>=</span> <span class='id identifier rubyid_live_reload_port'>live_reload_port</span>
+	<span class='ivar'>@production</span> <span class='op'>=</span> <span class='id identifier rubyid_production'>production</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="artist=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="artist-instance_method">
+  
+    #<strong>artist</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute artist.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+24
+25
+26</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter/chart.rb', line 24</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_artist'>artist</span>
+  <span class='ivar'>@artist</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="charter=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="charter-instance_method">
+  
+    #<strong>charter</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute charter.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+25
+26
+27</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter/chart.rb', line 25</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_charter'>charter</span>
+  <span class='ivar'>@charter</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="difficulty=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="difficulty-instance_method">
+  
+    #<strong>difficulty</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute difficulty.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+28
+29
+30</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter/chart.rb', line 28</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_difficulty'>difficulty</span>
+  <span class='ivar'>@difficulty</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="difficulty_color=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="difficulty_color-instance_method">
+  
+    #<strong>difficulty_color</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute difficulty_color.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+27
+28
+29</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter/chart.rb', line 27</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_difficulty_color'>difficulty_color</span>
+  <span class='ivar'>@difficulty_color</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="difficulty_name=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="difficulty_name-instance_method">
+  
+    #<strong>difficulty_name</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute difficulty_name.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter/chart.rb', line 26</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_difficulty_name'>difficulty_name</span>
+  <span class='ivar'>@difficulty_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="difficulty_sup=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="difficulty_sup-instance_method">
+  
+    #<strong>difficulty_sup</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute difficulty_sup.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29
+30
+31</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter/chart.rb', line 29</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_difficulty_sup'>difficulty_sup</span>
+  <span class='ivar'>@difficulty_sup</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="events-instance_method">
+  
+    #<strong>events</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>An array of Sunniesnow::Event.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter/chart.rb', line 32</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_events'>events</span>
+  <span class='ivar'>@events</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="title=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="title-instance_method">
+  
+    #<strong>title</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>The title of the music. This is one of the metadata of the chart which will be reflected in the generated JSON. Also, see <a href="https://sunniesnow.github.io/doc/chart.html#title">chart file specifications</a> for more info.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+22
+23
+24</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter/chart.rb', line 22</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_title'>title</span>
+  <span class='ivar'>@title</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="to_json-instance_method">
+  
+    #<strong>to_json</strong>(*args)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Convert to JSON. A Sunniesnow chart is always a JSON file in the level file. This method is used to generate that JSON file.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter/chart.rb', line 57</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_json'>to_json</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
+	<span class='id identifier rubyid_hash'>hash</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+		<span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>$schema</span><span class='label_end'>&#39;:</span> <span class='const'><span class='object_link'><a href="#SCHEMA-constant" title="Sunniesnow::Chart::SCHEMA (constant)">SCHEMA</a></span></span><span class='comma'>,</span>
+		<span class='label'>title:</span> <span class='ivar'>@title</span><span class='comma'>,</span>
+		<span class='label'>artist:</span> <span class='ivar'>@artist</span><span class='comma'>,</span>
+		<span class='label'>charter:</span> <span class='ivar'>@charter</span><span class='comma'>,</span>
+		<span class='label'>difficultyName:</span> <span class='ivar'>@difficulty_name</span><span class='comma'>,</span>
+		<span class='label'>difficultyColor:</span> <span class='ivar'>@difficulty_color</span><span class='comma'>,</span>
+		<span class='label'>difficulty:</span> <span class='ivar'>@difficulty</span><span class='comma'>,</span>
+		<span class='label'>difficultySup:</span> <span class='ivar'>@difficulty_sup</span><span class='comma'>,</span>
+		<span class='label'>events:</span> <span class='ivar'>@events</span>
+	<span class='rbrace'>}</span>
+	<span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:sscharter</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+		<span class='label'>version:</span> <span class='const'><span class='object_link'><a href="../Sunniesnow.html" title="Sunniesnow (module)">Sunniesnow</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Charter.html" title="Sunniesnow::Charter (class)">Charter</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Charter.html#VERSION-constant" title="Sunniesnow::Charter::VERSION (constant)">VERSION</a></span></span><span class='comma'>,</span>
+		<span class='label'>port:</span> <span class='ivar'>@live_reload_port</span>
+	<span class='rbrace'>}</span> <span class='kw'>unless</span> <span class='ivar'>@production</span>
+	<span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Sun Feb  1 20:21:55 2026 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.3.5).
+</div>
+
+    </div>
+  </body>
+</html>

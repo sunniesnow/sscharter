@@ -1,0 +1,5182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Sunniesnow::Charter
+  
+    &mdash; sscharter
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Sunniesnow::Charter";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Sunniesnow.html" title="Sunniesnow (module)">Sunniesnow</a></span></span>
+     &raquo; 
+    <span class="title">Charter</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Sunniesnow::Charter
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Sunniesnow::Charter</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/sscharter/version.rb<span class="defines">,<br />
+  lib/sscharter.rb</span>
+</dd>
+  </dl>
+  
+</div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Charter/BpmChangeList.html" title="Sunniesnow::Charter::BpmChangeList (class)">BpmChangeList</a></span>, <span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span>, <span class='object_link'><a href="Charter/OffsetError.html" title="Sunniesnow::Charter::OffsetError (class)">OffsetError</a></span>, <span class='object_link'><a href="Charter/TipPointError.html" title="Sunniesnow::Charter::TipPointError (class)">TipPointError</a></span>, <span class='object_link'><a href="Charter/TipPointStart.html" title="Sunniesnow::Charter::TipPointStart (class)">TipPointStart</a></span>, <span class='object_link'><a href="Charter/Transform.html" title="Sunniesnow::Charter::Transform (class)">Transform</a></span>
+    
+  
+</p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="VERSION-constant" class="">VERSION =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0.10.0</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="PROJECT_DIR-constant" class="">PROJECT_DIR =
+          
+        </dt>
+        <dd><pre class="code"><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>SSCHARTER_PROJECT_DIR</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_pwd'>pwd</span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="COLORS-constant" class="">COLORS =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+	<span class='label'>easy:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>#3eb9fd</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+	<span class='label'>normal:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>#f19e56</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+	<span class='label'>hard:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>#e75e74</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+	<span class='label'>master:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>#8c68f3</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+	<span class='label'>special:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>#f156ee</span><span class='tstring_end'>&#39;</span></span>
+<span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+        <dt id="DIRECTIONS-constant" class="">DIRECTIONS =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+	<span class='label'>right:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>r</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+	<span class='label'>up_right:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>ur</span><span class='words_sep'> </span><span class='tstring_content'>ru</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+	<span class='label'>up:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>u</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+	<span class='label'>up_left:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>ul</span><span class='words_sep'> </span><span class='tstring_content'>lu</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+	<span class='label'>left:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>l</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+	<span class='label'>down_left:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>dl</span><span class='words_sep'> </span><span class='tstring_content'>ld</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+	<span class='label'>down:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>d</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+	<span class='label'>down_right:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>dr</span><span class='words_sep'> </span><span class='tstring_content'>rd</span><span class='tstring_end'>]</span></span>
+<span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+	<span class='label'>right:</span> <span class='float'>0.0</span><span class='comma'>,</span>
+	<span class='label'>up_right:</span> <span class='const'>Math</span><span class='op'>::</span><span class='const'>PI</span> <span class='op'>/</span> <span class='int'>4</span><span class='comma'>,</span>
+	<span class='label'>up:</span> <span class='const'>Math</span><span class='op'>::</span><span class='const'>PI</span> <span class='op'>/</span> <span class='int'>2</span><span class='comma'>,</span>
+	<span class='label'>up_left:</span> <span class='const'>Math</span><span class='op'>::</span><span class='const'>PI</span> <span class='op'>*</span> <span class='int'>3</span> <span class='op'>/</span> <span class='int'>4</span><span class='comma'>,</span>
+	<span class='label'>left:</span> <span class='const'>Math</span><span class='op'>::</span><span class='const'>PI</span><span class='comma'>,</span>
+	<span class='label'>down_left:</span> <span class='op'>-</span><span class='const'>Math</span><span class='op'>::</span><span class='const'>PI</span> <span class='op'>*</span> <span class='int'>3</span> <span class='op'>/</span> <span class='int'>4</span><span class='comma'>,</span>
+	<span class='label'>down:</span> <span class='op'>-</span><span class='const'>Math</span><span class='op'>::</span><span class='const'>PI</span> <span class='op'>/</span> <span class='int'>2</span><span class='comma'>,</span>
+	<span class='label'>down_right:</span> <span class='op'>-</span><span class='const'>Math</span><span class='op'>::</span><span class='const'>PI</span> <span class='op'>/</span> <span class='int'>4</span>
+<span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='lparen'>(</span><span class='id identifier rubyid_direction_name'>direction_name</span><span class='comma'>,</span> <span class='id identifier rubyid_aliases'>aliases</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_directions'>directions</span><span class='op'>|</span>
+	<span class='id identifier rubyid_aliases'>aliases</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_directions'>directions</span><span class='lbracket'>[</span><span class='id identifier rubyid__1'>_1</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_directions'>directions</span><span class='lbracket'>[</span><span class='id identifier rubyid_direction_name'>direction_name</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+  <h2>Class Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#charts-class_method" title="charts (class method)">.<strong>charts</strong>  &#x21d2; Hash&lt;String, Sunniesnow::Charter&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A hash containing all the charts opened by open.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#events-instance_method" title="#events (instance method)">#<strong>events</strong>  &#x21d2; Array&lt;Sunniesnow::Charter::Event&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>An array of events.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      DSL methods
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#artist-instance_method" title="#artist (instance method)">#<strong>artist</strong>(artist)  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the artist of the music for the chart.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#at-instance_method" title="#at (instance method)">#<strong>at</strong>(name, preserve_beat: false, update_mark: false, &amp;block)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#beat-instance_method" title="#beat (instance method)">#<strong>beat</strong>(delta_beat = 0)  &#x21d2; Rational </a>
+    
+
+    
+      (also: #b)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Increments the current beat by the given delta set by <code>delta_beat</code>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#beat!-instance_method" title="#beat! (instance method)">#<strong>beat!</strong>(beat = @current_beat)  &#x21d2; Rational </a>
+    
+
+    
+      (also: #b!)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Sets the current beat to the given value.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bg_note-instance_method" title="#bg_note (instance method)">#<strong>bg_note</strong>(x, y, duration_beats = 0, text = nil)  &#x21d2; Event </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Creates a background note at the given coordinates with the given duration and text.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#big_text-instance_method" title="#big_text (instance method)">#<strong>big_text</strong>(duration_beats = 0, text)  &#x21d2; Event </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Creates a big text.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bpm-instance_method" title="#bpm (instance method)">#<strong>bpm</strong>(bpm)  &#x21d2; BpmChangeList </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the BPM starting at the current beat.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#charter-instance_method" title="#charter (instance method)">#<strong>charter</strong>(charter)  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the name of the chart author for the chart.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#check-instance_method" title="#check (instance method)">#<strong>check</strong>(notes_in_bound: true, bg_notes_in_bound: true)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#difficulty-instance_method" title="#difficulty (instance method)">#<strong>difficulty</strong>(difficulty)  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the difficulty level for the chart.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#difficulty_color-instance_method" title="#difficulty_color (instance method)">#<strong>difficulty_color</strong>(difficulty_color)  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the color of the difficulty for the chart.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#difficulty_name-instance_method" title="#difficulty_name (instance method)">#<strong>difficulty_name</strong>(difficulty_name)  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the name of the difficulty for the chart.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#difficulty_sup-instance_method" title="#difficulty_sup (instance method)">#<strong>difficulty_sup</strong>(difficulty_sup)  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the difficulty superscript for the chart.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#drag-instance_method" title="#drag (instance method)">#<strong>drag</strong>(x, y)  &#x21d2; Event </a>
+    
+
+    
+      (also: #d)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Creates a drag note at the given coordinates.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#duplicate-instance_method" title="#duplicate (instance method)">#<strong>duplicate</strong>(events, new_tip_points: true)  &#x21d2; Array&lt;Event&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Duplicate all events in a given array.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#flick-instance_method" title="#flick (instance method)">#<strong>flick</strong>(x, y, direction, text = &#39;&#39;)  &#x21d2; Event </a>
+    
+
+    
+      (also: #f)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Creates a flick note at the given coordinates with the given direction and text.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#group-instance_method" title="#group (instance method)">#<strong>group</strong>(preserve_beat: true, &amp;block)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#hold-instance_method" title="#hold (instance method)">#<strong>hold</strong>(x, y, duration_beats, text = &#39;&#39;)  &#x21d2; Event </a>
+    
+
+    
+      (also: #h)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Creates a hold note at the given coordinates with the given duration and text.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#mark-instance_method" title="#mark (instance method)">#<strong>mark</strong>(name)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#method_name-instance_method" title="#method_name (instance method)">#<strong>method_name</strong>(duration_beats = 0)  &#x21d2; Event </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Creates a  background pattern.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#mode-instance_method" title="#mode (instance method)">#<strong>mode</strong>(duration_beats = 0)  &#x21d2; Event </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Creates a  background pattern.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#offset-instance_method" title="#offset (instance method)">#<strong>offset</strong>(offset)  &#x21d2; BpmChangeList </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the offset.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#remove-instance_method" title="#remove (instance method)">#<strong>remove</strong>(*events)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tap-instance_method" title="#tap (instance method)">#<strong>tap</strong>(x, y, text = &#39;&#39;)  &#x21d2; Event </a>
+    
+
+    
+      (also: #t)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Creates a tap note at the given coordinates with the given text.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#title-instance_method" title="#title (instance method)">#<strong>title</strong>(title)  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the title of the music for the chart.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#transform-instance_method" title="#transform (instance method)">#<strong>transform</strong>(events, &amp;block)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Transform all events in a given array in time and/or space.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#open-class_method" title="open (class method)">.<strong>open</strong>(name, &amp;block)  &#x21d2; Sunniesnow::Charter </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a new chart or open an existing chart for editing.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#backup_beat-instance_method" title="#backup_beat (instance method)">#<strong>backup_beat</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#backup_state-instance_method" title="#backup_state (instance method)">#<strong>backup_state</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#event-instance_method" title="#event (instance method)">#<strong>event</strong>(type, duration_beats = nil, **properties)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#init_bookmarks-instance_method" title="#init_bookmarks (instance method)">#<strong>init_bookmarks</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#init_chart_info-instance_method" title="#init_chart_info (instance method)">#<strong>init_chart_info</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#init_state-instance_method" title="#init_state (instance method)">#<strong>init_state</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(name)  &#x21d2; Charter </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Create a new chart.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#inspect-instance_method" title="#inspect (instance method)">#<strong>inspect</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#output_json-instance_method" title="#output_json (instance method)">#<strong>output_json</strong>(**opts)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#push_tip_point_start-instance_method" title="#push_tip_point_start (instance method)">#<strong>push_tip_point_start</strong>(start_event)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#restore_beat-instance_method" title="#restore_beat (instance method)">#<strong>restore_beat</strong>(backup)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#restore_state-instance_method" title="#restore_state (instance method)">#<strong>restore_state</strong>(backup)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#time_at-instance_method" title="#time_at (instance method)">#<strong>time_at</strong>(beat = @current_beat)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tip_point-instance_method" title="#tip_point (instance method)">#<strong>tip_point</strong>(mode, *args, preserve_beat: true, **opts, &amp;block)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_sunniesnow-instance_method" title="#to_sunniesnow (instance method)">#<strong>to_sunniesnow</strong>(**opts)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(name)  &#x21d2; <tt><span class='object_link'><a href="" title="Sunniesnow::Charter (class)">Charter</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a new chart. Usually you should use <span class='object_link'><a href="#open-class_method" title="Sunniesnow::Charter.open (method)">open</a></span> instead of this method.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the name of the chart.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+356
+357
+358
+359
+360
+361</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 356</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='id identifier rubyid_name'>name</span>
+	<span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
+	<span class='id identifier rubyid_init_chart_info'>init_chart_info</span>
+	<span class='id identifier rubyid_init_state'>init_state</span>
+	<span class='id identifier rubyid_init_bookmarks'>init_bookmarks</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="class_attr_details" class="attr_details">
+    <h2>Class Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="charts-class_method">
+  
+    .<strong>charts</strong>  &#x21d2; <tt>Hash&lt;String, <span class='object_link'><a href="" title="Sunniesnow::Charter (class)">Sunniesnow::Charter</a></span>&gt;</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>A hash containing all the charts opened by open. The keys are the names of the charts, and the values are the <span class='object_link'><a href="" title="Sunniesnow::Charter (class)">Sunniesnow::Charter</a></span> objects.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash&lt;String, <span class='object_link'><a href="" title="Sunniesnow::Charter (class)">Sunniesnow::Charter</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+321
+322
+323</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 321</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_charts'>charts</span>
+  <span class='ivar'>@charts</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="events-instance_method">
+  
+    #<strong>events</strong>  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Sunniesnow::Charter::Event</a></span>&gt;</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>An array of events.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Sunniesnow::Charter::Event</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+327
+328
+329</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 327</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_events'>events</span>
+  <span class='ivar'>@events</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="open-class_method">
+  
+    .<strong>open</strong>(name, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="" title="Sunniesnow::Charter (class)">Sunniesnow::Charter</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Create a new chart or open an existing chart for editing. The <code>name</code> is used to check whether the chart already exists. If a new chart needs to be created, it is added to <span class='object_link'><a href="#charts-class_method" title="Sunniesnow::Charter.charts (method)">charts</a></span>.</p>
+
+<p>The given <code>block</code> will be evaluated in the context of the chart (inside the block, <code>self</code> is the same as the return value, a <span class='object_link'><a href="" title="Sunniesnow::Charter (class)">Sunniesnow::Charter</a></span> instance). This method is intended to be called at the top level of a Ruby script to open a context for writing a Sunniesnow chart using the DSL.</p>
+
+<p>In the examples in the documentation of other methods, it is assumed that they are run inside a block passed to this method.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+      <pre class="example code"><code><span class='const'><span class='object_link'><a href="../Sunniesnow.html" title="Sunniesnow (module)">Sunniesnow</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Sunniesnow::Charter (class)">Charter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>master</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>do</span>
+  <span class='comment'># write the chart here
+</span><span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the name of the chart.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Sunniesnow::Charter (class)">Sunniesnow::Charter</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the chart.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+347
+348
+349
+350
+351</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 347</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
+	<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='ivar'>@charts</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_name'>name</span>
+	<span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span> <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span>
+	<span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="artist-instance_method">
+  
+    #<strong>artist</strong>(artist)  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Set the artist of the music for the chart. This will be reflected in the return value of <span class='object_link'><a href="#to_sunniesnow-instance_method" title="Sunniesnow::Charter#to_sunniesnow (method)">#to_sunniesnow</a></span>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>artist</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the artist of the music.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the artist of the music, the same as the argument <code>artist</code>.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <code>artist</code> is not a String.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Chart.html#artist-instance_method" title="Sunniesnow::Chart#artist (method)">Sunniesnow::Chart#artist</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+534
+535
+536
+537</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 534</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_artist'>artist</span> <span class='id identifier rubyid_artist'>artist</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>artist must be a string</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_artist'>artist</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>String</span>
+	<span class='ivar'>@artist</span> <span class='op'>=</span> <span class='id identifier rubyid_artist'>artist</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="at-instance_method">
+  
+    #<strong>at</strong>(name, preserve_beat: false, update_mark: false, &amp;block)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+1038
+1039
+1040
+1041
+1042
+1043
+1044
+1045
+1046
+1047
+1048
+1049</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 1038</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_at'>at</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>preserve_beat:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>update_mark:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>no block given</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_block'>block</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unknown bookmark </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_bookmark'>bookmark</span> <span class='op'>=</span> <span class='ivar'>@bookmarks</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span>
+	<span class='id identifier rubyid_backup'>backup</span> <span class='op'>=</span> <span class='id identifier rubyid_backup_state'>backup_state</span>
+	<span class='id identifier rubyid_restore_state'>restore_state</span> <span class='id identifier rubyid_bookmark'>bookmark</span>
+	<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_group'>group</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
+	<span class='id identifier rubyid_mark'>mark</span> <span class='id identifier rubyid_name'>name</span> <span class='kw'>if</span> <span class='id identifier rubyid_update_mark'>update_mark</span>
+	<span class='id identifier rubyid_beat_backup'>beat_backup</span> <span class='op'>=</span> <span class='id identifier rubyid_backup_beat'>backup_beat</span> <span class='kw'>if</span> <span class='id identifier rubyid_preserve_beat'>preserve_beat</span>
+	<span class='id identifier rubyid_restore_state'>restore_state</span> <span class='id identifier rubyid_backup'>backup</span>
+	<span class='id identifier rubyid_restore_beat'>restore_beat</span> <span class='id identifier rubyid_beat_backup'>beat_backup</span> <span class='kw'>if</span> <span class='id identifier rubyid_preserve_beat'>preserve_beat</span>
+	<span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="backup_beat-instance_method">
+  
+    #<strong>backup_beat</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+417
+418
+419</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 417</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_backup_beat'>backup_beat</span>
+	<span class='lbrace'>{</span><span class='label'>current_beat:</span> <span class='ivar'>@current_beat</span><span class='comma'>,</span> <span class='label'>bpm_changes:</span> <span class='ivar'>@bpm_changes</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="backup_state-instance_method">
+  
+    #<strong>backup_state</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 426</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_backup_state'>backup_state</span>
+	<span class='lbrace'>{</span>
+		<span class='label'>current_beat:</span> <span class='ivar'>@current_beat</span><span class='comma'>,</span>
+		<span class='label'>bpm_changes:</span> <span class='ivar'>@bpm_changes</span><span class='comma'>,</span>
+		<span class='label'>tip_point_mode_stack:</span> <span class='ivar'>@tip_point_mode_stack</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='comma'>,</span>
+		<span class='label'>current_tip_point_stack:</span> <span class='ivar'>@current_tip_point_stack</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='comma'>,</span>
+		<span class='label'>current_tip_point_group_stack:</span> <span class='ivar'>@current_tip_point_group_stack</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='comma'>,</span>
+		<span class='label'>current_duplicate:</span> <span class='ivar'>@current_duplicate</span><span class='comma'>,</span>
+		<span class='label'>tip_point_start_stack:</span> <span class='ivar'>@tip_point_start_stack</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='comma'>,</span>
+		<span class='label'>tip_point_start_to_add_stack:</span> <span class='ivar'>@tip_point_start_to_add_stack</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='comma'>,</span>
+		<span class='label'>groups:</span> <span class='ivar'>@groups</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+	<span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="beat-instance_method">
+  
+    #<strong>beat</strong>(delta_beat = 0)  &#x21d2; <tt>Rational</tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='b-instance_method'>b</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Increments the current beat by the given delta set by <code>delta_beat</code>. It is recommended that <code>delta_beat</code> be a Rational or an Integer for accuracy. Float will be converted to Rational, and a warning will be issued when a Float is used.</p>
+
+<p>This method is also useful for inspecting the current beat. If the method is called without an argument, it simply returns the current beat. For this purpose, this method is equivalent to <span class='object_link'><a href="#beat!-instance_method" title="Sunniesnow::Charter#beat! (method)">#beat!</a></span>.</p>
+
+<p>This method must be called after <span class='object_link'><a href="#offset-instance_method" title="Sunniesnow::Charter#offset (method)">#offset</a></span>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+        <h5 class="example_title"><div class='inline'>
+<p>Increment the current beat and inspect it</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_offset'>offset</span> <span class='float'>0.1</span><span class='semicolon'>;</span> <span class='id identifier rubyid_bpm'>bpm</span> <span class='int'>120</span>
+<span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_b'>b</span>       <span class='comment'># Outputs 0, this is the initial value
+</span><span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_b'>b</span> <span class='int'>1</span>     <span class='comment'># Outputs 1, because it is incremented by 1 when it was 0
+</span><span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_b'>b</span> <span class='int'>1</span><span class='op'>/</span><span class='rational'>2r</span>  <span class='comment'># Outputs 3/2, because it is incremented by 3/2 when it was 1
+</span><span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_time_at'>time_at</span> <span class='comment'># Outputs 0.85, which is offset + 60s / BPM * beat</span></code></pre>
+    
+      
+        <h5 class="example_title"><div class='inline'>
+<p>Time the notes</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_offset'>offset</span> <span class='float'>0.1</span><span class='semicolon'>;</span> <span class='id identifier rubyid_bpm'>bpm</span> <span class='int'>120</span>
+<span class='id identifier rubyid_t'>t</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span><span class='semicolon'>;</span> <span class='id identifier rubyid_b'>b</span> <span class='int'>1</span>
+<span class='id identifier rubyid_t'>t</span> <span class='int'>50</span><span class='comma'>,</span> <span class='int'>0</span><span class='semicolon'>;</span> <span class='id identifier rubyid_b'>b</span> <span class='int'>1</span>
+<span class='comment'># Now there are two tap notes, one at beat 0, and the other at beat 1</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>delta_beat</span>
+      
+      
+        <span class='type'>(<tt>Rational</tt>, <tt>Integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>0</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the delta to increment the current beat by.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Rational</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the new current beat.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Charter/OffsetError.html" title="Sunniesnow::Charter::OffsetError (class)">OffsetError</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <span class='object_link'><a href="#offset-instance_method" title="Sunniesnow::Charter#offset (method)">#offset</a></span> has not been called.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#beat!-instance_method" title="Sunniesnow::Charter#beat! (method)">#beat!</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 683</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_beat'>beat</span> <span class='id identifier rubyid_delta_beat'>delta_beat</span> <span class='op'>=</span> <span class='int'>0</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Charter/OffsetError.html" title="Sunniesnow::Charter::OffsetError (class)">OffsetError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Charter/OffsetError.html#initialize-instance_method" title="Sunniesnow::Charter::OffsetError#initialize (method)">new</a></span></span> <span class='id identifier rubyid___method__'>__method__</span> <span class='kw'>unless</span> <span class='ivar'>@current_beat</span>
+	<span class='kw'>case</span> <span class='id identifier rubyid_delta_beat'>delta_beat</span>
+	<span class='kw'>when</span> <span class='const'>Integer</span><span class='comma'>,</span> <span class='const'>Rational</span>
+		<span class='ivar'>@current_beat</span> <span class='op'>+=</span> <span class='id identifier rubyid_delta_beat'>delta_beat</span><span class='period'>.</span><span class='id identifier rubyid_to_r'>to_r</span>
+	<span class='kw'>when</span> <span class='const'>Float</span>
+		<span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>float beat is not recommended</span><span class='tstring_end'>&#39;</span></span>
+		<span class='ivar'>@current_beat</span> <span class='op'>+=</span> <span class='id identifier rubyid_delta_beat'>delta_beat</span><span class='period'>.</span><span class='id identifier rubyid_to_r'>to_r</span>
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>invalid delta_beat</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="beat!-instance_method">
+  
+    #<strong>beat!</strong>(beat = @current_beat)  &#x21d2; <tt>Rational</tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='b!-instance_method'>b!</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Sets the current beat to the given value. It is recommended that <code>beat</code> be a Rational or an Integer for accuracy. Float will be converted to Rational, and a warning will be issued.</p>
+
+<p>When called without an argument, this method does nothing and returns the current beat. For this purpose, this method is equivalent to <span class='object_link'><a href="#beat-instance_method" title="Sunniesnow::Charter#beat (method)">#beat</a></span>.</p>
+
+<p>This method must be called after <span class='object_link'><a href="#offset-instance_method" title="Sunniesnow::Charter#offset (method)">#offset</a></span>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+        <h5 class="example_title"><div class='inline'>
+<p>Set the current beat and inspect it</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_offset'>offset</span> <span class='float'>0.1</span><span class='semicolon'>;</span> <span class='id identifier rubyid_bpm'>bpm</span> <span class='int'>120</span>
+<span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_b!'>b!</span>      <span class='comment'># Outputs 0, this is the initial value
+</span><span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_b!'>b!</span> <span class='int'>1</span>    <span class='comment'># Outputs 1, because it is set to 1
+</span><span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_b!'>b!</span> <span class='int'>1</span><span class='op'>/</span><span class='rational'>2r</span> <span class='comment'># Outputs 1/2, because it is set to 1/2
+</span><span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_time_at'>time_at</span> <span class='comment'># Outputs 0.35, which is offset + 60s / BPM * beat</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>beat</span>
+      
+      
+        <span class='type'>(<tt>Rational</tt>, <tt>Integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>@current_beat</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the new current beat.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Rational</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the new current beat.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Charter/OffsetError.html" title="Sunniesnow::Charter::OffsetError (class)">OffsetError</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <span class='object_link'><a href="#offset-instance_method" title="Sunniesnow::Charter#offset (method)">#offset</a></span> has not been called.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#beat-instance_method" title="Sunniesnow::Charter#beat (method)">#beat</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+715
+716
+717
+718
+719
+720
+721
+722
+723
+724
+725
+726</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 715</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_beat!'>beat!</span> <span class='id identifier rubyid_beat'>beat</span> <span class='op'>=</span> <span class='ivar'>@current_beat</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Charter/OffsetError.html" title="Sunniesnow::Charter::OffsetError (class)">OffsetError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Charter/OffsetError.html#initialize-instance_method" title="Sunniesnow::Charter::OffsetError#initialize (method)">new</a></span></span> <span class='id identifier rubyid___method__'>__method__</span> <span class='kw'>unless</span> <span class='ivar'>@current_beat</span>
+	<span class='kw'>case</span> <span class='id identifier rubyid_beat'>beat</span>
+	<span class='kw'>when</span> <span class='const'>Integer</span><span class='comma'>,</span> <span class='const'>Rational</span>
+		<span class='ivar'>@current_beat</span> <span class='op'>=</span> <span class='id identifier rubyid_beat'>beat</span><span class='period'>.</span><span class='id identifier rubyid_to_r'>to_r</span>
+	<span class='kw'>when</span> <span class='const'>Float</span>
+		<span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>float beat is not recommended</span><span class='tstring_end'>&#39;</span></span>
+		<span class='ivar'>@current_beat</span> <span class='op'>=</span> <span class='id identifier rubyid_beat'>beat</span><span class='period'>.</span><span class='id identifier rubyid_to_r'>to_r</span>
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>invalid beat</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="bg_note-instance_method">
+  
+    #<strong>bg_note</strong>(x, y, duration_beats = 0, text = nil)  &#x21d2; <tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Creates a background note at the given coordinates with the given duration and text. The coordinates <code>x</code> and <code>y</code> must be numbers. The argument <code>duration_beats</code> is the duration of the background note in beats. It needs to be a non-negative Rational or Integer. If it is a Float, it will be converted to a Rational, and a warning will be issued. The argument <code>text</code> is the text to be displayed on the note (it is converted to a string via <code>to_s</code> if it is not a string).</p>
+
+<p>Both the <code>duration_beats</code> and the <code>text</code> arguments are optional. When there are three arguments given in total, the method determines whether the third is <code>duration_beats</code> or <code>text</code> based on its type.</p>
+
+<p>Technically, this adds an event of type <code>:bg_note</code> to the chart at the current time with properties containing the information provided by <code>x</code>, <code>y</code>, <code>duration_beats</code>, and <code>text</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_offset'>offset</span> <span class='float'>0.1</span><span class='semicolon'>;</span> <span class='id identifier rubyid_bpm'>bpm</span> <span class='int'>120</span>
+<span class='id identifier rubyid_bg_note'>bg_note</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>1</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Hello</span><span class='tstring_end'>&#39;</span></span> <span class='comment'># duration is 1, text is &#39;Hello&#39;
+</span><span class='id identifier rubyid_bg_note'>bg_note</span> <span class='int'>50</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>world</span><span class='tstring_end'>&#39;</span></span>   <span class='comment'># duration is 0, text is &#39;world&#39;
+</span><span class='id identifier rubyid_bg_note'>bg_note</span> <span class='op'>-</span><span class='int'>50</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>2</span>        <span class='comment'># duration is 2, text is &#39;&#39;</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>x</span>
+      
+      
+        <span class='type'>(<tt>Numeric</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the x-coordinate of the note.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>y</span>
+      
+      
+        <span class='type'>(<tt>Numeric</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the y-coordinate of the note.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>duration_beats</span>
+      
+      
+        <span class='type'>(<tt>Rational</tt>, <tt>Integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>0</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the duration of the background note in beats.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>text</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the text to be displayed on the note.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the event representing the background note.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <code>x</code>, <code>y</code>, or <code>duration_beats</code> is not a number, or if <code>duration_beats</code> is negative.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+883
+884
+885
+886
+887
+888
+889
+890
+891
+892
+893
+894
+895
+896
+897
+898
+899
+900
+901
+902</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 883</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_bg_note'>bg_note</span> <span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span> <span class='op'>=</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='kw'>nil</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>String</span>
+			<span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span>
+			<span class='id identifier rubyid_duration_beats'>duration_beats</span> <span class='op'>=</span> <span class='int'>0</span>
+		<span class='kw'>else</span>
+			<span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+		<span class='kw'>end</span>
+	<span class='kw'>end</span>
+	<span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Numeric</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_y'>y</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Numeric</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_duration_beats'>duration_beats</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Numeric</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x, y, and duration_beats must be numbers</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span> <span class='op'>&lt;</span> <span class='int'>0</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>duration must be non-negative</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Float</span>
+		<span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Rational is recommended over Float for duration_beats</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+	<span class='id identifier rubyid_event'>event</span> <span class='symbol'>:bg_note</span><span class='comma'>,</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span><span class='period'>.</span><span class='id identifier rubyid_to_r'>to_r</span><span class='comma'>,</span> <span class='label'>x:</span> <span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='comma'>,</span> <span class='label'>y:</span> <span class='id identifier rubyid_y'>y</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="big_text-instance_method">
+  
+    #<strong>big_text</strong>(duration_beats = 0, text)  &#x21d2; <tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Creates a big text. The argument <code>duration_beats</code> is the duration of the big text in beats. It needs to be a non-negative Rational or Integer. If it is a Float, it will be converted to a Rational, and a warning will be issued. The argument <code>text</code> is the text to be displayed.</p>
+
+<p>Technically, this adds an event of type <code>:big_text</code> to the chart at the current time with properties containing the information provided by <code>duration_beats</code> and <code>text</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_offset'>offset</span> <span class='float'>0.1</span><span class='semicolon'>;</span> <span class='id identifier rubyid_bpm'>bpm</span> <span class='int'>120</span>
+<span class='id identifier rubyid_big_text'>big_text</span> <span class='int'>1</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Hello, world!</span><span class='tstring_end'>&#39;</span></span> <span class='comment'># duration is 1, text is &#39;Hello, world!&#39;
+</span><span class='id identifier rubyid_b'>b</span> <span class='int'>1</span>
+<span class='id identifier rubyid_big_text'>big_text</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Goodbye!</span><span class='tstring_end'>&#39;</span></span>         <span class='comment'># duration is 0, text is &#39;Goodbye!&#39;</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>duration_beats</span>
+      
+      
+        <span class='type'>(<tt>Rational</tt>, <tt>Integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>0</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the duration of the big text in beats.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>text</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the text to be displayed.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the event representing the big text.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <code>duration_beats</code> is not a number or is negative.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+921
+922
+923
+924
+925
+926
+927
+928
+929
+930
+931
+932</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 921</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_big_text'>big_text</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span> <span class='op'>=</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span>
+	<span class='kw'>unless</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Numeric</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>duration_beats must be a number</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span> <span class='op'>&lt;</span> <span class='int'>0</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>duration must be non-negative</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Float</span>
+		<span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Rational is recommended over Float for duration_beats</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+	<span class='id identifier rubyid_event'>event</span> <span class='symbol'>:big_text</span><span class='comma'>,</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span><span class='period'>.</span><span class='id identifier rubyid_to_r'>to_r</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="bpm-instance_method">
+  
+    #<strong>bpm</strong>(bpm)  &#x21d2; <tt><span class='object_link'><a href="Charter/BpmChangeList.html" title="Sunniesnow::Charter::BpmChangeList (class)">BpmChangeList</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Set the BPM starting at the current beat. This method must be called after <span class='object_link'><a href="#offset-instance_method" title="Sunniesnow::Charter#offset (method)">#offset</a></span>. The method can be called multiple times, which is useful when the music changes its tempo from time to time.</p>
+
+<p>Internally, this simply calls <span class='object_link'><a href="Charter/BpmChangeList.html#add-instance_method" title="Sunniesnow::Charter::BpmChangeList#add (method)">Sunniesnow::Charter::BpmChangeList#add</a></span> on the BPM changes created by <span class='object_link'><a href="#offset-instance_method" title="Sunniesnow::Charter#offset (method)">#offset</a></span>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>bpm</span>
+      
+      
+        <span class='type'>(<tt>Numeric</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the BPM.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Charter/BpmChangeList.html" title="Sunniesnow::Charter::BpmChangeList (class)">BpmChangeList</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the BPM changes.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Charter/OffsetError.html" title="Sunniesnow::Charter::OffsetError (class)">OffsetError</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <span class='object_link'><a href="#offset-instance_method" title="Sunniesnow::Charter#offset (method)">#offset</a></span> has not been called.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+653
+654
+655
+656</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 653</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_bpm'>bpm</span> <span class='id identifier rubyid_bpm'>bpm</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Charter/OffsetError.html" title="Sunniesnow::Charter::OffsetError (class)">OffsetError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Charter/OffsetError.html#initialize-instance_method" title="Sunniesnow::Charter::OffsetError#initialize (method)">new</a></span></span> <span class='id identifier rubyid___method__'>__method__</span> <span class='kw'>unless</span> <span class='ivar'>@bpm_changes</span>
+	<span class='ivar'>@bpm_changes</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='ivar'>@current_beat</span><span class='comma'>,</span> <span class='id identifier rubyid_bpm'>bpm</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="charter-instance_method">
+  
+    #<strong>charter</strong>(charter)  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Set the name of the chart author for the chart. This will be reflected in the return value of <span class='object_link'><a href="#to_sunniesnow-instance_method" title="Sunniesnow::Charter#to_sunniesnow (method)">#to_sunniesnow</a></span>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>charter</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the name of the charter.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the name of the chart author, the same as the argument <code>charter</code>.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <code>charter</code> is not a String.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Chart.html#charter-instance_method" title="Sunniesnow::Chart#charter (method)">Sunniesnow::Chart#charter</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+545
+546
+547
+548</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 545</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_charter'>charter</span> <span class='id identifier rubyid_charter'>charter</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>charter must be a string</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_charter'>charter</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>String</span>
+	<span class='ivar'>@charter</span> <span class='op'>=</span> <span class='id identifier rubyid_charter'>charter</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="check-instance_method">
+  
+    #<strong>check</strong>(notes_in_bound: true, bg_notes_in_bound: true)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+1051
+1052
+1053
+1054
+1055
+1056
+1057
+1058
+1059
+1060
+1061
+1062
+1063
+1064
+1065
+1066
+1067
+1068
+1069
+1070
+1071
+1072
+1073
+1074
+1075
+1076</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 1051</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_check'>check</span><span class='lparen'>(</span>
+	<span class='label'>notes_in_bound:</span> <span class='kw'>true</span><span class='comma'>,</span>
+	<span class='label'>bg_notes_in_bound:</span> <span class='kw'>true</span>
+<span class='rparen'>)</span>
+	<span class='id identifier rubyid_out_of_bound_events'>out_of_bound_events</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_notes_in_bound'>notes_in_bound</span> <span class='op'>||</span> <span class='id identifier rubyid_bg_notes_in_bound'>bg_notes_in_bound</span>
+	<span class='ivar'>@events</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_event'>event</span><span class='op'>|</span>
+		<span class='kw'>if</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>tap</span><span class='words_sep'> </span><span class='tstring_content'>hold</span><span class='words_sep'> </span><span class='tstring_content'>drag</span><span class='words_sep'> </span><span class='tstring_content'>flick</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_notes_in_bound'>notes_in_bound</span> <span class='op'>||</span> <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>==</span> <span class='symbol'>:bg_note</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_bg_notes_in_bound'>bg_notes_in_bound</span>
+			<span class='kw'>if</span> <span class='id identifier rubyid_event'>event</span><span class='lbracket'>[</span><span class='symbol'>:x</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='op'>-</span><span class='int'>100</span><span class='op'>-</span><span class='float'>1e-10</span> <span class='op'>||</span> <span class='id identifier rubyid_event'>event</span><span class='lbracket'>[</span><span class='symbol'>:x</span><span class='rbracket'>]</span> <span class='op'>&gt;</span> <span class='int'>100</span><span class='op'>+</span><span class='float'>1e-10</span> <span class='op'>||</span> <span class='id identifier rubyid_event'>event</span><span class='lbracket'>[</span><span class='symbol'>:y</span><span class='rbracket'>]</span> <span class='op'>&lt;</span> <span class='op'>-</span><span class='int'>50</span><span class='op'>-</span><span class='float'>1e-10</span> <span class='op'>||</span> <span class='id identifier rubyid_event'>event</span><span class='lbracket'>[</span><span class='symbol'>:y</span><span class='rbracket'>]</span> <span class='op'>&gt;</span> <span class='int'>50</span><span class='op'>+</span><span class='float'>1e-10</span>
+				<span class='id identifier rubyid_out_of_bound_events'>out_of_bound_events</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='id identifier rubyid_event'>event</span>
+			<span class='kw'>end</span>
+		<span class='kw'>end</span>
+	<span class='kw'>end</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_notes_in_bound'>notes_in_bound</span> <span class='op'>||</span> <span class='id identifier rubyid_bg_notes_in_bound'>bg_notes_in_bound</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_out_of_bound_events'>out_of_bound_events</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+			<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>===== All notes are in bound =====</span><span class='tstring_end'>&quot;</span></span>
+		<span class='kw'>else</span>
+			<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>===== Out-of-bound notes =====</span><span class='tstring_end'>&quot;</span></span>
+			<span class='id identifier rubyid_out_of_bound_events'>out_of_bound_events</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_event'>event</span><span class='op'>|</span>
+				<span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_event'>event</span>
+				<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>at time </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_time'>time</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+				<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>defined at:</span><span class='tstring_end'>&#39;</span></span>
+				<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span>
+			<span class='kw'>end</span>
+		<span class='kw'>end</span>
+	<span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="difficulty-instance_method">
+  
+    #<strong>difficulty</strong>(difficulty)  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Set the difficulty level for the chart. This will be reflected in the return value of <span class='object_link'><a href="#to_sunniesnow-instance_method" title="Sunniesnow::Charter#to_sunniesnow (method)">#to_sunniesnow</a></span>.</p>
+
+<p>The argument <code>difficulty</code> should be a string representing the difficulty level. Anything other than a string will be converted to a string using <code>to_s</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>difficulty</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the difficulty level.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the difficulty level (converted to a string).</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Chart.html#difficulty-instance_method" title="Sunniesnow::Chart#difficulty (method)">Sunniesnow::Chart#difficulty</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+599
+600
+601</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 599</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_difficulty'>difficulty</span> <span class='id identifier rubyid_difficulty'>difficulty</span>
+	<span class='ivar'>@difficulty</span> <span class='op'>=</span> <span class='id identifier rubyid_difficulty'>difficulty</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="difficulty_color-instance_method">
+  
+    #<strong>difficulty_color</strong>(difficulty_color)  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Set the color of the difficulty for the chart. This will be reflected in the return value of <span class='object_link'><a href="#to_sunniesnow-instance_method" title="Sunniesnow::Charter#to_sunniesnow (method)">#to_sunniesnow</a></span>.</p>
+
+<p>The argument <code>difficulty_color</code> can be a color name (a key of <span class='object_link'><a href="#COLORS-constant" title="Sunniesnow::Charter::COLORS (constant)">COLORS</a></span>), an RGB color in hexadecimal format (e.g. <tt>‘#8c68f3’</tt>, <tt>‘#8CF’</tt>), an RGB color in decimal format (e.g. <tt>‘rgb(140, 104, 243)’</tt>), or an integer representing an RGB color (e.g. <code>0x8c68f3</code>).</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>difficulty_color</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>, <tt>String</tt>, <tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the color of the difficulty.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the color of the difficulty in hexadecimal format (e.g. <tt>‘#8c68f3’</tt>).</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <code>difficulty_color</code> is not a valid color format.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Chart.html#difficulty_color-instance_method" title="Sunniesnow::Chart#difficulty_color (method)">Sunniesnow::Chart#difficulty_color</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 572</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_difficulty_color'>difficulty_color</span> <span class='id identifier rubyid_difficulty_color'>difficulty_color</span>
+	<span class='ivar'>@difficulty_color</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_difficulty_color'>difficulty_color</span>
+	<span class='kw'>when</span> <span class='const'>Symbol</span>
+		<span class='const'><span class='object_link'><a href="#COLORS-constant" title="Sunniesnow::Charter::COLORS (constant)">COLORS</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_difficulty_color'>difficulty_color</span><span class='rbracket'>]</span>
+	<span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^#[0-9a-fA-F]{6}$</span><span class='regexp_end'>/</span></span>
+		<span class='id identifier rubyid_difficulty_color'>difficulty_color</span>
+	<span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^#[0-9a-fA-F]{3}$</span><span class='regexp_end'>/</span></span>
+		<span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_g'>g</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span> <span class='op'>=</span> <span class='id identifier rubyid_difficulty_color'>difficulty_color</span><span class='period'>.</span><span class='id identifier rubyid_chars'>chars</span>
+		<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_r'>r</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_r'>r</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_g'>g</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_g'>g</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_b'>b</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_b'>b</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+	<span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$</span><span class='regexp_end'>/</span></span>
+		<span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_g'>g</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span> <span class='op'>=</span> <span class='backref'>$1</span><span class='comma'>,</span> <span class='backref'>$2</span><span class='comma'>,</span> <span class='backref'>$3</span>
+		<span class='id identifier rubyid_sprintf'>sprintf</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>#%02x%02x%02x</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='id identifier rubyid_g'>g</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
+	<span class='kw'>when</span> <span class='const'>Integer</span>
+		<span class='id identifier rubyid_sprintf'>sprintf</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>#%06x</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_difficulty_color'>difficulty_color</span> <span class='op'>%</span> <span class='int'>0x1000000</span>
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>unknown format of difficulty_color</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="difficulty_name-instance_method">
+  
+    #<strong>difficulty_name</strong>(difficulty_name)  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Set the name of the difficulty for the chart. This will be reflected in the return value of <span class='object_link'><a href="#to_sunniesnow-instance_method" title="Sunniesnow::Charter#to_sunniesnow (method)">#to_sunniesnow</a></span>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>difficulty_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the name of the difficulty.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the name of the difficulty, the same as the argument <code>difficulty_name</code>.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <code>difficulty_name</code> is not a String.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Chart.html#difficulty_name-instance_method" title="Sunniesnow::Chart#difficulty_name (method)">Sunniesnow::Chart#difficulty_name</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+556
+557
+558
+559</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 556</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_difficulty_name'>difficulty_name</span> <span class='id identifier rubyid_difficulty_name'>difficulty_name</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>difficulty_name must be a string</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_difficulty_name'>difficulty_name</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>String</span>
+	<span class='ivar'>@difficulty_name</span> <span class='op'>=</span> <span class='id identifier rubyid_difficulty_name'>difficulty_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="difficulty_sup-instance_method">
+  
+    #<strong>difficulty_sup</strong>(difficulty_sup)  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Set the difficulty superscript for the chart. This will be reflected in the return value of <span class='object_link'><a href="#to_sunniesnow-instance_method" title="Sunniesnow::Charter#to_sunniesnow (method)">#to_sunniesnow</a></span>.</p>
+
+<p>The argument <code>difficulty_sup</code> should be a string representing the difficulty superscript. Anything other than a string will be converted to a string using <code>to_s</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>difficulty_sup</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the difficulty superscript.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the difficulty superscript (converted to a string).</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Chart.html#difficulty_sup-instance_method" title="Sunniesnow::Chart#difficulty_sup (method)">Sunniesnow::Chart#difficulty_sup</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+611
+612
+613</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 611</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_difficulty_sup'>difficulty_sup</span> <span class='id identifier rubyid_difficulty_sup'>difficulty_sup</span>
+	<span class='ivar'>@difficulty_sup</span> <span class='op'>=</span> <span class='id identifier rubyid_difficulty_sup'>difficulty_sup</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="drag-instance_method">
+  
+    #<strong>drag</strong>(x, y)  &#x21d2; <tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='d-instance_method'>d</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Creates a drag note at the given coordinates. The coordinates <code>x</code> and <code>y</code> must be numbers.</p>
+
+<p>Technically, this adds an event of type <code>:drag</code> to the chart at the current time with properties containing the information provided by <code>x</code> and <code>y</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_offset'>offset</span> <span class='float'>0.1</span><span class='semicolon'>;</span> <span class='id identifier rubyid_bpm'>bpm</span> <span class='int'>120</span>
+<span class='id identifier rubyid_d'>d</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span>
+<span class='id identifier rubyid_d'>d</span> <span class='int'>50</span><span class='comma'>,</span> <span class='int'>0</span>
+<span class='comment'># Now there are two drag notes at (0, 0) and (50, 0)</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>x</span>
+      
+      
+        <span class='type'>(<tt>Numeric</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the x-coordinate of the note.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>y</span>
+      
+      
+        <span class='type'>(<tt>Numeric</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the y-coordinate of the note.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the event representing the drag note.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <code>x</code> or <code>y</code> is not a number.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+806
+807
+808
+809
+810
+811</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 806</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_drag'>drag</span> <span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span>
+	<span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Numeric</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_y'>y</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Numeric</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x and y must be numbers</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+	<span class='id identifier rubyid_event'>event</span> <span class='symbol'>:drag</span><span class='comma'>,</span> <span class='label'>x:</span> <span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='comma'>,</span> <span class='label'>y:</span> <span class='id identifier rubyid_y'>y</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="duplicate-instance_method">
+  
+    #<strong>duplicate</strong>(events, new_tip_points: true)  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span>&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Duplicate all events in a given array. This method is useful when you want to duplicate a set of events. The argument <code>events</code> is an array of events to be duplicated. The argument <code>new_tip_points</code> is a boolean indicating whether to create new tip points. If it is <code>true</code>, new tip points will be created for the duplicated events. If it is <code>false</code>, each duplicated event shares the same tip point as the original event.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+        <h5 class="example_title"><div class='inline'>
+<p>Duplicate a note</p>
+</div></h5>
+      
+      <pre class="example code"><code>offset 0.1; bpm 120
+duplicate [t 0, 0]</code></pre>
+    
+      
+        <h5 class="example_title"><div class='inline'>
+<p>Duplicate notes that share tip points with the original notes</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_offset'>offset</span> <span class='float'>0.1</span><span class='semicolon'>;</span> <span class='id identifier rubyid_bpm'>bpm</span> <span class='int'>120</span>
+<span class='id identifier rubyid_duplicate'>duplicate</span> <span class='id identifier rubyid_tp_chain'>tp_chain</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='int'>100</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_t'>t</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span> <span class='rbrace'>}</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>events</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the events to be duplicated.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>new_tip_points</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>whether to create new tip points for the duplicated events.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the duplicated events.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+988
+989
+990
+991
+992
+993
+994
+995
+996
+997
+998
+999
+1000</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 988</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_duplicate'>duplicate</span> <span class='id identifier rubyid_events'>events</span><span class='comma'>,</span> <span class='label'>new_tip_points:</span> <span class='kw'>true</span>
+	<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+	<span class='id identifier rubyid_events'>events</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_event'>event</span><span class='op'>|</span>
+		<span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span> <span class='op'>==</span> <span class='symbol'>:placeholder</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_new_tip_points'>new_tip_points</span>
+		<span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='id identifier rubyid_event'>event</span> <span class='op'>=</span> <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_event'>event</span><span class='lbracket'>[</span><span class='symbol'>:tip_point</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_new_tip_points'>new_tip_points</span>
+			<span class='id identifier rubyid_event'>event</span><span class='lbracket'>[</span><span class='symbol'>:tip_point</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embvar'>#</span><span class='ivar'>@current_duplicate</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_event'>event</span><span class='lbracket'>[</span><span class='symbol'>:tip_point</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+		<span class='kw'>end</span>
+		<span class='ivar'>@groups</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='id identifier rubyid__1'>_1</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='id identifier rubyid_event'>event</span> <span class='rbrace'>}</span>
+	<span class='kw'>end</span>
+	<span class='ivar'>@current_duplicate</span> <span class='op'>+=</span> <span class='int'>1</span> <span class='kw'>if</span> <span class='id identifier rubyid_new_tip_points'>new_tip_points</span>
+	<span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="event-instance_method">
+  
+    #<strong>event</strong>(type, duration_beats = nil, **properties)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 452</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_event'>event</span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_properties'>properties</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Charter/OffsetError.html" title="Sunniesnow::Charter::OffsetError (class)">OffsetError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Charter/OffsetError.html#initialize-instance_method" title="Sunniesnow::Charter::OffsetError#initialize (method)">new</a></span></span> <span class='id identifier rubyid___method__'>__method__</span> <span class='kw'>unless</span> <span class='ivar'>@bpm_changes</span>
+	<span class='id identifier rubyid_event'>event</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Charter/Event.html#initialize-instance_method" title="Sunniesnow::Charter::Event#initialize (method)">new</a></span></span> <span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='ivar'>@current_beat</span><span class='comma'>,</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span><span class='comma'>,</span> <span class='ivar'>@bpm_changes</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_properties'>properties</span>
+	<span class='ivar'>@groups</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='id identifier rubyid__1'>_1</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='id identifier rubyid_event'>event</span> <span class='rbrace'>}</span>
+	<span class='kw'>return</span> <span class='id identifier rubyid_event'>event</span> <span class='kw'>unless</span> <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_tip_pointable?'>tip_pointable?</span>
+	<span class='kw'>case</span> <span class='ivar'>@tip_point_mode_stack</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
+	<span class='kw'>when</span> <span class='symbol'>:chain</span>
+		<span class='kw'>if</span> <span class='ivar'>@tip_point_start_to_add_stack</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
+			<span class='ivar'>@current_tip_point_stack</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@tip_point_peak</span>
+			<span class='ivar'>@tip_point_peak</span> <span class='op'>+=</span> <span class='int'>1</span>
+		<span class='kw'>end</span>
+		<span class='id identifier rubyid_push_tip_point_start'>push_tip_point_start</span> <span class='id identifier rubyid_event'>event</span>
+		<span class='ivar'>@tip_point_start_to_add_stack</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
+	<span class='kw'>when</span> <span class='symbol'>:drop</span>
+		<span class='ivar'>@current_tip_point_stack</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@tip_point_peak</span>
+		<span class='ivar'>@tip_point_peak</span> <span class='op'>+=</span> <span class='int'>1</span>
+		<span class='id identifier rubyid_push_tip_point_start'>push_tip_point_start</span> <span class='id identifier rubyid_event'>event</span>
+	<span class='kw'>when</span> <span class='symbol'>:none</span>
+		<span class='comment'># pass
+</span>	<span class='kw'>end</span>
+	<span class='id identifier rubyid_event'>event</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="flick-instance_method">
+  
+    #<strong>flick</strong>(x, y, direction, text = &#39;&#39;)  &#x21d2; <tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='f-instance_method'>f</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Creates a flick note at the given coordinates with the given direction and text. The coordinates <code>x</code> and <code>y</code> must be numbers. The argument <code>direction</code> is the direction of the flick note in radians or a symbol. If it is a symbol, it should be one of the keys of <span class='object_link'><a href="#DIRECTIONS-constant" title="Sunniesnow::Charter::DIRECTIONS (constant)">DIRECTIONS</a></span> (which are <code>:right</code>, <code>:up_right</code>, etc., abbreviated as <code>:r</code>, <code>:ur</code> etc.). If it is a number, it should be a number representing the angle in radians, specifying the angle rorated anticlockwise starting from the positive x-direction. The argument <code>text</code> is the text to be displayed on the note (it is converted to a string via <code>to_s</code> if it is not a string).</p>
+
+<p>Technically, this adds an event of type <code>:flick</code> to the chart at the current time with properties containing the information provided by <code>x</code>, <code>y</code>, <code>direction</code>, and <code>text</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_offset'>offset</span> <span class='float'>0.1</span><span class='semicolon'>;</span> <span class='id identifier rubyid_bpm'>bpm</span> <span class='int'>120</span>
+<span class='id identifier rubyid_f'>f</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='symbol'>:r</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Hello</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_f'>f</span> <span class='int'>50</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='const'>Math</span><span class='op'>::</span><span class='const'>PI</span> <span class='op'>/</span> <span class='int'>4</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>world</span><span class='tstring_end'>&#39;</span></span>
+<span class='comment'># Now there are two flick notes at (0, 0) and (50, 0)
+</span><span class='comment'># with directions right and up right and texts &#39;Hello&#39; and &#39;world&#39; respectively</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>x</span>
+      
+      
+        <span class='type'>(<tt>Numeric</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the x-coordinate of the note.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>y</span>
+      
+      
+        <span class='type'>(<tt>Numeric</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the y-coordinate of the note.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>direction</span>
+      
+      
+        <span class='type'>(<tt>Numeric</tt>, <tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the direction of the flick note in radians or a symbol.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>text</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the text to be displayed on the note.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the event representing the flick note.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <code>x</code> or <code>y</code> is not a number, if <code>direction</code> is not a symbol or a number, or if the direction is a symbol that does not represent a known direction.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+840
+841
+842
+843
+844
+845
+846
+847
+848
+849
+850
+851
+852
+853
+854</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 840</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_flick'>flick</span> <span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='id identifier rubyid_direction'>direction</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Numeric</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_y'>y</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Numeric</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x and y must be numbers</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_direction'>direction</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Symbol</span>
+		<span class='id identifier rubyid_direction'>direction</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#DIRECTIONS-constant" title="Sunniesnow::Charter::DIRECTIONS (constant)">DIRECTIONS</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_direction'>direction</span><span class='rbracket'>]</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unknown direction </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_direction'>direction</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_direction'>direction</span>
+	<span class='kw'>elsif</span> <span class='id identifier rubyid_direction'>direction</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Numeric</span>
+		<span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Are you using degrees as angle unit instead of radians?</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_direction'>direction</span> <span class='op'>!=</span> <span class='int'>0</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_direction'>direction</span> <span class='op'>%</span> <span class='int'>45</span> <span class='op'>==</span> <span class='int'>0</span>
+		<span class='id identifier rubyid_direction'>direction</span> <span class='op'>=</span> <span class='id identifier rubyid_direction'>direction</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+	<span class='kw'>else</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>direction must be a symbol or a number</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+	<span class='id identifier rubyid_event'>event</span> <span class='symbol'>:flick</span><span class='comma'>,</span> <span class='label'>x:</span> <span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='comma'>,</span> <span class='label'>y:</span> <span class='id identifier rubyid_y'>y</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='comma'>,</span> <span class='label'>angle:</span> <span class='id identifier rubyid_direction'>direction</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="group-instance_method">
+  
+    #<strong>group</strong>(preserve_beat: true, &amp;block)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+1012
+1013
+1014
+1015
+1016
+1017
+1018
+1019
+1020</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 1012</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_group'>group</span> <span class='label'>preserve_beat:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>no block given</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_block'>block</span>
+	<span class='ivar'>@groups</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+	<span class='id identifier rubyid_beat_backup'>beat_backup</span> <span class='op'>=</span> <span class='id identifier rubyid_backup_beat'>backup_beat</span> <span class='kw'>unless</span> <span class='id identifier rubyid_preserve_beat'>preserve_beat</span>
+	<span class='id identifier rubyid_instance_eval'>instance_eval</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
+	<span class='id identifier rubyid_restore_beat'>restore_beat</span> <span class='id identifier rubyid_beat_backup'>beat_backup</span> <span class='kw'>unless</span> <span class='id identifier rubyid_preserve_beat'>preserve_beat</span>
+	<span class='ivar'>@groups</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_equal?'>equal?</span> <span class='id identifier rubyid__1'>_1</span> <span class='rbrace'>}</span>
+	<span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="hold-instance_method">
+  
+    #<strong>hold</strong>(x, y, duration_beats, text = &#39;&#39;)  &#x21d2; <tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='h-instance_method'>h</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Creates a hold note at the given coordinates with the given duration and text. The coordinates <code>x</code> and <code>y</code> must be numbers. The argument <code>duration_beats</code> is the duration of the hold note in beats. It needs to be a positive Rational or Integer. If it is a Float, it will be converted to a Rational, and a warning will be issued. The argument <code>text</code> is the text to be displayed on the note (it is converted to a string via <code>to_s</code> if it is not a string).</p>
+
+<p>Technically, this adds an event of type <code>:hold</code> to the chart at the current time with properties containing the information provided by <code>x</code>, <code>y</code>, <code>duration_beats</code>, and <code>text</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_offset'>offset</span> <span class='float'>0.1</span><span class='semicolon'>;</span> <span class='id identifier rubyid_bpm'>bpm</span> <span class='int'>120</span>
+<span class='id identifier rubyid_h'>h</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>1</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Hello</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_h'>h</span> <span class='int'>50</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>2</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>world</span><span class='tstring_end'>&#39;</span></span>
+<span class='comment'># Now there are two hold notes at (0, 0) and (50, 0)
+</span><span class='comment'># with durations 1 and 2 beats and texts &#39;Hello&#39; and &#39;world&#39; respectively</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>x</span>
+      
+      
+        <span class='type'>(<tt>Numeric</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the x-coordinate of the note.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>y</span>
+      
+      
+        <span class='type'>(<tt>Numeric</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the y-coordinate of the note.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>duration_beats</span>
+      
+      
+        <span class='type'>(<tt>Rational</tt>, <tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the duration of the hold note in beats.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>text</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the text to be displayed on the note.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the event representing the hold note.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <code>x</code>, <code>y</code>, or <code>duration_beats</code> is not a number, or if <code>duration_beats</code> is not positive.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+778
+779
+780
+781
+782
+783
+784
+785
+786
+787
+788
+789</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 778</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_hold'>hold</span> <span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Numeric</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_y'>y</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Numeric</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_duration_beats'>duration_beats</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Numeric</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x, y, and duration must be numbers</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span> <span class='op'>&lt;=</span> <span class='int'>0</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>duration must be positive</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Float</span>
+		<span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Rational is recommended over Float for duration_beats</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+	<span class='id identifier rubyid_event'>event</span> <span class='symbol'>:hold</span><span class='comma'>,</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span><span class='period'>.</span><span class='id identifier rubyid_to_r'>to_r</span><span class='comma'>,</span> <span class='label'>x:</span> <span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='comma'>,</span> <span class='label'>y:</span> <span class='id identifier rubyid_y'>y</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="init_bookmarks-instance_method">
+  
+    #<strong>init_bookmarks</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+374
+375
+376</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 374</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_init_bookmarks'>init_bookmarks</span>
+	<span class='ivar'>@bookmarks</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="init_chart_info-instance_method">
+  
+    #<strong>init_chart_info</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 363</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_init_chart_info'>init_chart_info</span>
+	<span class='ivar'>@difficulty_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+	<span class='ivar'>@difficulty_color</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>#000000</span><span class='tstring_end'>&#39;</span></span>
+	<span class='ivar'>@difficulty</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+	<span class='ivar'>@difficulty_sup</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+	<span class='ivar'>@title</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+	<span class='ivar'>@artist</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+	<span class='ivar'>@charter</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+	<span class='ivar'>@events</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="init_state-instance_method">
+  
+    #<strong>init_state</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 378</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_init_state'>init_state</span>
+	<span class='ivar'>@current_beat</span> <span class='op'>=</span> <span class='kw'>nil</span>
+	<span class='ivar'>@bpm_changes</span> <span class='op'>=</span> <span class='kw'>nil</span>
+	<span class='ivar'>@tip_point_mode_stack</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='symbol'>:none</span><span class='rbracket'>]</span>
+	<span class='ivar'>@current_tip_point_stack</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+	<span class='ivar'>@current_tip_point_group_stack</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+	<span class='ivar'>@tip_point_peak</span> <span class='op'>=</span> <span class='int'>0</span>
+	<span class='ivar'>@current_duplicate</span> <span class='op'>=</span> <span class='int'>0</span>
+	<span class='ivar'>@tip_point_start_stack</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='kw'>nil</span><span class='rbracket'>]</span>
+	<span class='ivar'>@tip_point_start_to_add_stack</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='kw'>nil</span><span class='rbracket'>]</span>
+	<span class='ivar'>@groups</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='ivar'>@events</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="inspect-instance_method">
+  
+    #<strong>inspect</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+408
+409
+410</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 408</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
+	<span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;Sunniesnow::Charter </span><span class='embvar'>#</span><span class='ivar'>@name</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="mark-instance_method">
+  
+    #<strong>mark</strong>(name)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+1033
+1034
+1035
+1036</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 1033</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_mark'>mark</span> <span class='id identifier rubyid_name'>name</span>
+	<span class='ivar'>@bookmarks</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_backup_state'>backup_state</span>
+	<span class='id identifier rubyid_name'>name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="method_name-instance_method">
+  
+    #<strong>method_name</strong>(duration_beats = 0)  &#x21d2; <tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Creates a  background pattern. The argument <code>duration_beats</code> is the duration of the background pattern in beats. It needs to be a non-negative Rational or Integer. If it is a Float, it will be converted to a Rational, and a warning will be issued.</p>
+
+<p>Technically, this adds an event of type <code>:bg_pattern</code> to the chart at the current time with properties containing the information provided by <code>duration_beats</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_offset'>offset</span> <span class='float'>0.1</span><span class='semicolon'>;</span> <span class='id identifier rubyid_bpm'>bpm</span> <span class='int'>120</span>
+<span class='id identifier rubyid_method_name'>method_name</span> <span class='int'>1</span> <span class='comment'># duration is 1
+</span><span class='id identifier rubyid_b'>b</span> <span class='int'>1</span>
+<span class='id identifier rubyid_method_name'>method_name</span> <span class='int'>0</span> <span class='comment'># duration is 0</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>duration_beats</span>
+      
+      
+        <span class='type'>(<tt>Rational</tt>, <tt>Integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>0</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the duration of the background pattern in beats.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the event representing the background pattern.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <code>duration_beats</code> is not a number or is negative.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+958
+959
+960
+961
+962
+963
+964
+965
+966
+967
+968
+969
+970
+971</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 958</span>
+
+<span class='qsymbols_beg'>%i[</span><span class='tstring_content'>grid</span><span class='words_sep'> </span><span class='tstring_content'>hexagon</span><span class='words_sep'> </span><span class='tstring_content'>checkerboard</span><span class='words_sep'> </span><span class='tstring_content'>diamond_grid</span><span class='words_sep'> </span><span class='tstring_content'>pentagon</span><span class='words_sep'> </span><span class='tstring_content'>turntable</span><span class='words_sep'> </span><span class='tstring_content'>hexagram</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_method_name'>method_name</span><span class='op'>|</span>
+	<span class='id identifier rubyid_define_method'>define_method</span> <span class='id identifier rubyid_method_name'>method_name</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_duration_beats'>duration_beats</span> <span class='op'>=</span> <span class='int'>0</span><span class='op'>|</span>
+		<span class='kw'>unless</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Numeric</span>
+			<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>duration_beats must be a number</span><span class='tstring_end'>&#39;</span></span>
+		<span class='kw'>end</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span> <span class='op'>&lt;</span> <span class='int'>0</span>
+			<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>duration must be non-negative</span><span class='tstring_end'>&#39;</span></span>
+		<span class='kw'>end</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Float</span>
+			<span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Rational is recommended over Float for duration_beats</span><span class='tstring_end'>&#39;</span></span>
+		<span class='kw'>end</span>
+		<span class='id identifier rubyid_event'>event</span> <span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='id identifier rubyid_duration_beats'>duration_beats</span><span class='period'>.</span><span class='id identifier rubyid_to_r'>to_r</span>
+	<span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="mode-instance_method">
+  
+    #<strong>mode</strong>(duration_beats = 0)  &#x21d2; <tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Creates a  background pattern. The argument <code>duration_beats</code> is the duration of the background pattern in beats. It needs to be a non-negative Rational or Integer. If it is a Float, it will be converted to a Rational, and a warning will be issued.</p>
+
+<p>Technically, this adds an event of type <code>:bg_pattern</code> to the chart at the current time with properties containing the information provided by <code>duration_beats</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_offset'>offset</span> <span class='float'>0.1</span><span class='semicolon'>;</span> <span class='id identifier rubyid_bpm'>bpm</span> <span class='int'>120</span>
+<span class='id identifier rubyid_mode'>mode</span> <span class='int'>1</span> <span class='comment'># duration is 1
+</span><span class='id identifier rubyid_b'>b</span> <span class='int'>1</span>
+<span class='id identifier rubyid_mode'>mode</span> <span class='int'>0</span> <span class='comment'># duration is 0</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>duration_beats</span>
+      
+      
+        <span class='type'>(<tt>Rational</tt>, <tt>Integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>0</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the duration of the background pattern in beats.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the event representing the background pattern.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <code>duration_beats</code> is not a number or is negative.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+1026
+1027
+1028
+1029
+1030
+1031</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 1026</span>
+
+<span class='qsymbols_beg'>%i[</span><span class='tstring_content'>chain</span><span class='words_sep'> </span><span class='tstring_content'>drop</span><span class='words_sep'> </span><span class='tstring_content'>none</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_mode'>mode</span><span class='op'>|</span>
+	<span class='id identifier rubyid_define_method'>define_method</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tip_point_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_mode'>mode</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='op'>|</span>
+		<span class='id identifier rubyid_tip_point'>tip_point</span> <span class='id identifier rubyid_mode'>mode</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
+	<span class='kw'>end</span>
+	<span class='id identifier rubyid_alias_method'>alias_method</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tp_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_mode'>mode</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tip_point_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_mode'>mode</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="offset-instance_method">
+  
+    #<strong>offset</strong>(offset)  &#x21d2; <tt><span class='object_link'><a href="Charter/BpmChangeList.html" title="Sunniesnow::Charter::BpmChangeList (class)">BpmChangeList</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Set the offset. This is the time in seconds of the zeroth beat. This method must be called before any other methods that require a beat, or an <span class='object_link'><a href="Charter/OffsetError.html" title="Sunniesnow::Charter::OffsetError (class)">OffsetError</a></span> will be raised.</p>
+
+<p>After calling this method, the current beat (see <span class='object_link'><a href="#beat-instance_method" title="Sunniesnow::Charter#beat (method)">#beat</a></span> and <span class='object_link'><a href="#beat!-instance_method" title="Sunniesnow::Charter#beat! (method)">#beat!</a></span>) is set to zero, and a new BPM needs to be set using <span class='object_link'><a href="#bpm-instance_method" title="Sunniesnow::Charter#bpm (method)">#bpm</a></span>. Only after that can the time of any positive beat be calculated.</p>
+
+<p>Though not commonly useful, this method can be called multiple times in a chart. A new call of this method does not affect the events and BPM changes set before. Technically, each event is associated with a BPM change list (see <span class='object_link'><a href="Charter/Event.html#bpm_changes-instance_method" title="Sunniesnow::Charter::Event#bpm_changes (method)">Sunniesnow::Charter::Event#bpm_changes</a></span>), and each call of this method creates a new BPM change list, which is used for the events set after.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_offset'>offset</span> <span class='float'>0.1</span>
+<span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_time_at'>time_at</span> <span class='comment'># Outputs 0.1, which is the offset
+</span><span class='id identifier rubyid_offset'>offset</span> <span class='float'>0.2</span>
+<span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_time_at'>time_at</span> <span class='comment'># Outputs 0.2, which is the updated offset by the second call</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>offset</span>
+      
+      
+        <span class='type'>(<tt>Numeric</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the offset in seconds.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Charter/BpmChangeList.html" title="Sunniesnow::Charter::BpmChangeList (class)">BpmChangeList</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the BPM changes.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <code>offset</code> is not a number.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Charter/BpmChangeList.html" title="Sunniesnow::Charter::BpmChangeList (class)">BpmChangeList</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+638
+639
+640
+641
+642</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 638</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_offset'>offset</span> <span class='id identifier rubyid_offset'>offset</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>offset must be a number</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_offset'>offset</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Numeric</span>
+	<span class='ivar'>@current_beat</span> <span class='op'>=</span> <span class='rational'>0r</span>
+	<span class='ivar'>@bpm_changes</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Charter/BpmChangeList.html" title="Sunniesnow::Charter::BpmChangeList (class)">BpmChangeList</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Charter/BpmChangeList.html#initialize-instance_method" title="Sunniesnow::Charter::BpmChangeList#initialize (method)">new</a></span></span> <span class='id identifier rubyid_offset'>offset</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="output_json-instance_method">
+  
+    #<strong>output_json</strong>(**opts)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+404
+405
+406</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 404</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_output_json'>output_json</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span>
+	<span class='id identifier rubyid_to_sunniesnow'>to_sunniesnow</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="push_tip_point_start-instance_method">
+  
+    #<strong>push_tip_point_start</strong>(start_event)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+475
+476
+477
+478
+479
+480
+481
+482
+483</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 475</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_push_tip_point_start'>push_tip_point_start</span> <span class='id identifier rubyid_start_event'>start_event</span>
+	<span class='id identifier rubyid_start_event'>start_event</span><span class='lbracket'>[</span><span class='symbol'>:tip_point</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='ivar'>@current_tip_point_stack</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+	<span class='id identifier rubyid_tip_point_start'>tip_point_start</span> <span class='op'>=</span> <span class='ivar'>@tip_point_start_to_add_stack</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='op'>&amp;.</span><span class='id identifier rubyid_get_start_placeholder'>get_start_placeholder</span> <span class='id identifier rubyid_start_event'>start_event</span>
+	<span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_tip_point_start'>tip_point_start</span>
+	<span class='ivar'>@groups</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_group'>group</span><span class='op'>|</span>
+		<span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='id identifier rubyid_tip_point_start'>tip_point_start</span>
+		<span class='kw'>break</span> <span class='kw'>if</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_equal?'>equal?</span><span class='lparen'>(</span><span class='ivar'>@current_tip_point_group_stack</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@tip_point_mode_stack</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>!=</span> <span class='symbol'>:drop</span>
+	<span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="remove-instance_method">
+  
+    #<strong>remove</strong>(*events)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+1022
+1023
+1024</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 1022</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_remove'>remove</span> <span class='op'>*</span><span class='id identifier rubyid_events'>events</span>
+	<span class='id identifier rubyid_events'>events</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_event'>event</span><span class='op'>|</span> <span class='ivar'>@groups</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='id identifier rubyid__1'>_1</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='id identifier rubyid_event'>event</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="restore_beat-instance_method">
+  
+    #<strong>restore_beat</strong>(backup)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+421
+422
+423
+424</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 421</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_restore_beat'>restore_beat</span> <span class='id identifier rubyid_backup'>backup</span>
+	<span class='ivar'>@current_beat</span> <span class='op'>=</span> <span class='id identifier rubyid_backup'>backup</span><span class='lbracket'>[</span><span class='symbol'>:current_beat</span><span class='rbracket'>]</span>
+	<span class='ivar'>@bpm_changes</span> <span class='op'>=</span> <span class='id identifier rubyid_backup'>backup</span><span class='lbracket'>[</span><span class='symbol'>:bpm_changes</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="restore_state-instance_method">
+  
+    #<strong>restore_state</strong>(backup)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 440</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_restore_state'>restore_state</span> <span class='id identifier rubyid_backup'>backup</span>
+	<span class='ivar'>@current_beat</span> <span class='op'>=</span> <span class='id identifier rubyid_backup'>backup</span><span class='lbracket'>[</span><span class='symbol'>:current_beat</span><span class='rbracket'>]</span>
+	<span class='ivar'>@bpm_changes</span> <span class='op'>=</span> <span class='id identifier rubyid_backup'>backup</span><span class='lbracket'>[</span><span class='symbol'>:bpm_changes</span><span class='rbracket'>]</span>
+	<span class='ivar'>@tip_point_mode_stack</span> <span class='op'>=</span> <span class='id identifier rubyid_backup'>backup</span><span class='lbracket'>[</span><span class='symbol'>:tip_point_mode_stack</span><span class='rbracket'>]</span>
+	<span class='ivar'>@current_tip_point_stack</span> <span class='op'>=</span> <span class='id identifier rubyid_backup'>backup</span><span class='lbracket'>[</span><span class='symbol'>:current_tip_point_stack</span><span class='rbracket'>]</span>
+	<span class='ivar'>@current_tip_point_group_stack</span> <span class='op'>=</span> <span class='id identifier rubyid_backup'>backup</span><span class='lbracket'>[</span><span class='symbol'>:current_tip_point_group_stack</span><span class='rbracket'>]</span>
+	<span class='ivar'>@current_duplicate</span> <span class='op'>=</span> <span class='id identifier rubyid_backup'>backup</span><span class='lbracket'>[</span><span class='symbol'>:current_duplicate</span><span class='rbracket'>]</span>
+	<span class='ivar'>@tip_point_start_to_add_stack</span> <span class='op'>=</span> <span class='id identifier rubyid_backup'>backup</span><span class='lbracket'>[</span><span class='symbol'>:tip_point_start_to_add_stack</span><span class='rbracket'>]</span>
+	<span class='ivar'>@groups</span> <span class='op'>=</span> <span class='id identifier rubyid_backup'>backup</span><span class='lbracket'>[</span><span class='symbol'>:groups</span><span class='rbracket'>]</span>
+	<span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tap-instance_method">
+  
+    #<strong>tap</strong>(x, y, text = &#39;&#39;)  &#x21d2; <tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt> 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='t-instance_method'>t</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Creates a tap note at the given coordinates with the given text. The coordinates <code>x</code> and <code>y</code> must be numbers. The argument <code>text</code> is the text to be displayed on the note (it is converted to a string via <code>to_s</code> if it is not a string).</p>
+
+<p>Technically, this adds an event of type <code>:tap</code> to the chart at the current time with properties containing the information provided by <code>x</code>, <code>y</code>, and <code>text</code>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_offset'>offset</span> <span class='float'>0.1</span><span class='semicolon'>;</span> <span class='id identifier rubyid_bpm'>bpm</span> <span class='int'>120</span>
+<span class='id identifier rubyid_t'>t</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Hello</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_t'>t</span> <span class='int'>50</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>world</span><span class='tstring_end'>&#39;</span></span>
+<span class='comment'># Now there are two simultaneous tap notes at (0, 0) and (50, 0)
+</span><span class='comment'># with texts &#39;Hello&#39; and &#39;world&#39; respectively</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>x</span>
+      
+      
+        <span class='type'>(<tt>Numeric</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the x-coordinate of the note.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>y</span>
+      
+      
+        <span class='type'>(<tt>Numeric</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the y-coordinate of the note.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>text</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the text to be displayed on the note.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the event representing the tap note.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <code>x</code> or <code>y</code> is not a number.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+747
+748
+749
+750
+751
+752</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 747</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tap'>tap</span> <span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Numeric</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_y'>y</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Numeric</span><span class='rparen'>)</span>
+		<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x and y must be numbers</span><span class='tstring_end'>&#39;</span></span>
+	<span class='kw'>end</span>
+	<span class='id identifier rubyid_event'>event</span> <span class='symbol'>:tap</span><span class='comma'>,</span> <span class='label'>x:</span> <span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='comma'>,</span> <span class='label'>y:</span> <span class='id identifier rubyid_y'>y</span><span class='period'>.</span><span class='id identifier rubyid_to_f'>to_f</span><span class='comma'>,</span> <span class='label'>text:</span> <span class='id identifier rubyid_text'>text</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="time_at-instance_method">
+  
+    #<strong>time_at</strong>(beat = @current_beat)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+412
+413
+414
+415</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 412</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_time_at'>time_at</span> <span class='id identifier rubyid_beat'>beat</span> <span class='op'>=</span> <span class='ivar'>@current_beat</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Charter/OffsetError.html" title="Sunniesnow::Charter::OffsetError (class)">OffsetError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Charter/OffsetError.html#initialize-instance_method" title="Sunniesnow::Charter::OffsetError#initialize (method)">new</a></span></span> <span class='id identifier rubyid___method__'>__method__</span> <span class='kw'>unless</span> <span class='ivar'>@bpm_changes</span>
+	<span class='ivar'>@bpm_changes</span><span class='period'>.</span><span class='id identifier rubyid_time_at'>time_at</span> <span class='id identifier rubyid_beat'>beat</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tip_point-instance_method">
+  
+    #<strong>tip_point</strong>(mode, *args, preserve_beat: true, **opts, &amp;block)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 485</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tip_point'>tip_point</span> <span class='id identifier rubyid_mode'>mode</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='label'>preserve_beat:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
+	<span class='ivar'>@tip_point_mode_stack</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='id identifier rubyid_mode'>mode</span>
+	<span class='kw'>if</span> <span class='id identifier rubyid_mode'>mode</span> <span class='op'>==</span> <span class='symbol'>:none</span>
+		<span class='ivar'>@tip_point_start_stack</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='kw'>nil</span>
+		<span class='ivar'>@tip_point_start_to_add_stack</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='kw'>nil</span>
+		<span class='ivar'>@current_tip_point_stack</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='kw'>nil</span>
+	<span class='kw'>else</span>
+		<span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_opts'>opts</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+			<span class='kw'>unless</span> <span class='ivar'>@tip_point_start_stack</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
+				<span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Charter/TipPointError.html" title="Sunniesnow::Charter::TipPointError (class)">TipPointError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>cannot omit tip point arguments at top level or inside tip_point_none</span><span class='tstring_end'>&#39;</span></span>
+			<span class='kw'>end</span>
+			<span class='ivar'>@tip_point_start_stack</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='ivar'>@tip_point_start_stack</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+		<span class='kw'>else</span>
+			<span class='ivar'>@tip_point_start_stack</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='const'><span class='object_link'><a href="Charter/TipPointStart.html" title="Sunniesnow::Charter::TipPointStart (class)">TipPointStart</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Charter/TipPointStart.html#initialize-instance_method" title="Sunniesnow::Charter::TipPointStart#initialize (method)">new</a></span></span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span>
+		<span class='kw'>end</span>
+		<span class='ivar'>@tip_point_start_to_add_stack</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='ivar'>@tip_point_start_stack</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
+		<span class='ivar'>@current_tip_point_stack</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='kw'>nil</span>
+	<span class='kw'>end</span>
+	<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_group'>group</span> <span class='label'>preserve_beat:</span> <span class='kw'>do</span>
+		<span class='ivar'>@current_tip_point_group_stack</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='ivar'>@groups</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
+		<span class='id identifier rubyid_instance_eval'>instance_eval</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
+	<span class='kw'>end</span>
+	<span class='ivar'>@tip_point_start_stack</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
+	<span class='ivar'>@tip_point_start_to_add_stack</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
+	<span class='ivar'>@tip_point_mode_stack</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
+	<span class='ivar'>@current_tip_point_stack</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
+	<span class='ivar'>@current_tip_point_group_stack</span><span class='period'>.</span><span class='id identifier rubyid_pop'>pop</span>
+	<span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="title-instance_method">
+  
+    #<strong>title</strong>(title)  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Set the title of the music for the chart. This will be reflected in the return value of <span class='object_link'><a href="#to_sunniesnow-instance_method" title="Sunniesnow::Charter#to_sunniesnow (method)">#to_sunniesnow</a></span>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>title</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the title of the music.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the title of the music, the same as the argument <code>title</code>.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if <code>title</code> is not a String.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Chart.html#title-instance_method" title="Sunniesnow::Chart#title (method)">Sunniesnow::Chart#title</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+523
+524
+525
+526</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 523</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_title'>title</span> <span class='id identifier rubyid_title'>title</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>title must be a string</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_title'>title</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>String</span>
+	<span class='ivar'>@title</span> <span class='op'>=</span> <span class='id identifier rubyid_title'>title</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_sunniesnow-instance_method">
+  
+    #<strong>to_sunniesnow</strong>(**opts)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 391</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_sunniesnow'>to_sunniesnow</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span>
+	<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Sunniesnow.html" title="Sunniesnow (module)">Sunniesnow</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Chart.html" title="Sunniesnow::Chart (class)">Chart</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Chart.html#initialize-instance_method" title="Sunniesnow::Chart#initialize (method)">new</a></span></span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span>
+	<span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='ivar'>@title</span>
+	<span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_artist'>artist</span> <span class='op'>=</span> <span class='ivar'>@artist</span>
+	<span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_charter'>charter</span> <span class='op'>=</span> <span class='ivar'>@charter</span>
+	<span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_difficulty_name'>difficulty_name</span> <span class='op'>=</span> <span class='ivar'>@difficulty_name</span>
+	<span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_difficulty_color'>difficulty_color</span> <span class='op'>=</span> <span class='ivar'>@difficulty_color</span>
+	<span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_difficulty'>difficulty</span> <span class='op'>=</span> <span class='ivar'>@difficulty</span>
+	<span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_difficulty_sup'>difficulty_sup</span> <span class='op'>=</span> <span class='ivar'>@difficulty_sup</span>
+	<span class='ivar'>@events</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_events'>events</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span> <span class='id identifier rubyid__1'>_1</span><span class='period'>.</span><span class='id identifier rubyid_to_sunniesnow'>to_sunniesnow</span> <span class='rbrace'>}</span>
+	<span class='id identifier rubyid_result'>result</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="transform-instance_method">
+  
+    #<strong>transform</strong>(events, &amp;block)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Transform all events in a given array in time and/or space. Space transformation does not affect background patterns.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+1004
+1005
+1006
+1007
+1008
+1009
+1010</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/sscharter.rb', line 1004</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_transform'>transform</span> <span class='id identifier rubyid_events'>events</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
+	<span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>no block given</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_block'>block</span>
+	<span class='id identifier rubyid_events'>events</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_events'>events</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_events'>events</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'><span class='object_link'><a href="Charter/Event.html" title="Sunniesnow::Charter::Event (class)">Event</a></span></span>
+	<span class='id identifier rubyid_transform'>transform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Charter/Transform.html" title="Sunniesnow::Charter::Transform (class)">Transform</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Charter/Transform.html#initialize-instance_method" title="Sunniesnow::Charter::Transform#initialize (method)">new</a></span></span>
+	<span class='id identifier rubyid_transform'>transform</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span>
+	<span class='id identifier rubyid_events'>events</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_transform'>transform</span><span class='period'>.</span><span class='id identifier rubyid_apply'>apply</span> <span class='id identifier rubyid__1'>_1</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Sun Feb  1 20:21:55 2026 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.3.5).
+</div>
+
+    </div>
+  </body>
+</html>
