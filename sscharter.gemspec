@@ -31,16 +31,16 @@ Gem::Specification.new do |spec|
 	spec.require_paths = ["lib"]
 
 	# Uncomment to register a new dependency of your gem
-	spec.add_dependency 'rubyzip', '~> 3.1'
-	spec.add_dependency 'launchy', '>= 2.5', '< 4.0'
-	spec.add_dependency 'webrick', '~> 1.8'
-	spec.add_dependency 'filewatcher', '~> 2.0'
+	spec.add_dependency 'rubyzip', '~> 3.2'
+	spec.add_dependency 'launchy', '~> 3.1'
+	spec.add_dependency 'webrick', '~> 1.9'
+	spec.add_dependency 'filewatcher', '~> 3.0'
 	spec.add_dependency 'em-websocket', '~> 0.5'
 	spec.add_dependency 'concurrent-ruby', '~> 1.3'
 	# https://github.com/igrigorik/em-websocket/issues/160
 	spec.add_dependency 'base64' if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.4')
-	spec.add_development_dependency 'minitest', '~> 5.0'
-	spec.add_development_dependency 'rake', '~> 13.0'
+	spec.add_development_dependency 'minitest', '~> 6.0'
+	spec.add_development_dependency 'rake', '~> 13.3'
 	spec.add_development_dependency 'yard', '~> 0.9'
 
 	# For more information and examples about making a new gem, check out our
