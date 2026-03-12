@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Sunniesnow::Charter
+
+	using Sunniesnow::Utils
+
 	class Event
 		include Metronomic
 
