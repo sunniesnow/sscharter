@@ -20,10 +20,10 @@ class Sunniesnow::Charter
 	# @param y [Numeric]
 	# @param duration_beats [Integer, Rational]
 	# @param width [Numeric]
-	# @param height [Numeric]
-	# @param above [IMAGE_LAYER_ABOVE_SET]
-	# @param coordinate_system [COORDINATE_SYSTEMS_SET]
-	# @param mirrorable [Boolean]
+	# @param height [Numeric?]
+	# @param above [IMAGE_LAYER_ABOVE_SET?]
+	# @param coordinate_system [COORDINATE_SYSTEMS_SET?]
+	# @param mirrorable [Boolean?]
 	# @return [Event]
 	def image filename, x, y, duration_beats, width, height = nil, above: nil, coordinate_system: nil, mirrorable: nil
 		raise ArgumentError, 'filename must be a string' unless filename.is_a? String

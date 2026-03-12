@@ -2,6 +2,7 @@
 
 class Sunniesnow::Charter
 
+	# Aliases for some directions that can be used with {#flick}.
 	DIRECTIONS = {
 		right: %i[r],
 		up_right: %i[ur ru],
@@ -247,8 +248,8 @@ class Sunniesnow::Charter
 	#   #   @example
 	#   #     offset 0.1; bpm 120
 	#   #     $1 1 # duration is 1
-	#   #     b 1
-	#   #     $1 0 # duration is 0
+	#   #     b 2
+	#   #     $1 2 # duration is 2
 	#   bg_pattern :grid, 'grid'
 	#   bg_pattern :hexagon, 'hexagon'
 	#   bg_pattern :checkerboard, 'checkerboard'

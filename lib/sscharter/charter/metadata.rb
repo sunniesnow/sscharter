@@ -2,6 +2,7 @@
 
 class Sunniesnow::Charter
 
+	# Aliases for some colors that can be used with {#difficulty_color}.
 	COLORS = {
 		easy: '#3eb9fd',
 		normal: '#f19e56',
@@ -11,6 +12,7 @@ class Sunniesnow::Charter
 	}.freeze
 
 	# @note Internal API.
+	# @return [void]
 	def init_chart_info
 		@difficulty_name = ''
 		@difficulty_color = '#000000'

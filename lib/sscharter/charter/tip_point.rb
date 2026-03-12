@@ -2,21 +2,28 @@
 
 class Sunniesnow::Charter
 
-	class TipPointError < StandardError
-		def initialize *expected_state, actual_state
-			super "wrong tip point state: expected #{expected_state.join ' or '}, got #{actual_state}"
-		end
-
-		def self.ensure state, *expected
-			raise self.new *expected, state unless expected.include? state
-		end
-	end
-
 	# @note Internal API.
 	class TipPointStart
 
-		def initialize x = 0, y = 0, relative_time = 0.0, relative: true, speed: nil,
-				relative_beat: nil, beat_speed: nil
+		# @param relative [Boolean] whether the position at which a created tip point appears specified by the arguments +x+ and +y+
+		#   is relative to the first note it visits or absolute.
+		# @param x [Numeric] the x-coordinate of the position at which a created tip point appears, whether relative or absolute.
+		# @param y [Numeric] the y-coordinate of the position at which a created tip point appears, whether relative or absolute.
+		# @overload initialize x, y, relative_time, relative: true
+		#   @param relative_time [Numeric]
+		#   The time at which a created tip point appears is the time of the first note it visits minus +relative_time+.
+		# @overload initialize x, y, speed:, relative: true
+		#   @param speed [Numeric]
+		#   The time at which a created tip point appears is the time of the first note it visits minus
+		#   the distance between the note and the position where the tip point appears divided by +speed+.
+		# @overload initialize x, y, relative_beat:, relative: true
+		#   @param relative_beat [Rational, Integer]
+		#   The beat at which a created tip point appears is the beat of the first note it visits minus +relative_beat+.
+		# @overload initialize x, y, beat_speed:, relative: true
+		#   @param beat_speed [Numeric]
+		#   The beat at which a created tip point appears is the beat of the first note it visits minus
+		#   the distance between the note and the position where the tip point appears divided by +beat_speed+.
+		def initialize x, y, relative_time = nil, relative: true, speed: nil, relative_beat: nil, beat_speed: nil
 			@x = x
 			@y = y
 			@relative_time = relative_time
@@ -27,6 +34,9 @@ class Sunniesnow::Charter
 			check
 		end
 
+		# Checks that the parameters passed to {#initialize} is one of the valid overloads.
+		# @return [void]
+		# @raise [ArgumentError] if checks fail.
 		def check
 			if !@x.is_a?(Numeric) || !@y.is_a?(Numeric)
 				raise ArgumentError, 'x and y must be numbers'
@@ -35,12 +45,15 @@ class Sunniesnow::Charter
 			@y = @y.to_f
 			%i[@relative_time @speed @relative_beat @beat_speed].each do |key|
 				value = instance_variable_get key
-				raise ArgumentError, "cannot specify both #@time_key and #{key}" if @time_key && value&.!=(0)
-				@time_key = key if value&.!=(0)
+				next unless value
+				raise ArgumentError, "cannot specify both #@time_key and #{key}" if @time_key
+				@time_key = key
 			end
-			@time_key ||= :@relative_time
+			raise ArgumentError, "must specify one of relative_time, speed, relative_beat, beat_speed" unless @time_key
 		end
 
+		# @param start_event [Event]
+		# @return [Event]
 		def get_start_placeholder start_event
 			raise ArgumentError, "start_event is not tip-pointable" unless start_event.tip_pointable?
 			result = Event.new :placeholder, start_event.beat, start_event.bpm_changes
@@ -77,6 +90,8 @@ class Sunniesnow::Charter
 	end
 
 	# @note Internal API.
+	# @param start_event [Event]
+	# @return [void]
 	def push_tip_point_start start_event
 		start_event[:tip_point] = @current_tip_point_stack.last.to_s
 		tip_point_start = @tip_point_start_to_add_stack.last&.get_start_placeholder start_event
@@ -85,6 +100,7 @@ class Sunniesnow::Charter
 			group.push tip_point_start
 			break if group.equal?(@current_tip_point_group_stack.last) && @tip_point_mode_stack.last != :drop
 		end
+		nil
 	end
 
 	# @note Internal API.
@@ -98,7 +114,7 @@ class Sunniesnow::Charter
 		else
 			if args.empty? && opts.empty?
 				unless @tip_point_start_stack.last
-					raise TipPointError, 'cannot omit tip point arguments at top level or inside tip_point_none'
+					raise ArgumentError, 'cannot omit tip point arguments at top level or inside tip_point_none'
 				end
 				@tip_point_start_stack.push @tip_point_start_stack.last.dup
 			else
@@ -123,9 +139,11 @@ class Sunniesnow::Charter
 
 	# @!parse
 	#   # @!macro [attach] tip_point_mode
-	#   #   @!method tip_point_$1 x = 0, y = 0, relative: true, preserve_beat: true, &block
+	#   #   @!method tip_point_$1 x, y, relative_time = nil, relative: true, speed: nil, relative_beat: nil, beat_speed: nil, preserve_beat: true, &block
 	#   #   $2
-	#   #   There are four overloads of this method for different ways to specify the time at which the tip point appears.
+	#   #   There are four overloads of this method for different ways to specify the time at which the tip point appears,
+	#   #   and there is another overload that totally omits the arguments for specifying
+	#   #   when and where the tip point appears and can only be used inside another tip point block.
 	#   #   This method is otherwise the same as {#group}.
 	#   #
 	#   #   If the methods {#tp_chain}, {#tp_drop}, and {#tp_none} are nested in +block+,
@@ -151,26 +169,29 @@ class Sunniesnow::Charter
 	#   #   @return [Array<Event>] the events created inside +block+, similar to {#group}.
 	#   #   @raise [ArgumentError]
 	#   #   @yieldself [Charter] the same as +self+.
-	#   #   @overload tip_point_$1 x = 0, y = 0, relative_time = 0.0, relative: true, preserve_beat: true, &block
+	#   #   @overload tip_point_$1 x, y, relative_time, relative: true, preserve_beat: true, &block
 	#   #     @param relative_time [Numeric]
 	#   #     The time at which a created tip point appears is the time of the first note it visits minus +relative_time+.
-	#   #   @overload tip_point_$1 x = 0, y = 0, speed:, relative: true, preserve_beat: true, &block
+	#   #   @overload tip_point_$1 x, y, speed:, relative: true, preserve_beat: true, &block
 	#   #     @param speed [Numeric]
 	#   #     The time at which a created tip point appears is the time of the first note it visits minus
 	#   #     the distance between the note and the position where the tip point appears divided by +speed+.
-	#   #   @overload tip_point_$1 x = 0, y = 0, relative_beat:, relative: true, preserve_beat: true, &block
+	#   #   @overload tip_point_$1 x, y, relative_beat:, relative: true, preserve_beat: true, &block
 	#   #     @param relative_beat [Rational, Integer]
 	#   #     The beat at which a created tip point appears is the beat of the first note it visits minus +relative_beat+.
-	#   #   @overload tip_point_$1 x = 0, y = 0, beat_speed:, relative: true, preserve_beat: true, &block
+	#   #   @overload tip_point_$1 x, y, beat_speed:, relative: true, preserve_beat: true, &block
 	#   #     @param beat_speed [Numeric]
 	#   #     The beat at which a created tip point appears is the beat of the first note it visits minus
 	#   #     the distance between the note and the position where the tip point appears divided by +beat_speed+.
+	#   #   @overload tip_point_$1 preserve_beat: true, &block
+	#   #     This overload can only be used inside another tip point block,
+	#   #     and it creates a tip point with the same parameters as the one created by the outer block.
 	#   tip_point_mode :chain, 'Create a tip point to connect the notes created inside +block+.'
 	#   tip_point_mode :drop, 'A tip point is created for each note created inside +block+.'
 	#   alias tp_chain tip_point_chain
 	#   alias tp_drop tip_point_drop
 	#   alias tp_none tip_point_none
-	# @!method tip_point_none(preserve_beat: true, &block)
+	# @!method tip_point_none preserve_beat: true, &block
 	#   Notes created inside +block+ will not be visited by any tip point.
 	#   This method is otherwise the same as {#group}.
 	#   @yieldself [Charter] the same as +self+.

@@ -5,6 +5,7 @@ class Sunniesnow::Charter
 	using Sunniesnow::Utils
 
 	class OffsetError < StandardError
+		# @param method_name [Symbol]
 		def initialize method_name
 			super "offset must be set before using #{method_name}"
 		end
@@ -13,35 +14,50 @@ class Sunniesnow::Charter
 	class BpmChangeList
 
 		class BpmChange
-			include Comparable
 
-			attr_accessor :beat, :bps
+			# @return [Rational]
+			attr_accessor :beat
 
+			# @return [Float]
+			attr_accessor :bps
+
+			# @param beat [Rational]
+			# @param bpm [Float]
 			def initialize beat, bpm
 				@beat = beat
 				@bps = bpm / 60.0
 			end
 
+			# @return [Float]
 			def bpm
 				@bps * 60.0
 			end
 
+			# @param bpm [Float]
+			# @return [Float]
 			def bpm= bpm
 				@bps = bpm / 60.0
 			end
 
+			# @param other [BpmChange]
+			# @return [-1,0,1]
 			def <=> other
 				@beat <=> other.beat
 			end
 		end
 
+		# @return [Float]
 		attr_accessor :offset
 
+		# @param offset [Float]
 		def initialize offset
 			@offset = offset
 			@list = []
 		end
 
+		# @param beat [Rational]
+		# @param bpm [Float]
+		# @return [BpmChangeList] +self+.
 		def add beat, bpm
 			if index = @list.bsearch_index { beat <=> _1.beat }
 				@list[index].bpm = bpm
@@ -52,6 +68,8 @@ class Sunniesnow::Charter
 			self
 		end
 
+		# @param beat [Rational]
+		# @return [Float]
 		def time_at beat
 			index = @list.bisect(right: true) { _1.beat <=> beat }
 			raise ArgumentError, 'beat is before the first bpm change' if index < 0
@@ -62,16 +80,22 @@ class Sunniesnow::Charter
 			end
 		end
 
+		# @param beat [Rational]
+		# @return [Float]
 		def bps_before beat
 			raise ArgumentError, 'beat is before or at the first bpm change' if beat <= @list.first.beat
 			@list[@list.bisect(right: false) { _1.beat <=> beat } - 1].bps
 		end
 
+		# @param beat [Rational]
+		# @return [Float]
 		def bps_after beat
 			raise ArgumentError, 'beat is before the first bpm change' if beat < @list.first.beat
 			@list[@list.bisect(right: true) { _1.beat <=> beat }].bps
 		end
 
+		# @param index [Integer]
+		# @return [BpmChange?]
 		def [] index
 			@list[index]
 		end
@@ -122,6 +146,12 @@ class Sunniesnow::Charter
 		def beat_state
 			BeatState.new @beat, @bpm_changes
 		end
+
+		# @param other [Metronomic]
+		# @return [-1,0,1]
+		def <=> other
+			@beat <=> other.beat
+		end
 	end
 
 	# Including this module adds the ability to keep track of the current beat and set BPM changes at the current beat.
@@ -130,10 +160,12 @@ class Sunniesnow::Charter
 	# The examples shown in the documentation below assume that +self+ is a {Charter} instance.
 	module BeatSeries
 
-		# @return [Integer, Rational]
+		# It is +nil+ if the offset has not been set by {Charter#offset} yet.
+		# @return [Rational?]
 		attr_accessor :current_beat
 
-		# @return [BpmChangeList]
+		# It is +nil+ if the offset has not been set by {Charter#offset} yet.
+		# @return [BpmChangeList?]
 		attr_reader :bpm_changes
 
 		# @!group DSL Methods
@@ -225,6 +257,9 @@ class Sunniesnow::Charter
 
 		# @!endgroup
 
+		# @param beat [Rational]
+		# @return [Float]
+		# @raise [OffsetError] if {Charter#offset} has not been called.
 		def time_at beat = @current_beat
 			raise OffsetError.new __method__ unless @bpm_changes
 			@bpm_changes.time_at beat
@@ -238,15 +273,18 @@ class Sunniesnow::Charter
 
 		# @note Internal API.
 		# @param backup [BeatState]
+		# @return [void]
 		def restore_beat_state backup
 			@current_beat = backup.current_beat
 			@bpm_changes = backup.bpm_changes
+			nil
 		end
 	end
 
 	include BeatSeries
 
 	# @note Internal API.
+	# @return [void]
 	def init_beat_state
 		@current_beat = nil
 		@bpm_changes = nil

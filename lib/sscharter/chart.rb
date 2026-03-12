@@ -17,16 +17,57 @@ class Sunniesnow::Chart
 	# The title of the music.
 	# This is one of the metadata of the chart which will be reflected in the generated JSON.
 	# Also, see
-	# {https://sunniesnow.github.io/doc/chart.html#title chart file specifications}
+	# {https://sunniesnow.github.io/doc/chart.html#chart-title chart file specifications}
 	# for more info.
 	# @return [String]
 	attr_accessor :title
 
+	# The artist of the music.
+	# This is one of the metadata of the chart which will be reflected in the generated JSON.
+	# Also, see
+	# {https://sunniesnow.github.io/doc/chart.html#chart-artist chart file specifications}
+	# for more info.
+	# @return [String]
 	attr_accessor :artist
+
+	# The author of the chart.
+	# This is one of the metadata of the chart which will be reflected in the generated JSON.
+	# Also, see
+	# {https://sunniesnow.github.io/doc/chart.html#chart-charter chart file specifications}
+	# for more info.
+	# @return [String]
 	attr_accessor :charter
+
+	# The difficulty name of the chart.
+	# This is one of the metadata of the chart which will be reflected in the generated JSON.
+	# Also, see
+	# {https://sunniesnow.github.io/doc/chart.html#chart-difficulty-name chart file specifications}
+	# for more info.
+	# @return [String]
 	attr_accessor :difficulty_name
+
+	# The difficulty color of the chart.
+	# This is one of the metadata of the chart which will be reflected in the generated JSON.
+	# Also, see
+	# {https://sunniesnow.github.io/doc/chart.html#chart-difficulty-color chart file specifications}
+	# for more info.
+	# @return [String]
 	attr_accessor :difficulty_color
+
+	# The difficulty of the chart.
+	# This is one of the metadata of the chart which will be reflected in the generated JSON.
+	# Also, see
+	# {https://sunniesnow.github.io/doc/chart.html#chart-difficulty chart file specifications}
+	# for more info.
+	# @return [String]
 	attr_accessor :difficulty
+
+	# The difficulty superscript of the chart.
+	# This is one of the metadata of the chart which will be reflected in the generated JSON.
+	# Also, see
+	# {https://sunniesnow.github.io/doc/chart.html#chart-difficulty-sup chart file specifications}
+	# for more info.
+	# @return [String]
 	attr_accessor :difficulty_sup
 
 	# @return [Array<Sunniesnow::Event>]
@@ -76,7 +117,7 @@ class Sunniesnow::Chart
 end
 
 class Sunniesnow::Event
-	
+
 	attr_accessor :time, :type, :time_dependent
 	attr_reader :properties
 

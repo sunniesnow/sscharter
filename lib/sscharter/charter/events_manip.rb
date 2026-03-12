@@ -2,10 +2,15 @@
 
 class Sunniesnow::Charter
 
-	# Implements homography
+	# Implements homography.
 	class Transform
 		include Math
-		attr_reader :xx, :xy, :xz, :yx, :yy, :yz, :zx, :zy, :zz, :tt, :t1
+
+		# @return [Float]
+		attr_reader :xx, :xy, :xz, :yx, :yy, :yz, :zx, :zy, :zz
+
+		# @return [Rational]
+		attr_reader :tt, :t1
 
 		def initialize
 			@xx = @yy = @zz = 1.0
@@ -14,6 +19,8 @@ class Sunniesnow::Charter
 			@tt = 1r
 		end
 
+		# @param event [Event]
+		# @return [Event] same as +event+.
 		def apply event
 			event.beat = @t1 + @tt * event.beat
 			return unless x = event[:x]
@@ -43,7 +50,15 @@ class Sunniesnow::Charter
 			event
 		end
 
+		# @!group DSL Methods
+
+		# @param xx [Numeric]
+		# @param xy [Numeric]
+		# @param yx [Numeric]
+		# @param yy [Numeric]
+		# @return [void]
 		def compound_linear xx, xy, yx, yy
+			raise ArgumentError, 'arguments must be numbers' unless [xx, xy, yx, yy].all? { _1.is_a? Numeric }
 			@xx, @xy, @xz, @yx, @yy, @yz = [
 				xx * @xx + xy * @yx,
 				xx * @xy + xy * @yy,
@@ -52,22 +67,30 @@ class Sunniesnow::Charter
 				yx * @xy + yy * @yy,
 				yx * @xz + yy * @yz,
 			]
+			nil
 		end
 
+		# @param dx [Numeric]
+		# @param dy [Numeric]
+		# @return [void]
 		def translate dx, dy
 			raise ArgumentError, 'dx and dy must be numbers' unless dx.is_a?(Numeric) && dy.is_a?(Numeric)
 			@xz += dx
 			@yz += dy
 		end
 
+		# @return [void]
 		def horizontal_flip
 			compound_linear -1, 0, 0, 1
 		end
 
+		# @return [void]
 		def vertical_flip
 			compound_linear 1, 0, 0, -1
 		end
 
+		# @param angle [Numeric] in radians.
+		# @return [void]
 		def rotate angle
 			raise ArgumentError, 'angle must be a number' unless angle.is_a? Numeric
 			warn 'Are you using degrees as angle unit instead of radians?' if angle != 0 && angle % 45 == 0
@@ -76,16 +99,24 @@ class Sunniesnow::Charter
 			compound_linear c, -s, s, c
 		end
 
+		# @param sx [Numeric]
+		# @param sy [Numeric]
+		# @return [void]
 		def scale sx, sy = sx
 			raise ArgumentError, 'sx and sy must be numbers' unless sx.is_a?(Numeric) && sy.is_a?(Numeric)
 			compound_linear sx, 0, 0, sy
 		end
 
+		# @param delta_beat [Integer, Rational]
+		# @return [void]
 		def beat_translate delta_beat
 			raise ArgumentError, 'delta_beat must be a number' unless delta_beat.is_a? Numeric
 			warn 'Rational is recommended over Float for delta_beat' if delta_beat.is_a? Float
 			@t1 += delta_beat.to_r
+			nil
 		end
+
+		# @!endgroup
 	end
 
 	# @!group DSL Methods
@@ -132,6 +163,7 @@ class Sunniesnow::Charter
 		events.each { transform.apply _1 }
 	end
 
+	# Remove events from the chart.
 	# @param events [Array<Event>]
 	# @return [Array<Event>]
 	def remove *events

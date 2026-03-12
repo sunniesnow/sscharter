@@ -37,11 +37,14 @@ class Sunniesnow::Charter
 	Bookmark = Data.define :beat_state, :group_state
 
 	# @note Internal API.
+	# @return [void]
 	def init_bookmarks
 		@bookmarks = {}
+		nil
 	end
 
 	# @note Internal API.
+	# @return [void]
 	def init_group_state
 		@tip_point_mode_stack = [:none]
 		@current_tip_point_stack = []
@@ -51,6 +54,7 @@ class Sunniesnow::Charter
 		@tip_point_start_stack = [nil]
 		@tip_point_start_to_add_stack = [nil]
 		@groups = [@events]
+		nil
 	end
 
 	# @note Internal API.
@@ -69,6 +73,7 @@ class Sunniesnow::Charter
 
 	# @note Internal API.
 	# @param backup [GroupState]
+	# @return [void]
 	def restore_group_state backup
 		@tip_point_mode_stack = backup.tip_point_mode_stack
 		@current_tip_point_stack = backup.current_tip_point_stack

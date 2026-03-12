@@ -2,12 +2,13 @@
 
 class Sunniesnow::Charter
 
-	PROJECT_DIR = File.expand_path(ENV['SSCHARTER_PROJECT_DIR'] ||= Dir.pwd)
+	# The project directory.
+	PROJECT_DIR = File.expand_path(ENV['SSCHARTER_PROJECT_DIR'] ||= Dir.pwd).freeze
 
 	# @!scope class
 	# A hash containing all the charts opened by {::open}.
 	# The keys are the names of the charts, and the values are the {Sunniesnow::Charter} objects.
-	# @return [Hash<String, Sunniesnow::Charter>]
+	# @return [Hash{String => Sunniesnow::Charter}]
 	singleton_class.attr_reader :charts
 	@charts = {}
 
@@ -63,10 +64,12 @@ class Sunniesnow::Charter
 		result
 	end
 
-	def output_json **opts
-		to_sunniesnow(**opts).to_json
+	# @return [String]
+	def output_json *args, **opts
+		to_sunniesnow(**opts).to_json *args
 	end
 
+	# @return [String]
 	def inspect
 		"#<Sunniesnow::Charter #@name>"
 	end
