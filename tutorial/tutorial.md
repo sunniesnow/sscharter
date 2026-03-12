@@ -1002,6 +1002,12 @@ to whatever it was before `at` was called.
 You can keep the current beat by using `preserve_beat: true`
 in the call of `at`.
 
+Usually, at the beginning of the block in `at`,
+the current beat is not set to the beat where the mark is
+but where it was before `at` was called.
+You can set the current beat to the beat where the mark is at the beginning of the block
+by using `goto_beat: true` in the call of `at`.
+
 ### BPM changes
 
 > [!NOTE]
@@ -1255,38 +1261,6 @@ at :my_mark do
   t 100, 0 # this note will be connected by the same tip point
 end
 ```
-
-## Advanced charting techniques
-
-TODO.
-
-### Use Git as a version manager
-
-You ever want to keep track of the changes you made to the chart?
-You ever wish to revert to a previous version of the chart?
-You ever want to collaborate with others on the chart?
-You can use [Git](https://git-scm.com/) to implement these version control features.
-
-First, install Git.
-Then, run `git init` in your project directory to make it a Git repository.
-Every time you want to save the current version of the chart,
-you can run `git add .` to stage all the changes,
-and then run `git commit -m "Your commit message here"` to commit the changes.
-Git may prompt you to set up your name and email address,
-then just do so by following the instructions.
-
-A detailed tutorial on how to use Git is beyond the scope of this tutorial,
-so I may just refer you to the official [tutorial](https://git-scm.com/docs/gittutorial) of Git.
-
-### Useful loops
-
-### Homography
-
-### Tip points and placeholders
-
-### Multiple offsets and timing tweaking
-
-### JSON post-processing
 
 ## Step 6: review your chart and write the README
 
