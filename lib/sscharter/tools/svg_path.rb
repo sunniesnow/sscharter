@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# @see Sunniesnow::Tools.path
 module Sunniesnow::Tools::SvgPath
 
 	Vector2D = Data.define :x, :y do
@@ -374,6 +375,23 @@ module Sunniesnow::Tools::SvgPath
 end
 
 module Sunniesnow::Tools
+
+	# Turn any SVG path into uniformly sampled points.
+	# @param data [String] The SVG path definition.
+	# @return [SvgPath::Path]
+	# @yieldparam x [Float]
+	# @yieldparam y [Float]
+	# @yieldparam i [Integer]
+	# @overload path data, range, total = range.end, &block
+	#   @param range [Range]
+	#   @param total [Integer]
+	# @overload path data, range_end, total = range_end, &block
+	#   @param range_end [Integer]
+	#   @param total [Integer]
+	# @example
+	#   path 'M -6,-0 C -4,2 -0,-0.7 -0,2 -0,4.7 6,-1 5,1 4,3 1,2 -0,-0 -1,-2 10,-2 6,-3 2,-4 -6,-0 -4,2 c 2,2 3,-8 0,-5', 128 do |x, y, i|
+	#     d x, y; b 1/32r
+	#   end
 	module_function def path data, *args, &block
 		result = SvgPath::Path.new data
 		result.samples *args, &block if block

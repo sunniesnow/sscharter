@@ -11,6 +11,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          submodules: recursive
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:

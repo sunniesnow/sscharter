@@ -1,0 +1,4 @@
+[submodule "gems/yard"]
+	path = gems/yard
+	url = https://github.com/UlyssesZh/yard.git
+	branch = sscharter

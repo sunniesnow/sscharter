@@ -84,18 +84,18 @@ class TestSscharter < Minitest::Test
 		assert_raises(Charter::OffsetError) { chart.event :placeholder }
 
 		chart.offset offset = rand
-		assert_equal 0r, chart.instance_variable_get(:@current_beat)
+		assert_equal 0r, chart.current_beat
 		chart.beat 10
-		assert_equal 10r, chart.instance_variable_get(:@current_beat)
+		assert_equal 10r, chart.current_beat
 		chart.beat 20
-		assert_equal 30r, chart.instance_variable_get(:@current_beat)
+		assert_equal 30r, chart.current_beat
 		chart.beat! 100
-		assert_equal 100r, chart.instance_variable_get(:@current_beat)
+		assert_equal 100r, chart.current_beat
 		chart.offset rand
-		assert_equal 0r, chart.instance_variable_get(:@current_beat)
+		assert_equal 0r, chart.current_beat
 	end
 
-	def test_bpm_change
+	def test_bpm_change_time_at
 		chart = Charter.open __method__
 		chart.offset offset = rand
 		chart.bpm bpm = rand * 300
@@ -115,6 +115,27 @@ class TestSscharter < Minitest::Test
 
 		test_beat = rand beat2
 		assert_in_delta offset + beat1/bps + test_beat/new_bps, chart.time_at(beat1 + test_beat), 1e-8
+	end
+
+	def test_bpm_change_bps_before_after
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+		bps = bpm / 60
+		assert_raises(ArgumentError) { chart.bpm_changes.bps_before 0 }
+		assert_in_delta bps, chart.bpm_changes.bps_after(0), 1e-8
+		assert_raises(ArgumentError) { chart.bpm_changes.bps_after -1 }
+
+		chart.beat beat1 = rand(100)
+		assert_in_delta bps, chart.bpm_changes.bps_before(beat1), 1e-8
+		assert_in_delta bps, chart.bpm_changes.bps_after(beat1), 1e-8
+
+		chart.bpm new_bpm = bpm * rand
+		new_bps = new_bpm / 60
+		assert_in_delta bps, chart.bpm_changes.bps_before(beat1), 1e-8
+		assert_in_delta new_bps, chart.bpm_changes.bps_after(beat1), 1e-8
+		assert_in_delta new_bps, chart.bpm_changes.bps_before(beat1 + 1), 1e-8
+		assert_in_delta new_bps, chart.bpm_changes.bps_after(beat1 + 1), 1e-8
 	end
 
 	def test_notes
@@ -164,7 +185,7 @@ class TestSscharter < Minitest::Test
 			b 2
 		end
 		assert_equal events.length, 2
-		assert_equal chart.instance_variable_get(:@current_beat), 3
+		assert_equal chart.current_beat, 3
 		assert_equal group1, events
 
 		group2 = chart.group preserve_beat: false do
@@ -174,7 +195,7 @@ class TestSscharter < Minitest::Test
 			b 2
 		end
 		assert_equal events.map(&:beat), [0, 1, 3, 4]
-		assert_equal chart.instance_variable_get(:@current_beat), 3
+		assert_equal chart.current_beat, 3
 		assert_equal [*group1, *group2], events
 	end
 
@@ -774,5 +795,77 @@ class TestSscharter < Minitest::Test
 		assert_in_delta placeholder1[:x] - note1[:x], placeholder2[:x] - note2[:x], 1e-8
 		assert_in_delta placeholder1[:y] - note1[:y], placeholder2[:y] - note2[:y], 1e-8
 		assert_in_delta placeholder1.time - note1.time, placeholder2.time - note2.time, 1e-6
+	end
+
+	def test_time_dependent_goto_beat_false
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+
+		chart.b 4
+		event1 = chart.t rand(100), rand(100)
+		chart.b 1
+		event2 = chart.h rand(100), rand(100), rand(10) + 1
+		x1 = -rand(100)
+		y1 = -rand(100)
+		chart.td [event1, event2], goto_beat: false do
+			b -3
+			x x1
+			b 1
+			y y1
+		end
+		assert_equal chart.current_beat, 5
+		[event1, event2].each do |event|
+			assert_equal event.time_dependent[:x].data_points.length, 1
+			assert_equal event.time_dependent[:y].data_points.length, 1
+			assert_equal event.time_dependent[:x].data_points[0].beat, 2
+			assert_equal event.time_dependent[:y].data_points[0].beat, 3
+			assert_equal event.time_dependent[:x].data_points[0].value, x1
+			assert_equal event.time_dependent[:y].data_points[0].value, y1
+		end
+	end
+
+	def test_time_dependent_goto_beat_true
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+
+		chart.b 4
+		event1 = chart.t rand(100), rand(100)
+		chart.b 1
+		event2 = chart.h rand(100), rand(100), rand(10) + 1
+		x1 = -rand(100)
+		y1 = -rand(100)
+		chart.td [event1, event2], goto_beat: true do
+			b -3
+			x x1
+			b 1
+			y y1
+		end
+		assert_equal chart.current_beat, 5
+		[event1, event2].each do |event|
+			assert_equal event.time_dependent[:x].data_points.length, 1
+			assert_equal event.time_dependent[:y].data_points.length, 1
+			assert_equal event.time_dependent[:x].data_points[0].value, x1
+			assert_equal event.time_dependent[:y].data_points[0].value, y1
+		end
+		assert_equal event1.time_dependent[:x].data_points[0].beat, 1
+		assert_equal event1.time_dependent[:y].data_points[0].beat, 2
+		assert_equal event2.time_dependent[:x].data_points[0].beat, 2
+		assert_equal event2.time_dependent[:y].data_points[0].beat, 3
+	end
+
+	def test_image
+		chart = Charter.open __method__
+		chart.offset offset = rand
+		chart.bpm bpm = rand * 300
+
+		chart.b 2
+		event = chart.image filename = "test.png", x = rand(100), y = rand(100), duration_beats = 3, width = 25
+		assert_equal event.type, :image
+		assert_equal event[:filename], filename
+		assert_equal event[:x], x
+		assert_equal event[:y], y
+		assert_equal event[:width], width
 	end
 end

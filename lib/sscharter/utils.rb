@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
+# @note Internal API.
 module Sunniesnow::Utils
 
 	refine Array do
-		# If there no match, return the next index.
-		# Less than all: return 0. Greater than all: return array.length.
+		# Do a binary search. If there is a match, return the index of the match.
+		# Otherwise, if +right+, return the index of the last element that is less than the value;
+		# otherwise, return the index of the first element that is greater than the value.
 		def bisect value = nil, right: false, &compare_function
 			if value && compare_function
 				raise ArgumentError, "Cannot specify both value and compare_function"

@@ -11,8 +11,14 @@ Rake::TestTask.new :test do |t|
 end
 
 YARD::Rake::YardocTask.new do |t|
-	t.files.concat %w[README.md]
-	t.options.concat %w[--title sscharter --output-dir doc --exclude lib/sscharter/cli.rb --readme]
+	t.options.concat %w[
+		--title sscharter
+		--output-dir doc
+		--exclude lib/sscharter/cli.rb
+		--readme README.md
+		--files tutorial/*.md
+		--type-tag yieldself:Yield\ Self
+	]
 end
 
 task default: :test

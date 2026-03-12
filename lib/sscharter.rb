@@ -40,6 +40,14 @@ class Sunniesnow::Charter
 				@bps = bpm / 60.0
 			end
 
+			def bpm
+				@bps * 60.0
+			end
+
+			def bpm= bpm
+				@bps = bpm / 60.0
+			end
+
 			def <=> other
 				@beat <=> other.beat
 			end
@@ -53,8 +61,12 @@ class Sunniesnow::Charter
 		end
 
 		def add beat, bpm
-			@list.push BpmChange.new beat, bpm
-			@list.sort!
+			if index = @list.bsearch_index { beat <=> _1.beat }
+				@list[index].bpm = bpm
+			else
+				@list.push BpmChange.new beat, bpm
+				@list.sort!
+			end
 			self
 		end
 
@@ -68,17 +80,195 @@ class Sunniesnow::Charter
 			end
 		end
 
+		def bps_before beat
+			raise ArgumentError, 'beat is before or at the first bpm change' if beat <= @list.first.beat
+			@list[@list.bisect(right: false) { _1.beat <=> beat } - 1].bps
+		end
+
+		def bps_after beat
+			raise ArgumentError, 'beat is before the first bpm change' if beat < @list.first.beat
+			@list[@list.bisect(right: true) { _1.beat <=> beat }].bps
+		end
+
 		def [] index
 			@list[index]
 		end
 	end
 
+	# @note Internal API.
+	# @!parse
+	#   class BeatState < Data
+	#     # @return [Rational]
+	#     attr_reader :current_beat
+	#     # @return [BpmChangeList]
+	#     attr_reader :bpm_changes
+	#   end
+	BeatState = Data.define :current_beat, :bpm_changes
+
+	module Metronomic
+
+		# @return [Float]
+		attr_accessor :offset
+
+		# @return [Integer, Rational]
+		attr_accessor :beat
+
+		# @return [Integer, Rational, nil]
+		attr_accessor :duration_beats
+
+		# @return [BpmChangeList]
+		attr_reader :bpm_changes
+
+		# @return [Float]
+		# @param delta_beat [Integer, Rational]
+		def time_at_relative_beat delta_beat
+			@offset + @bpm_changes.time_at(@beat + delta_beat)
+		end
+
+		# @return [Float]
+		def time
+			time_at_relative_beat 0
+		end
+
+		# @return [Float]
+		def end_time
+			time_at_relative_beat @duration_beats || 0
+		end
+
+		# @note Internal API.
+		# @return BeatState
+		def beat_state
+			BeatState.new @beat, @bpm_changes
+		end
+	end
+
+	# Including this module adds the ability to keep track of the current beat and set BPM changes at the current beat.
+	# It provides methods {#beat} and {#beat!} to navigate through the beats.
+	#
+	# The examples shown in the documentation below assume that +self+ is a {Charter} instance.
+	module BeatSeries
+
+		# @return [Integer, Rational]
+		attr_accessor :current_beat
+
+		# @return [BpmChangeList]
+		attr_reader :bpm_changes
+
+		# @!group DSL Methods
+
+		# Set the BPM starting at the current beat.
+		# This method must be called after {Charter#offset}.
+		# The method can be called multiple times,
+		# which is useful when the music changes its tempo from time to time.
+		#
+		# Internally, this simply calls {BpmChangeList#add} on the BPM changes created by {Charter#offset}.
+		# @param bpm [Numeric] the BPM.
+		# @raise [OffsetError] if {Charter#offset} has not been called.
+		# @return [BpmChangeList] the BPM changes.
+		def bpm bpm
+			raise OffsetError.new __method__ unless @bpm_changes
+			@bpm_changes.add @current_beat, bpm
+		end
+
+		# Increments the current beat by the given delta set by +delta_beat+.
+		# It is recommended that +delta_beat+ be a Rational or an Integer for accuracy.
+		# Float will be converted to Rational, and a warning will be issued
+		# when a Float is used.
+		#
+		# This method is also useful for inspecting the current beat.
+		# If the method is called without an argument, it simply returns the current beat.
+		# For this purpose, this method is equivalent to {#beat!}.
+		#
+		# This method must be called after {Charter#offset}.
+		# @param delta_beat [Rational, Integer] the delta to increment the current beat by.
+		# @raise [OffsetError] if {Charter#offset} has not been called.
+		# @return [Rational] the new current beat.
+		# @see #beat!
+		# @example Increment the current beat and inspect it
+		#   offset 0.1; bpm 120
+		#   p b       # Outputs 0, this is the initial value
+		#   p b 1     # Outputs 1, because it is incremented by 1 when it was 0
+		#   p b 1/2r  # Outputs 3/2, because it is incremented by 3/2 when it was 1
+		#   p time_at # Outputs 0.85, which is offset + 60s / BPM * beat
+		# @example Time the notes
+		#   offset 0.1; bpm 120
+		#   t 0, 0; b 1
+		#   t 50, 0; b 1
+		#   # Now there are two tap notes, one at beat 0, and the other at beat 1
+		def beat delta_beat = 0
+			raise OffsetError.new __method__ unless @current_beat
+			case delta_beat
+			when Integer, Rational
+				@current_beat += delta_beat.to_r
+			when Float
+				warn 'float beat is not recommended'
+				@current_beat += delta_beat.to_r
+			else
+				raise ArgumentError, 'invalid delta_beat'
+			end
+		end
+		alias b beat
+
+		# Sets the current beat to the given value.
+		# It is recommended that +beat+ be a Rational or an Integer for accuracy.
+		# Float will be converted to Rational, and a warning will be issued.
+		#
+		# When called without an argument, this method does nothing and returns the current beat.
+		# For this purpose, this method is equivalent to {#beat}.
+		#
+		# This method must be called after {Charter#offset}.
+		# @param beat [Rational, Integer] the new current beat.
+		# @raise [OffsetError] if {Charter#offset} has not been called.
+		# @return [Rational] the new current beat.
+		# @see #beat
+		# @example Set the current beat and inspect it
+		#   offset 0.1; bpm 120
+		#   p b!      # Outputs 0, this is the initial value
+		#   p b! 1    # Outputs 1, because it is set to 1
+		#   p b! 1/2r # Outputs 1/2, because it is set to 1/2
+		#   p time_at # Outputs 0.35, which is offset + 60s / BPM * beat
+		def beat! beat = @current_beat
+			raise OffsetError.new __method__ unless @current_beat
+			case beat
+			when Integer, Rational
+				@current_beat = beat.to_r
+			when Float
+				warn 'float beat is not recommended'
+				@current_beat = beat.to_r
+			else
+				raise ArgumentError, 'invalid beat'
+			end
+		end
+		alias b! beat!
+
+		# @!endgroup
+
+		def time_at beat = @current_beat
+			raise OffsetError.new __method__ unless @bpm_changes
+			@bpm_changes.time_at beat
+		end
+
+		# @note Internal API.
+		# @return [BeatState]
+		def current_beat_state
+			BeatState.new @current_beat, @bpm_changes
+		end
+
+		# @note Internal API.
+		# @param backup [BeatState]
+		def restore_beat_state backup
+			@current_beat = backup.current_beat
+			@bpm_changes = backup.bpm_changes
+		end
+	end
+
 	class Event
+		include Metronomic
 
-		TIP_POINTABLE_TYPES = %i[tap hold flick drag]
+		TIP_POINTABLE_TYPES = %i[tap hold flick drag].freeze
 
-		attr_accessor :beat, :offset, :duration_beats, :properties
-		attr_reader :type, :bpm_changes, :backtrace
+		attr_accessor :type, :properties, :time_dependent
+		attr_reader :backtrace
 
 		def initialize type, beat, duration_beats = nil, bpm_changes, **properties
 			@beat = beat
@@ -86,40 +276,35 @@ class Sunniesnow::Charter
 			@type = type
 			@bpm_changes = bpm_changes
 			@properties = properties
+			@time_dependent = TimeDependent.new beat, bpm_changes
 			@offset = 0.0
 			@backtrace = caller.filter { _1.sub! /^#{PROJECT_DIR}\//, '' }
 		end
 
-		def time_at_relative_beat delta_beat
-			@offset + @bpm_changes.time_at(@beat + delta_beat)
-		end
-
-		def time
-			time_at_relative_beat 0
-		end
-
-		def end_time
-			time_at_relative_beat @duration_beats || 0
-		end
-
+		# @return [Numeric, String]
 		def [] key
 			@properties[key]
 		end
 
+		# @return [Numeric, String]
 		def []= key, value
 			@properties[key] = value
 		end
 
+		# @return [Sunniesnow::Event]
 		def to_sunniesnow
 			t = time
 			properties = @properties.transform_keys &:snake_to_camel
 			properties[:duration] = end_time - t if @duration_beats
-			Sunniesnow::Event.new t, @type.snake_to_camel, **properties
+			result = Sunniesnow::Event.new t, @type.snake_to_camel, **properties
+			result.time_dependent = @time_dependent.to_sunniesnow unless @time_dependent.empty?
+			result
 		end
 
 		def dup
 			result = super
 			result.properties = @properties.dup
+			result.time_dependent = @time_dependent.dup
 			result
 		end
 
@@ -127,9 +312,253 @@ class Sunniesnow::Charter
 			TIP_POINTABLE_TYPES.include? @type
 		end
 
+		# @return [String]
 		def inspect
 			"#<#@type at #@beat#{@duration_beats && " for #@duration_beats"} offset #@offset: " +
 			@properties.map { |k, v| "#{k}=#{v.inspect}" }.join(', ') + '>'
+		end
+	end
+
+	class TimeDependent
+		class DataPoint
+			include Comparable
+			include Metronomic
+
+			attr_accessor :value
+
+			def initialize beat, bpm_changes, value
+				@offset = 0.0
+				@beat = beat
+				@bpm_changes = bpm_changes
+				@value = value
+			end
+
+			def <=> other
+				@beat <=> other.beat
+			end
+
+			def to_sunniesnow
+				{time: time, value: @value}
+			end
+		end
+
+		class PiecewiseData
+			include Metronomic
+			attr_accessor :data_points
+
+			def initialize beat, bpm_changes
+				@offset = 0.0
+				@beat = beat
+				@bpm_changes = bpm_changes
+			end
+
+			def data_point beat, value
+				DataPoint.new(beat, @bpm_changes, value).tap { (@data_points ||= []).push _1 }
+			end
+
+			def interpolable?
+				raise NotImplementedError
+			end
+
+			def dup
+				super.tap { _1.data_points = @data_points&.map &:dup }
+			end
+
+			def to_sunniesnow
+				return {} unless @data_points
+				data_points = @data_points.map &:to_sunniesnow
+				data_points.sort_by! { _1[:time] }
+				data_points.each { _1[:time] += @offset }
+				{dataPoints: data_points}
+			end
+		end
+
+		class InterpolablePiecewiseData < PiecewiseData
+			attr_accessor :speed, :beat_speed
+
+			def speed= value
+				@speed = value
+				@beat_speed = nil
+			end
+
+			def beat_speed= value
+				@beat_speed = value
+				@speed = nil
+			end
+
+			def interpolable?
+				true
+			end
+
+			def to_sunniesnow
+				speed = @speed || @beat_speed && @bpm_changes.bps_before(@data_points&.min_by(&:beat)&.beat || @beat) * @beat_speed
+				super.tap { _1[:speed] = speed if speed }
+			end
+		end
+
+		class UninterpolablePiecewiseData < PiecewiseData
+			attr_accessor :value
+
+			def interpolable?
+				false
+			end
+
+			def to_sunniesnow
+				super.tap { _1[:value] = @value if @value }
+			end
+		end
+
+		include BeatSeries
+
+		attr_accessor :data
+
+		def initialize beat, bpm_changes
+			@current_beat = beat
+			@bpm_changes = bpm_changes
+			@data = Hash.new { |h, k| h[k] = (INTERPOLABLE_SET.include?(k) ? InterpolablePiecewiseData : UninterpolablePiecewiseData).new beat, bpm_changes }
+		end
+
+		def [] key
+			@data.has_key?(key) ? @data[key] : nil
+		end
+
+		INTERPOLABLE = %i[
+			x y opacity size scale_x scale_y skew_x skew_y rotation text tint_red tint_green tint_blue
+			circle_opacity circle_scale_x circle_scale_y circle_skew_x circle_skew_y circle_rotation
+			circle_tint_red circle_tint_green circle_tint_blue
+			width height anchor_x anchor_y
+		].freeze
+
+		INTERPOLABLE_SET = INTERPOLABLE.to_set.freeze
+
+		UNINTERPOLABLE = %i[z blend_mode circle_blend_mode text].freeze
+
+		UNINTERPOLABLE_SET = UNINTERPOLABLE.to_set.freeze
+
+		BLEND_MODES = %i[
+			normal add multiply screen darken lighten erase color_dodge color_burn linear_burn linear_dodge
+			linear_light hard_light soft_light pin_light difference exclusion overlay saturation color luminosity
+			normal_npm add_npm screen_npm none subtract divide vivid_light hard_mix negation min max
+		].freeze
+
+		BLEND_MODES_SET = BLEND_MODES.to_set
+
+		UNINTERPOLABLE_TYPES = {
+			blend_mode: BLEND_MODES_SET,
+			circle_blend_mode: BLEND_MODES_SET,
+			test: String
+		}.tap { _1.default = Numeric }.freeze
+
+		# @!group DSL Methods
+
+		# @!parse
+		#   # @!macro [attach] interpolable_property
+		#   #   @!method $1 data_value = nil, speed: nil, s: nil
+		#   #   @overload $1 data_value
+		#   #     @param data_value [Numeric]
+		#   #     @return [DataPoint]
+		#   #   @overload $1 speed:
+		#   #     @param speed [Numeric]
+		#   #     @return [Float]
+		#   #   @overload $1 s:
+		#   #     This overload is the same as the +speed:+ overload, but with a shorter name for convenience.
+		#   #     @param s [Numeric]
+		#   #     @return [Float]
+		#   interpolable_property x
+		#   interpolable_property y
+		#   interpolable_property opacity
+		#   interpolable_property size
+		#   interpolable_property scale_x
+		#   interpolable_property scale_y
+		#   interpolable_property skew_x
+		#   interpolable_property skew_y
+		#   interpolable_property rotation
+		#   interpolable_property text
+		#   interpolable_property tint_red
+		#   interpolable_property tint_green
+		#   interpolable_property tint_blue
+		#   interpolable_property circle_opacity
+		#   interpolable_property circle_scale_x
+		#   interpolable_property circle_scale_y
+		#   interpolable_property circle_skew_x
+		#   interpolable_property circle_skew_y
+		#   interpolable_property circle_rotation
+		#   interpolable_property circle_tint_red
+		#   interpolable_property circle_tint_green
+		#   interpolable_property circle_tint_blue
+		#   interpolable_property width
+		#   interpolable_property height
+		#   interpolable_property anchor_x
+		#   interpolable_property anchor_y
+		INTERPOLABLE.each do |property|
+			define_method property do |data_value = nil, speed: nil, s: nil|
+				raise ArgumentError, 'cannot specify both speed and s' if !speed.nil? && !s.nil?
+				speed = s if speed.nil?
+				raise ArgumentError, 'must specify one and only one of data_value and speed' if [data_value, speed].compact.size != 1
+				if !data_value.nil?
+					raise ArgumentError, "#{property} must be a number" unless data_value.is_a? Numeric
+					@data[property].data_point @current_beat, data_value.to_f
+				else
+					raise ArgumentError, "speed must be a number" unless speed.is_a? Numeric
+					@data[property].speed = speed.to_f
+				end
+			end
+		end
+
+		# @!parse
+		#   # @!macro [attach] uninterpolable_property
+		#   #   @!method $1 data_value = nil, value: nil, v: nil
+		#   #   @overload $1 data_value
+		#   #     @param data_value [$2]
+		#   #     @return [DataPoint]
+		#   #   @overload $1 value:
+		#   #     @param value [$2]
+		#   #     @return [$2]
+		#   #   @overload $1 v:
+		#   #     This overload is the same as the +value:+ overload, but with a shorter name for convenience.
+		#   #     @param v [$2]
+		#   #     @return [$2]
+		#   uninterpolable_property z, Numeric
+		#   uninterpolable_property blend_mode, BLEND_MODES_SET
+		#   uninterpolable_property circle_blend_mode, BLEND_MODES_SET
+		#   uninterpolable_property text, String
+		UNINTERPOLABLE.each do |property|
+			define_method property do |data_value = nil, value: nil, v: nil|
+				raise ArgumentError, "cannot specify both value and v" if !value.nil? && !v.nil?
+				value = v if value.nil?
+				raise ArgumentError, "must specify one and only one of data_value and value" if [data_value, value].compact.size != 1
+				if !data_value.nil?
+					raise ArgumentError, "wrong data type for data_value of #{property}" unless UNINTERPOLABLE_TYPES[property] === data_value
+					@data[property].data_point @current_beat, data_value
+				else
+					raise ArgumentError, "wrong data type for value of #{property}" unless UNINTERPOLABLE_TYPES[property] === value
+					@data[property].value = value
+				end
+			end
+		end
+
+		# @!endgroup
+
+		def empty?
+			@data.empty?
+		end
+
+		def dup
+			result = super
+			result.data = @data.transform_values { _1.dup }
+			result.data.default_proc = @data.default_proc
+			result
+		end
+
+		def to_sunniesnow
+			result = @data.transform_keys &:snake_to_camel
+			result.transform_values! &:to_sunniesnow
+			%i[blendMode circleBlendMode].each do |key|
+				next unless result.has_key? key
+				result[key][:dataPoints]&.each { _1[:value] = _1[:value].to_s.tr ?_, ?- }
+				result[key][:value] = result[key][:value].to_s.tr ?_, ?- if result[key][:value]
+			end
+			result
 		end
 	end
 
@@ -137,7 +566,7 @@ class Sunniesnow::Charter
 	class Transform
 		include Math
 		attr_reader :xx, :xy, :xz, :yx, :yy, :yz, :zx, :zy, :zz, :tt, :t1
-		
+
 		def initialize
 			@xx = @yy = @zz = 1.0
 			@xy = @xz = @yx = @yz = @zx = @zy = 0.0
@@ -219,6 +648,7 @@ class Sunniesnow::Charter
 		end
 	end
 
+	# @note Internal API.
 	class TipPointStart
 
 		def initialize x = 0, y = 0, relative_time = 0.0, relative: true, speed: nil,
@@ -314,13 +744,14 @@ class Sunniesnow::Charter
 	
 	DIRECTIONS.freeze
 
-	class << self
-		# A hash containing all the charts opened by {::open}.
-		# The keys are the names of the charts, and the values are the {Sunniesnow::Charter} objects.
-		# @return [Hash<String, Sunniesnow::Charter>]
-		attr_reader :charts
-	end
+	# @!scope class
+	# A hash containing all the charts opened by {::open}.
+	# The keys are the names of the charts, and the values are the {Sunniesnow::Charter} objects.
+	# @return [Hash<String, Sunniesnow::Charter>]
+	singleton_class.attr_reader :charts
 	@charts = {}
+
+	include BeatSeries
 
 	# An array of events.
 	# @return [Array<Sunniesnow::Charter::Event>]
@@ -339,7 +770,8 @@ class Sunniesnow::Charter
 	# it is assumed that they are run inside a block passed to this method.
 	#
 	# @param name [String] the name of the chart.
-	# @return [Sunniesnow::Charter] the chart.
+	# @return [Charter] the chart.
+	# @yieldself [Charter] the chart, the same as the return value.
 	# @example
 	#   Sunniesnow::Charter.open 'master' do
 	#     # write the chart here
@@ -360,6 +792,7 @@ class Sunniesnow::Charter
 		init_bookmarks
 	end
 
+	# @note Internal API.
 	def init_chart_info
 		@difficulty_name = ''
 		@difficulty_color = '#000000'
@@ -371,10 +804,12 @@ class Sunniesnow::Charter
 		@events = []
 	end
 
+	# @note Internal API.
 	def init_bookmarks
 		@bookmarks = {}
 	end
 
+	# @note Internal API.
 	def init_state
 		@current_beat = nil
 		@bpm_changes = nil
@@ -388,6 +823,9 @@ class Sunniesnow::Charter
 		@groups = [@events]
 	end
 
+	# See {Sunniesnow::Chart#initialize} for the arguments.
+	# @return [Sunniesnow::Chart]
+	# @overload to_sunniesnow live_reload_port: 31108, production: false
 	def to_sunniesnow **opts
 		result = Sunniesnow::Chart.new **opts
 		result.title = @title
@@ -409,46 +847,67 @@ class Sunniesnow::Charter
 		"#<Sunniesnow::Charter #@name>"
 	end
 
-	def time_at beat = @current_beat
-		raise OffsetError.new __method__ unless @bpm_changes
-		@bpm_changes.time_at beat
+	# @note Internal API.
+	# @!parse
+	#   class GroupState < Data
+	#     # @return [Array<Symbol>]
+	#     attr_reader :tip_point_mode_stack
+	#     # @return [Array<Integer?>]
+	#     attr_reader :current_tip_point_stack
+	#     # @return [Array<Array<Event>>]
+	#     attr_reader :current_tip_point_group_stack
+	#     # @return [Integer]
+	#     attr_reader :current_duplicate
+	#     # @return [Array<TipPointStart?>]
+	#     attr_reader :tip_point_start_stack
+	#     # @return [Array<TipPointStart?>]
+	#     attr_reader :tip_point_start_to_add_stack
+	#     # @return [Array<Array<Event>>]
+	#     attr_reader :groups
+	#   end
+	GroupState = Data.define(
+		:tip_point_mode_stack, :current_tip_point_stack,
+		:current_tip_point_group_stack, :current_duplicate,
+		:tip_point_start_stack, :tip_point_start_to_add_stack, :groups
+	)
+
+	# @note Internal API.
+	# @!parse
+	#   class Bookmark < Data
+	#     # @return [BeatState]
+	#     attr_reader :beat_state
+	#     # @return [GroupState]
+	#     attr_reader :group_state
+	#   end
+	Bookmark = Data.define :beat_state, :group_state
+
+	# @note Internal API.
+	# @return [GroupState]
+	def current_group_state
+		GroupState.new(
+			@tip_point_mode_stack.dup,
+			@current_tip_point_stack.dup,
+			@current_tip_point_group_stack.dup,
+			@current_duplicate,
+			@tip_point_start_stack.dup,
+			@tip_point_start_to_add_stack.dup,
+			@groups.dup
+		)
 	end
 
-	def backup_beat
-		{current_beat: @current_beat, bpm_changes: @bpm_changes}
-	end
-
-	def restore_beat backup
-		@current_beat = backup[:current_beat]
-		@bpm_changes = backup[:bpm_changes]
-	end
-
-	def backup_state
-		{
-			current_beat: @current_beat,
-			bpm_changes: @bpm_changes,
-			tip_point_mode_stack: @tip_point_mode_stack.dup,
-			current_tip_point_stack: @current_tip_point_stack.dup,
-			current_tip_point_group_stack: @current_tip_point_group_stack.dup,
-			current_duplicate: @current_duplicate,
-			tip_point_start_stack: @tip_point_start_stack.dup,
-			tip_point_start_to_add_stack: @tip_point_start_to_add_stack.dup,
-			groups: @groups.dup
-		}
-	end
-
-	def restore_state backup
-		@current_beat = backup[:current_beat]
-		@bpm_changes = backup[:bpm_changes]
-		@tip_point_mode_stack = backup[:tip_point_mode_stack]
-		@current_tip_point_stack = backup[:current_tip_point_stack]
-		@current_tip_point_group_stack = backup[:current_tip_point_group_stack]
-		@current_duplicate = backup[:current_duplicate]
-		@tip_point_start_to_add_stack = backup[:tip_point_start_to_add_stack]
-		@groups = backup[:groups]
+	# @note Internal API.
+	# @param backup [GroupState]
+	def restore_group_state backup
+		@tip_point_mode_stack = backup.tip_point_mode_stack
+		@current_tip_point_stack = backup.current_tip_point_stack
+		@current_tip_point_group_stack = backup.current_tip_point_group_stack
+		@current_duplicate = backup.current_duplicate
+		@tip_point_start_to_add_stack = backup.tip_point_start_to_add_stack
+		@groups = backup.groups
 		nil
 	end
 
+	# @note Internal API.
 	def event type, duration_beats = nil, **properties
 		raise OffsetError.new __method__ unless @bpm_changes
 		event = Event.new type, @current_beat, duration_beats, @bpm_changes, **properties
@@ -472,6 +931,7 @@ class Sunniesnow::Charter
 		event
 	end
 
+	# @note Internal API.
 	def push_tip_point_start start_event
 		start_event[:tip_point] = @current_tip_point_stack.last.to_s
 		tip_point_start = @tip_point_start_to_add_stack.last&.get_start_placeholder start_event
@@ -482,6 +942,8 @@ class Sunniesnow::Charter
 		end
 	end
 
+	# @note Internal API.
+	# @yieldself [Sunniesnow::Charter] the same as +self+.
 	def tip_point mode, *args, preserve_beat: true, **opts, &block
 		@tip_point_mode_stack.push mode
 		if mode == :none
@@ -512,7 +974,7 @@ class Sunniesnow::Charter
 		result
 	end
 
-	# @!group DSL methods
+	# @!group DSL Methods
 
 	# Set the title of the music for the chart.
 	# This will be reflected in the return value of {#to_sunniesnow}.
@@ -640,91 +1102,6 @@ class Sunniesnow::Charter
 		@current_beat = 0r
 		@bpm_changes = BpmChangeList.new offset.to_f
 	end
-
-	# Set the BPM starting at the current beat.
-	# This method must be called after {#offset}.
-	# The method can be called multiple times,
-	# which is useful when the music changes its tempo from time to time.
-	#
-	# Internally, this simply calls {BpmChangeList#add} on the BPM changes created by {#offset}.
-	# @param bpm [Numeric] the BPM.
-	# @raise [OffsetError] if {#offset} has not been called.
-	# @return [BpmChangeList] the BPM changes.
-	def bpm bpm
-		raise OffsetError.new __method__ unless @bpm_changes
-		@bpm_changes.add @current_beat, bpm
-	end
-
-	# Increments the current beat by the given delta set by +delta_beat+.
-	# It is recommended that +delta_beat+ be a Rational or an Integer for accuracy.
-	# Float will be converted to Rational, and a warning will be issued
-	# when a Float is used.
-	#
-	# This method is also useful for inspecting the current beat.
-	# If the method is called without an argument, it simply returns the current beat.
-	# For this purpose, this method is equivalent to {#beat!}.
-	#
-	# This method must be called after {#offset}.
-	# @param delta_beat [Rational, Integer] the delta to increment the current beat by.
-	# @raise [OffsetError] if {#offset} has not been called.
-	# @return [Rational] the new current beat.
-	# @see #beat!
-	# @example Increment the current beat and inspect it
-	#   offset 0.1; bpm 120
-	#   p b       # Outputs 0, this is the initial value
-	#   p b 1     # Outputs 1, because it is incremented by 1 when it was 0
-	#   p b 1/2r  # Outputs 3/2, because it is incremented by 3/2 when it was 1
-	#   p time_at # Outputs 0.85, which is offset + 60s / BPM * beat
-	# @example Time the notes
-	#   offset 0.1; bpm 120
-	#   t 0, 0; b 1
-	#   t 50, 0; b 1
-	#   # Now there are two tap notes, one at beat 0, and the other at beat 1
-	def beat delta_beat = 0
-		raise OffsetError.new __method__ unless @current_beat
-		case delta_beat
-		when Integer, Rational
-			@current_beat += delta_beat.to_r
-		when Float
-			warn 'float beat is not recommended'
-			@current_beat += delta_beat.to_r
-		else
-			raise ArgumentError, 'invalid delta_beat'
-		end
-	end
-	alias b beat
-
-	# Sets the current beat to the given value.
-	# It is recommended that +beat+ be a Rational or an Integer for accuracy.
-	# Float will be converted to Rational, and a warning will be issued.
-	#
-	# When called without an argument, this method does nothing and returns the current beat.
-	# For this purpose, this method is equivalent to {#beat}.
-	#
-	# This method must be called after {#offset}.
-	# @param beat [Rational, Integer] the new current beat.
-	# @raise [OffsetError] if {#offset} has not been called.
-	# @return [Rational] the new current beat.
-	# @see #beat
-	# @example Set the current beat and inspect it
-	#   offset 0.1; bpm 120
-	#   p b!      # Outputs 0, this is the initial value
-	#   p b! 1    # Outputs 1, because it is set to 1
-	#   p b! 1/2r # Outputs 1/2, because it is set to 1/2
-	#   p time_at # Outputs 0.35, which is offset + 60s / BPM * beat
-	def beat! beat = @current_beat
-		raise OffsetError.new __method__ unless @current_beat
-		case beat
-		when Integer, Rational
-			@current_beat = beat.to_r
-		when Float
-			warn 'float beat is not recommended'
-			@current_beat = beat.to_r
-		else
-			raise ArgumentError, 'invalid beat'
-		end
-	end
-	alias b! beat!
 
 	# Creates a tap note at the given coordinates with the given text.
 	# The coordinates +x+ and +y+ must be numbers.
@@ -931,30 +1308,31 @@ class Sunniesnow::Charter
 		event :big_text, duration_beats.to_r, text: text.to_s
 	end
 
-	# @!macro [attach] bg_pattern
-	#   @!method $1(duration_beats = 0)
-	#   Creates a $2 background pattern.
-	#   The argument +duration_beats+ is the duration of the background pattern in beats.
-	#   It needs to be a non-negative Rational or Integer.
-	#   If it is a Float, it will be converted to a Rational, and a warning will be issued.
-	#
-	#   Technically, this adds an event of type +:bg_pattern+ to the chart at the current time
-	#   with properties containing the information provided by +duration_beats+.
-	#   @param duration_beats [Rational, Integer] the duration of the background pattern in beats.
-	#   @return [Event] the event representing the background pattern.
-	#   @raise [ArgumentError] if +duration_beats+ is not a number or is negative.
-	#   @example
-	#     offset 0.1; bpm 120
-	#     $1 1 # duration is 1
-	#     b 1
-	#     $1 0 # duration is 0
-	# @!parse bg_pattern :grid, 'grid'
-	# @!parse bg_pattern :hexagon, 'hexagon'
-	# @!parse bg_pattern :checkerboard, 'checkerboard'
-	# @!parse bg_pattern :diamond_grid, 'diamond grid'
-	# @!parse bg_pattern :pentagon, 'pentagon'
-	# @!parse bg_pattern :turntable, 'turntable'
-	# @!parse bg_pattern :hexagram, 'hexagram'
+	# @!parse
+	#   # @!macro [attach] bg_pattern
+	#   #   @!method $1(duration_beats = 0)
+	#   #   Creates a $2 background pattern.
+	#   #   The argument +duration_beats+ is the duration of the background pattern in beats.
+	#   #   It needs to be a non-negative Rational or Integer.
+	#   #   If it is a Float, it will be converted to a Rational, and a warning will be issued.
+	#   #
+	#   #   Technically, this adds an event of type +:$1+ to the chart at the current time
+	#   #   with properties containing the information provided by +duration_beats+.
+	#   #   @param duration_beats [Rational, Integer] the duration of the background pattern in beats.
+	#   #   @return [Event] the event representing the background pattern.
+	#   #   @raise [ArgumentError] if +duration_beats+ is not a number or is negative.
+	#   #   @example
+	#   #     offset 0.1; bpm 120
+	#   #     $1 1 # duration is 1
+	#   #     b 1
+	#   #     $1 0 # duration is 0
+	#   bg_pattern :grid, 'grid'
+	#   bg_pattern :hexagon, 'hexagon'
+	#   bg_pattern :checkerboard, 'checkerboard'
+	#   bg_pattern :diamond_grid, 'diamond grid'
+	#   bg_pattern :pentagon, 'pentagon'
+	#   bg_pattern :turntable, 'turntable'
+	#   bg_pattern :hexagram, 'hexagram'
 	%i[grid hexagon checkerboard diamond_grid pentagon turntable hexagram].each do |method_name|
 		define_method method_name do |duration_beats = 0|
 			unless duration_beats.is_a? Numeric
@@ -968,6 +1346,49 @@ class Sunniesnow::Charter
 			end
 			event method_name, duration_beats.to_r
 		end
+	end
+
+	# @!endgroup
+
+	IMAGE_LAYER_ABOVE = %i[none background bg_pattern hud fx judgement_line bg_notes notes circles tip_points fx_front].freeze
+
+	IMAGE_LAYER_ABOVE_SET = IMAGE_LAYER_ABOVE.to_set.freeze
+
+	COORDINATE_SYSTEMS = %i[canvas chart].freeze
+
+	COORDINATE_SYSTEMS_SET = COORDINATE_SYSTEMS.to_set.freeze
+
+	# @!group DSL Methods
+
+	# Creates an image event.
+	# @param filename [String]
+	# @param x [Numeric]
+	# @param y [Numeric]
+	# @param duration_beats [Integer, Rational]
+	# @param width [Numeric]
+	# @param height [Numeric]
+	# @param above [IMAGE_LAYER_ABOVE_SET]
+	# @param coordinate_system [COORDINATE_SYSTEMS_SET]
+	# @param mirrorable [Boolean]
+	# @return [Event]
+	def image filename, x, y, duration_beats, width, height = nil, above: nil, coordinate_system: nil, mirrorable: nil
+		raise ArgumentError, 'filename must be a string' unless filename.is_a? String
+		raise ArgumentError, 'x and y must be numbers' unless x.is_a?(Numeric) && y.is_a?(Numeric)
+		raise ArgumentError, 'duration_beats must be a number' unless duration_beats.is_a? Numeric
+		raise ArgumentError, 'duration_beats must be non-negative' if duration_beats < 0
+		raise ArgumentError, 'width must be a number' unless width.is_a? Numeric
+		raise ArgumentError, 'height must be a number' if !height.nil? && !height.is_a?(Numeric)
+		raise ArgumentError, "unknown coordinate_system #{coordinate_system}" if !coordinate_system.nil? && !%i[chart screen].include?(coordinate_system)
+		warn 'Rational is recommended over Float for duration_beats' if duration_beats.is_a? Float
+		raise ArgumentError, "invalid above: #{above}" if !above.nil? && !IMAGE_LAYER_ABOVE_SET.include?(above)
+		raise ArgumentError, "invalid coordinate_system: #{coordinate_system}" if !coordinate_system.nil? && !COORDINATE_SYSTEMS_SET.include?(coordinate_system)
+		raise ArgumentError, "mirrorable must be a boolean" unless [nil, true, false].include? mirrorable
+		additional_properties = {}
+		additional_properties[:above] = above.snake_to_camel if above
+		additional_properties[:coordinate_system] = coordinate_system.snake_to_camel if coordinate_system
+		additional_properties[:mirrorable] = mirrorable unless mirrorable.nil?
+		additional_properties[:height] = height.to_f if height
+		event :image, duration_beats.to_r, filename: filename, x: x.to_f, y: y.to_f, width: width.to_f, **additional_properties
 	end
 
 	# Duplicate all events in a given array.
@@ -1001,6 +1422,9 @@ class Sunniesnow::Charter
 
 	# Transform all events in a given array in time and/or space.
 	# Space transformation does not affect background patterns.
+	# @yieldself [Transform]
+	# @param events [Array<Event>, Event]
+	# @return [Array<Event>]
 	def transform events, &block
 		raise ArgumentError, 'no block given' unless block
 		events = [events] if events.is_a? Event
@@ -1009,20 +1433,78 @@ class Sunniesnow::Charter
 		events.each { transform.apply _1 }
 	end
 
+	# @return [Array<Event>] the events created inside +block+.
+	# @yieldself [Charter] the same as +self+.
 	def group preserve_beat: true, &block
 		raise ArgumentError, 'no block given' unless block
 		@groups.push result = []
-		beat_backup = backup_beat unless preserve_beat
+		beat_backup = current_beat_state unless preserve_beat
 		instance_eval &block
-		restore_beat beat_backup unless preserve_beat
+		restore_beat_state beat_backup unless preserve_beat
 		@groups.delete_if { result.equal? _1 }
 		result
 	end
 
+	# @param events [Array<Event>]
+	# @return [Array<Event>]
 	def remove *events
 		events.each { |event| @groups.each { _1.delete event } }
 	end
 
+	# @!parse
+	#   # @!macro [attach] tip_point_mode
+	#   #   @!method tip_point_$1 x = 0, y = 0, relative: true, preserve_beat: true, &block
+	#   #   $2
+	#   #   There are four overloads of this method for different ways to specify the time at which the tip point appears.
+	#   #   This method is otherwise the same as {#group}.
+	#   #
+	#   #   If the methods {#tp_chain}, {#tp_drop}, and {#tp_none} are nested in +block+,
+	#   #   only the innermost one takes effect.
+	#   #   @example Nested tip points
+	#   #     offset 0.1; bpm 120
+	#   #     tp_chain 0, 100, 1 do
+	#   #       t 0, 0, 'A'; b 1 # tip point from above
+	#   #       tp_drop -100, 0, 1 do
+	#   #         t 25, 25, 'B'; b 1 # tip point from left
+	#   #         t 50, 25, 'C'; b 1 # tip point from left
+	#   #       end
+	#   #       tp_none do
+	#   #         t 75, 50, 'D'; b 1 # no tip point
+	#   #       end
+	#   #       t 100, 0, 'E'; b 1 # same tip point as note A
+	#   #     end
+	#   #   @param preserve_beat [Boolean] whether the {#current_beat} will be reset to the value before executing +block+ after it is executed.
+	#   #   @param relative [Boolean] whether the position at which a created tip point appears specified by the arguments +x+ and +y+
+	#   #     is relative to the first note it visits or absolute.
+	#   #   @param x [Numeric] the x-coordinate of the position at which a created tip point appears, whether relative or absolute.
+	#   #   @param y [Numeric] the y-coordinate of the position at which a created tip point appears, whether relative or absolute.
+	#   #   @return [Array<Event>] the events created inside +block+, similar to {#group}.
+	#   #   @raise [ArgumentError]
+	#   #   @yieldself [Charter] the same as +self+.
+	#   #   @overload tip_point_$1 x = 0, y = 0, relative_time = 0.0, relative: true, preserve_beat: true, &block
+	#   #     @param relative_time [Numeric]
+	#   #     The time at which a created tip point appears is the time of the first note it visits minus +relative_time+.
+	#   #   @overload tip_point_$1 x = 0, y = 0, speed:, relative: true, preserve_beat: true, &block
+	#   #     @param speed [Numeric]
+	#   #     The time at which a created tip point appears is the time of the first note it visits minus
+	#   #     the distance between the note and the position where the tip point appears divided by +speed+.
+	#   #   @overload tip_point_$1 x = 0, y = 0, relative_beat:, relative: true, preserve_beat: true, &block
+	#   #     @param relative_beat [Rational, Integer]
+	#   #     The beat at which a created tip point appears is the beat of the first note it visits minus +relative_beat+.
+	#   #   @overload tip_point_$1 x = 0, y = 0, beat_speed:, relative: true, preserve_beat: true, &block
+	#   #     @param beat_speed [Numeric]
+	#   #     The beat at which a created tip point appears is the beat of the first note it visits minus
+	#   #     the distance between the note and the position where the tip point appears divided by +beat_speed+.
+	#   tip_point_mode :chain, 'Create a tip point to connect the notes created inside +block+.'
+	#   tip_point_mode :drop, 'A tip point is created for each note created inside +block+.'
+	#   alias tp_chain tip_point_chain
+	#   alias tp_drop tip_point_drop
+	#   alias tp_none tip_point_none
+	# @!method tip_point_none(preserve_beat: true, &block)
+	#   Notes created inside +block+ will not be visited by any tip point.
+	#   This method is otherwise the same as {#group}.
+	#   @yieldself [Charter] the same as +self+.
+	#   @return [Array<Event>] the events created inside +block+, similar to {#group}.
 	%i[chain drop none].each do |mode|
 		define_method "tip_point_#{mode}" do |*args, **opts, &block|
 			tip_point mode, *args, **opts, &block
@@ -1030,23 +1512,52 @@ class Sunniesnow::Charter
 		alias_method "tp_#{mode}", "tip_point_#{mode}"
 	end
 
+	# @param name [Object]
+	# @return [Object] +name+.
 	def mark name
-		@bookmarks[name] = backup_state
+		@bookmarks[name] = Bookmark.new current_beat_state, current_group_state
 		name
 	end
 
-	def at name, preserve_beat: false, update_mark: false, &block
+	# @return [Array<Event>]
+	# @yieldself [Charter] the same as +self+.
+	# @param name [Object] the name of the bookmark to jump to.
+	# @param goto_beat [Boolean]
+	# @param preserve_beat [Boolean]
+	# @param update_mark [Boolean]
+	def at name, goto_beat: true, preserve_beat: false, update_mark: false, &block
 		raise ArgumentError, 'no block given' unless block
 		raise ArgumentError, "unknown bookmark #{name}" unless bookmark = @bookmarks[name]
-		backup = backup_state
-		restore_state bookmark
+		group_backup = current_group_state
+		beat_backup = current_beat_state unless preserve_beat
+		restore_group_state bookmark.group_state
+		restore_beat_state bookmark.beat_state if goto_beat
 		result = group &block
 		mark name if update_mark
-		beat_backup = backup_beat if preserve_beat
-		restore_state backup
-		restore_beat beat_backup if preserve_beat
+		restore_group_state group_backup
+		restore_beat_state beat_backup unless preserve_beat
 		result
 	end
+
+	# @yieldself [TimeDependent]
+	# @param events [Array<Event>, Event]
+	# @param goto_beat [Boolean]
+	# @param preserve_beat [Boolean]
+	# @return [Array<Event>]
+	def time_dependent events, goto_beat: true, preserve_beat: false, &block
+		raise ArgumentError, 'no block given' unless block
+		events = [events] if events.is_a? Event
+		beat_backup = current_beat_state if !goto_beat || !preserve_beat
+		events.each do |event|
+			event.time_dependent.restore_beat_state goto_beat ? event.beat_state : beat_backup
+			event.time_dependent.instance_eval &block
+		end
+		restore_beat_state preserve_beat ? events.last.time_dependent.current_beat_state : beat_backup
+		events
+	end
+	alias td time_dependent
+
+	# @!endgroup
 
 	def check(
 		notes_in_bound: true,
@@ -1074,7 +1585,5 @@ class Sunniesnow::Charter
 			end
 		end
 	end
-
-	# @!endgroup
 
 end

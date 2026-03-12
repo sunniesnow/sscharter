@@ -11,16 +11,17 @@ class Sunniesnow::Chart
 	using Sunniesnow::Utils
 
 	# The schema URL for the output JSON.
-	# This will be set as the `$schema` property in the generated JSON.
+	# This will be set as the +$schema+ property in the generated JSON.
 	SCHEMA = 'https://sunniesnow.github.io/schema/chart-1.0.json'
 
 	# The title of the music.
 	# This is one of the metadata of the chart which will be reflected in the generated JSON.
 	# Also, see
-	# {chart file specifications}[https://sunniesnow.github.io/doc/chart.html#title]
+	# {https://sunniesnow.github.io/doc/chart.html#title chart file specifications}
 	# for more info.
+	# @return [String]
 	attr_accessor :title
-	
+
 	attr_accessor :artist
 	attr_accessor :charter
 	attr_accessor :difficulty_name
@@ -28,7 +29,7 @@ class Sunniesnow::Chart
 	attr_accessor :difficulty
 	attr_accessor :difficulty_sup
 
-	# An array of Sunniesnow::Event.
+	# @return [Array<Sunniesnow::Event>]
 	attr_reader :events
 
 	# @param [Integer] live_reload_port The port to use for live reload.
@@ -50,10 +51,10 @@ class Sunniesnow::Chart
 		@production = production
 	end
 
-	##
 	# Convert to JSON.
 	# A Sunniesnow chart is always a JSON file in the level file.
 	# This method is used to generate that JSON file.
+	# @return [String]
 	def to_json *args
 		hash = {
 			'$schema': SCHEMA,
@@ -76,7 +77,7 @@ end
 
 class Sunniesnow::Event
 	
-	attr_accessor :time, :type
+	attr_accessor :time, :type, :time_dependent
 	attr_reader :properties
 
 	def initialize time, type, **properties
@@ -94,6 +95,8 @@ class Sunniesnow::Event
 	end
 
 	def to_json *args
-		{time: @time, type: @type, properties: @properties}.to_json
+		result = {time: @time, type: @type, properties: @properties}
+		result[:timeDependent] = @time_dependent if @time_dependent
+		result.to_json *args
 	end
 end
