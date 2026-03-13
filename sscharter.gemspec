@@ -37,13 +37,15 @@ Gem::Specification.new do |spec|
 	spec.add_dependency 'filewatcher', '~> 3.0'
 	spec.add_dependency 'em-websocket', '~> 0.5'
 	spec.add_dependency 'concurrent-ruby', '~> 1.3'
+	spec.add_dependency 'json', '>= 2.17' # https://github.com/ruby/json/pull/910
 	# https://github.com/igrigorik/em-websocket/issues/160
 	spec.add_dependency 'base64' if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.4')
 	spec.add_development_dependency 'minitest', '~> 6.0'
 	spec.add_development_dependency 'rake', '~> 13.3'
 	spec.add_development_dependency 'yard', '~> 0.9'
 	spec.add_development_dependency 'rdoc', '~> 7.2' # yard markup engine
-	spec.add_development_dependency 'irb' # https://github.com/lsegal/yard/pull/1649
+	# https://github.com/lsegal/yard/pull/1649
+	spec.add_development_dependency 'irb' if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('4.0')
 	# For more information and examples about making a new gem, check out our
 	# guide at: https://bundler.io/guides/creating_gem.html
 end

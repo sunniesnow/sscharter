@@ -102,12 +102,12 @@ class TestSscharter < Minitest::Test
 		bps = bpm / 60
 		assert_equal offset, chart.time_at
 
-		chart.beat beat1 = rand(100)
+		chart.beat beat1 = rand(100) + 1
 		assert_in_delta offset + beat1/bps, chart.time_at, 1e-8
 
 		chart.bpm new_bpm = bpm * rand
 		new_bps = new_bpm / 60
-		chart.beat beat2 = rand(100)
+		chart.beat beat2 = rand(100) + 1
 		assert_in_delta offset + beat1/bps + beat2/new_bps, chart.time_at, 1e-8
 
 		test_beat = rand beat1
@@ -126,7 +126,7 @@ class TestSscharter < Minitest::Test
 		assert_in_delta bps, chart.bpm_changes.bps_after(0), 1e-8
 		assert_raises(ArgumentError) { chart.bpm_changes.bps_after -1 }
 
-		chart.beat beat1 = rand(100)
+		chart.beat beat1 = rand(100) + 1
 		assert_in_delta bps, chart.bpm_changes.bps_before(beat1), 1e-8
 		assert_in_delta bps, chart.bpm_changes.bps_after(beat1), 1e-8
 
@@ -334,7 +334,7 @@ class TestSscharter < Minitest::Test
 		assert_in_delta flick[:y], scale_y * y2
 		assert_in_delta tan(flick[:angle])/tan(angle), scale_y/scale_x, 1e-8
 
-		delta_beat = rand 100
+		delta_beat = rand(100) + 1
 		chart.transform(group1) { beat_translate delta_beat }
 		assert_equal tap.beat, delta_beat
 		assert_equal flick.beat, delta_beat + 1

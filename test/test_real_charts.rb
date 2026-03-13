@@ -6,6 +6,11 @@ require 'open3'
 
 class TestSscharter < Minitest::Test
 
+	REAL_CHARTS_SKIP_IF = {
+		# some syntax is considered error in YACC but not in Prism
+		lucky_clover_master: -> { RUBY_VERSION < '3.4' },
+	}
+
 	def compare_basic_objects expected, got
 		expected = expected.to_f if expected.is_a? Integer
 		got = got.to_f if got.is_a? Integer
@@ -56,14 +61,16 @@ class TestSscharter < Minitest::Test
 	end
 
 	Dir.glob File.join __dir__, 'real_charts', '*.rb' do |file|
-		define_method "test_#{File.basename(file, '.rb').tr ?-, ?_}" do
+		name = File.basename(file, '.rb').to_sym
+		define_method "test_#{name}" do
+			skip if REAL_CHARTS_SKIP_IF[name]&.()
 			got = Tempfile.create do |got_file|
 				# Use open3 to suppress output
 				Open3.capture2 'ruby', '-I', File.expand_path('../lib', __dir__), '-e', <<-'RUBY', '--', file, got_file.path
 					require 'sscharter'
 					load ARGV[0]
 					chart = Sunniesnow::Charter.charts.values.first.to_sunniesnow production: true
-					File.write ARGV[1], JSON.pretty_generate(chart, indent: ?\t)
+					File.write ARGV[1], JSON.generate(chart)
 				RUBY
 				JSON.load got_file, symbolize_names: true, create_additions: false
 			end
