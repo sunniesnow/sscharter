@@ -7,6 +7,8 @@ require 'open3'
 class TestSscharter < Minitest::Test
 
 	REAL_CHARTS_SKIP_IF = {
+		# omitted keyword arguments syntax
+		bpm_rt_master: -> { RUBY_VERSION < '3.1' },
 		# some syntax is considered error in YACC but not in Prism
 		lucky_clover_master: -> { RUBY_VERSION < '3.4' },
 	}

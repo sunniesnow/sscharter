@@ -32,15 +32,15 @@ Gem::Specification.new do |spec|
 
 	# Uncomment to register a new dependency of your gem
 	spec.add_dependency 'rubyzip', '~> 3.2'
-	spec.add_dependency 'launchy', '~> 3.1'
+	spec.add_dependency 'launchy', '~> 3.0'
 	spec.add_dependency 'webrick', '~> 1.9'
-	spec.add_dependency 'filewatcher', '~> 3.0'
+	spec.add_dependency 'filewatcher', '>= 2.0'
 	spec.add_dependency 'em-websocket', '~> 0.5'
 	spec.add_dependency 'concurrent-ruby', '~> 1.3'
 	spec.add_dependency 'json', '>= 2.17' # https://github.com/ruby/json/pull/910
 	# https://github.com/igrigorik/em-websocket/issues/160
 	spec.add_dependency 'base64' if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.4')
-	spec.add_development_dependency 'minitest', '~> 6.0'
+	spec.add_development_dependency 'minitest', '>= 5.0'
 	spec.add_development_dependency 'rake', '~> 13.3'
 	spec.add_development_dependency 'yard', '~> 0.9'
 	spec.add_development_dependency 'rdoc', '~> 7.2' # yard markup engine

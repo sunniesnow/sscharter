@@ -123,7 +123,7 @@ class Sunniesnow::Charter
 			@tip_point_start_to_add_stack.push @tip_point_start_stack.last
 			@current_tip_point_stack.push nil
 		end
-		result = group preserve_beat: do
+		result = group preserve_beat: preserve_beat do
 			@current_tip_point_group_stack.push @groups.last
 			instance_eval &block
 		end

@@ -3,7 +3,7 @@
 # @see Sunniesnow::Tools.path
 module Sunniesnow::Tools::SvgPath
 
-	Vector2D = Data.define :x, :y do
+	Vector2D = Sunniesnow::Utils::Data.define :x, :y do
 
 		# @!attribute [r] x
 		#   @return [Float]

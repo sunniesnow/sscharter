@@ -42,4 +42,17 @@ module Sunniesnow::Utils
 			to_s.snake_to_camel.to_sym
 		end
 	end
+
+	if Object.const_defined? :Data # Ruby 3.2
+		Data = Data
+	else
+		class Data < Struct
+			def self.define *fields, &block
+				new *fields do
+					fields.each { undef_method "#{_1}=" }
+					class_eval &block if block
+				end
+			end
+		end
+	end
 end

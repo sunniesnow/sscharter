@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'set'
+
 class Sunniesnow::Charter
 
 	using Sunniesnow::Utils

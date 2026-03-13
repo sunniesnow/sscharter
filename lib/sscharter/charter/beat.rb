@@ -109,7 +109,7 @@ class Sunniesnow::Charter
 	#     # @return [BpmChangeList]
 	#     attr_reader :bpm_changes
 	#   end
-	BeatState = Data.define :current_beat, :bpm_changes
+	BeatState = Sunniesnow::Utils::Data.define :current_beat, :bpm_changes
 
 	module Metronomic
 

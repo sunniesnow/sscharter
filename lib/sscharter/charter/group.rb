@@ -20,7 +20,7 @@ class Sunniesnow::Charter
 	#     # @return [Array<Array<Event>>]
 	#     attr_reader :groups
 	#   end
-	GroupState = Data.define(
+	GroupState = Sunniesnow::Utils::Data.define(
 		:tip_point_mode_stack, :current_tip_point_stack,
 		:current_tip_point_group_stack, :current_duplicate,
 		:tip_point_start_stack, :tip_point_start_to_add_stack, :groups
@@ -34,7 +34,7 @@ class Sunniesnow::Charter
 	#     # @return [GroupState]
 	#     attr_reader :group_state
 	#   end
-	Bookmark = Data.define :beat_state, :group_state
+	Bookmark = Sunniesnow::Utils::Data.define :beat_state, :group_state
 
 	# @note Internal API.
 	# @return [void]
