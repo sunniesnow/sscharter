@@ -159,7 +159,7 @@ module Sunniesnow::Tools::SvgPath
 		# @param s [Float]
 		# @return [Vector2D]
 		def at_length s
-			k = @lengths.bsearch_index { _1 > s } - 1
+			k = (@lengths.bsearch_index { _1 > s } || @lengths.length - 1) - 1
 			@segments[k].at_length s - @lengths[k]
 		end
 
