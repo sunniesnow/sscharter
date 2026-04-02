@@ -34,7 +34,7 @@ jobs:
     name: Push documentation
     needs: generate
     steps:
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         name: Download documentation
         with:
           pattern: doc
