@@ -41,7 +41,7 @@ jobs:
           path: doc
           merge-multiple: true
       - name: Push documentation
-        uses: crazy-max/ghaction-github-pages@v4
+        uses: crazy-max/ghaction-github-pages@v5
         with:
           target_branch: doc
           build_dir: doc
