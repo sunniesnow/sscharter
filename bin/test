@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+for lockfile in lock/*.lock; do
+	filename="$(basename "$lockfile")"
+	[[ $filename =~ ruby-([0-9]+\.[0-9]+) ]]
+	ruby_mm="${BASH_REMATCH[1]}"
+
+	ln -f -s "$lockfile" Gemfile.lock
+
+	docker run --rm -i -v .:/work "ruby:$ruby_mm" bash -s <<'BASH'
+set -euo pipefail
+
+git config --global --add safe.directory /work
+cd /work
+bundle install
+bundle exec rake
+BASH
+
+done

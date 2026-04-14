@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sscharter (0.10.0)
+    sscharter (0.10.1)
       concurrent-ruby (~> 1.3)
       em-websocket (~> 0.5)
       filewatcher (>= 2.0)
@@ -10,15 +10,10 @@ PATH
       rubyzip (~> 3.2)
       webrick (~> 1.9)
 
-PATH
-  remote: gems/yard
-  specs:
-    yard (0.9.38)
-
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.8.9)
+    addressable (2.9.0)
       public_suffix (>= 2.0.2, < 8.0)
     cgi (0.5.1)
     childprocess (5.1.0)
@@ -34,7 +29,7 @@ GEM
     filewatcher (2.1.0)
       module_methods (~> 0.1.0)
     http_parser.rb (0.8.1)
-    json (2.19.1)
+    json (2.19.3)
     launchy (3.1.1)
       addressable (~> 2.8)
       childprocess (~> 5.0)
@@ -55,6 +50,7 @@ GEM
     stringio (3.2.0)
     tsort (0.2.0)
     webrick (1.9.2)
+    yard (0.9.40)
 
 PLATFORMS
   ruby
@@ -65,7 +61,7 @@ DEPENDENCIES
   rake (~> 13.3)
   rdoc (~> 7.2)
   sscharter!
-  yard!
+  yard (>= 0.9.40)
 
 BUNDLED WITH
    2.5.23

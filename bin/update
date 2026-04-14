@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+for lockfile in lock/*.lock; do
+	filename="$(basename "$lockfile")"
+	[[ $filename =~ ruby-([0-9]+\.[0-9]+) ]]
+	ruby_mm="${BASH_REMATCH[1]}"
+
+	rm -f Gemfile.lock || true
+
+	output="$(docker run --rm -i -v .:/work "ruby:$ruby_mm" bash -s <<'BASH'
+set -euo pipefail
+
+git config --global --add safe.directory /work
+gem install bundler --no-document >&2
+cd /work
+bundle install >&2
+
+echo "ruby-$(ruby -v | grep -oP '\d+\.\d+\.\d+')-bundler-$(bundle -v | grep -oP '\d+\.\d+\.\d+')-Gemfile.lock"
+cat Gemfile.lock
+BASH
+)"
+
+	rm "$lockfile"
+	echo "$output" | tail -n +2 > "lock/$(echo "$output" | head -n 1)"
+done
+
+rm -f Gemfile.lock || true
+ln -s "$lockfile" Gemfile.lock

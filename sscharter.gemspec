@@ -42,10 +42,8 @@ Gem::Specification.new do |spec|
 	spec.add_dependency 'base64' if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.4')
 	spec.add_development_dependency 'minitest', '>= 5.0'
 	spec.add_development_dependency 'rake', '~> 13.3'
-	spec.add_development_dependency 'yard', '~> 0.9'
+	spec.add_development_dependency 'yard', '>= 0.9.40' # a lot of my PRs got merged before 0.9.40 release! yay!
 	spec.add_development_dependency 'rdoc', '~> 7.2' # yard markup engine
-	# https://github.com/lsegal/yard/pull/1649
-	spec.add_development_dependency 'irb' if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('4.0')
 	# For more information and examples about making a new gem, check out our
 	# guide at: https://bundler.io/guides/creating_gem.html
 end
