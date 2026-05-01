@@ -1,1 +1,101 @@
-lock/ruby-4.0.2-bundler-4.0.10-Gemfile.lock
+PATH
+  remote: .
+  specs:
+    sscharter (0.10.1)
+      base64
+      concurrent-ruby (~> 1.3)
+      em-websocket (~> 0.5)
+      filewatcher (>= 2.0)
+      json (>= 2.17)
+      launchy (~> 3.0)
+      rubyzip (~> 3.2)
+      webrick (~> 1.9)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.9.0)
+      public_suffix (>= 2.0.2, < 8.0)
+    base64 (0.3.0)
+    childprocess (5.1.0)
+      logger (~> 1.5)
+    concurrent-ruby (1.3.6)
+    date (3.5.1)
+    drb (2.2.3)
+    em-websocket (0.5.3)
+      eventmachine (>= 0.12.9)
+      http_parser.rb (~> 0)
+    erb (6.0.2)
+    eventmachine (1.2.7)
+    filewatcher (3.0.1)
+      logger (~> 1.7)
+      module_methods (~> 1.0)
+    http_parser.rb (0.8.1)
+    json (2.19.4)
+    launchy (3.1.1)
+      addressable (~> 2.8)
+      childprocess (~> 5.0)
+      logger (~> 1.6)
+    logger (1.7.0)
+    minitest (6.0.3)
+      drb (~> 2.0)
+      prism (~> 1.5)
+    module_methods (1.0.0)
+    prism (1.9.0)
+    psych (5.3.1)
+      date
+      stringio
+    public_suffix (7.0.5)
+    rake (13.3.1)
+    rdoc (7.2.0)
+      erb
+      psych (>= 4.0.0)
+      tsort
+    rubyzip (3.2.2)
+    stringio (3.2.0)
+    tsort (0.2.0)
+    webrick (1.9.2)
+    yard (0.9.40)
+
+PLATFORMS
+  ruby
+  x86_64-linux
+
+DEPENDENCIES
+  minitest (>= 5.0)
+  rake (~> 13.3)
+  rdoc (~> 7.2)
+  sscharter!
+  yard (>= 0.9.40)
+
+CHECKSUMS
+  addressable (2.9.0) sha256=7fdf6ac3660f7f4e867a0838be3f6cf722ace541dd97767fa42bc6cfa980c7af
+  base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
+  childprocess (5.1.0) sha256=9a8d484be2fd4096a0e90a0cd3e449a05bc3aa33f8ac9e4d6dcef6ac1455b6ec
+  concurrent-ruby (1.3.6) sha256=6b56837e1e7e5292f9864f34b69c5a2cbc75c0cf5338f1ce9903d10fa762d5ab
+  date (3.5.1) sha256=750d06384d7b9c15d562c76291407d89e368dda4d4fff957eb94962d325a0dc0
+  drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
+  em-websocket (0.5.3) sha256=f56a92bde4e6cb879256d58ee31f124181f68f8887bd14d53d5d9a292758c6a8
+  erb (6.0.2) sha256=9fe6264d44f79422c87490a1558479bd0e7dad4dd0e317656e67ea3077b5242b
+  eventmachine (1.2.7) sha256=994016e42aa041477ba9cff45cbe50de2047f25dd418eba003e84f0d16560972
+  filewatcher (3.0.1) sha256=b0f51e568cf112f72392053ae5ff5afa267592489091ee9f93c20fc275597f5a
+  http_parser.rb (0.8.1) sha256=9ae8df145b39aa5398b2f90090d651c67bd8e2ebfe4507c966579f641e11097a
+  json (2.19.4) sha256=670a7d333fb3b18ca5b29cb255eb7bef099e40d88c02c80bd42a3f30fe5239ac
+  launchy (3.1.1) sha256=72b847b5cc961589dde2c395af0108c86ff0119f42d4648d25b5440ebb10059e
+  logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
+  minitest (6.0.3) sha256=88ac8a1de36c00692420e7cb3cc11a0773bbcb126aee1c249f320160a7d11411
+  module_methods (1.0.0) sha256=92f28a9254b8c1a7f4e68aa52242ecabdac3343ce41909aac3fcc3bf2ac8ec5e
+  prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
+  psych (5.3.1) sha256=eb7a57cef10c9d70173ff74e739d843ac3b2c019a003de48447b2963d81b1974
+  public_suffix (7.0.5) sha256=1a8bb08f1bbea19228d3bed6e5ed908d1cb4f7c2726d18bd9cadf60bc676f623
+  rake (13.3.1) sha256=8c9e89d09f66a26a01264e7e3480ec0607f0c497a861ef16063604b1b08eb19c
+  rdoc (7.2.0) sha256=8650f76cd4009c3b54955eb5d7e3a075c60a57276766ebf36f9085e8c9f23192
+  rubyzip (3.2.2) sha256=c0ed99385f0625415c8f05bcae33fe649ed2952894a95ff8b08f26ca57ea5b3c
+  sscharter (0.10.1)
+  stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
+  tsort (0.2.0) sha256=9650a793f6859a43b6641671278f79cfead60ac714148aabe4e3f0060480089f
+  webrick (1.9.2) sha256=beb4a15fc474defed24a3bda4ffd88a490d517c9e4e6118c3edce59e45864131
+  yard (0.9.40) sha256=a4a205449b5d6de9292affb4fefccbd316678568b5d2df8182b7c77047a8c4a7
+
+BUNDLED WITH
+  4.0.10
