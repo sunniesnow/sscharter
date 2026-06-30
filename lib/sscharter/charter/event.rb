@@ -250,7 +250,7 @@ class Sunniesnow::Charter
 		UNINTERPOLABLE_TYPES = {
 			blend_mode: BLEND_MODES_SET,
 			circle_blend_mode: BLEND_MODES_SET,
-			test: String
+			text: String
 		}.tap { _1.default = Numeric }.freeze
 
 		# @!group DSL Methods

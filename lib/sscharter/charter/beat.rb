@@ -46,6 +46,8 @@ class Sunniesnow::Charter
 			end
 		end
 
+		include Enumerable
+
 		# @return [Float]
 		attr_accessor :offset
 
@@ -98,6 +100,12 @@ class Sunniesnow::Charter
 		# @return [BpmChange?]
 		def [] index
 			@list[index]
+		end
+
+		# @yieldparam [BpmChange]
+		def each(...)
+			@list.each(...)
+			self
 		end
 	end
 
